@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="idioma">
+        <item>Català</item>
+        <item>Español</item>
+        <item>Français</item>
+        <item>English</item>
+    </string-array>
+    <string-array name="codi_idioma">
+        <item>ca</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>en</item>
+    </string-array>
+
+    <string-array name="codi_dies_setmana">
+        <item>monday</item>
+        <item>tuesday</item>
+        <item>wednesday</item>
+        <item>thursday</item>
+        <item>friday</item>
+        <item>saturday</item>
+        <item>sunday</item>
+    </string-array>
+
+</resources>

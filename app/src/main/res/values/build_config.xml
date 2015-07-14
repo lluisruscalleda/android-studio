@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="bc_db_path">/data/data/ad.andorra.turismeactiu/databases/db.sqlite</string>
+
+</resources>

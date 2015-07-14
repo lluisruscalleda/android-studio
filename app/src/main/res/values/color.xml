@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="blanc">#ffffff</color>
+    <color name="blanc_alfa">#5fffffff</color>
+    <color name="blanc_molt_alfa">#40ffffff</color>
+    <color name="negre">#000000</color>
+    <color name="grisfort">#58585b</color>
+    <color name="grisclar">#b3b3b3</color>
+    <color name="verd">#68923c</color>
+    <color name="verdclar">#eff4eb</color>
+    <color name="verdfosc">#517236</color>
+    <color name="grana">#a81d34</color>
+    <color name="granaclar">#f6e8ea</color>
+    <color name="taronja">#f08f2c</color>
+    <color name="taronjaclar">#fdf3ea</color>
+    <color name="blau">#17718d</color>
+    <color name="blauclar">#e7f0f3</color>
+
+    <color name="background_for_save">#488AC7</color>
+    <!-- Per llistes -->
+    <color name="alpha_white">#30FFFFFF</color>
+    <color name="alpha_white_80">#CCFFFFFF</color>
+    <color name="alpha_white_light">#10FFFFFF</color>
+    <color name="alpha_white_middle">#49FFFFFF</color>
+
+</resources>
