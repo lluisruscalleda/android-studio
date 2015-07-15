@@ -2,7 +2,7 @@
 <resources>
 
     <string name="bc_db_path">/data/data/ad.andorra.turismeactiu/databases/db.sqlite</string>
-
+    <string name="bc_api_server_url">https://api.thesocialcoin.org/</string>
     <string name="bc_session_preferences_filename">thesocialcoin_session_data</string>
     <string name="bc_project_preferences_filename">thesocialcoin_project_data</string>
 </resources>

@@ -3,34 +3,46 @@ package com.thesocialcoin.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.thesocialcoin.R;
+import com.thesocialcoin.controllers.UserManager;
+import com.thesocialcoin.utils.LogTags;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,7 +53,7 @@ import java.util.List;
  * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
-public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, View.OnClickListener  {
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -63,6 +75,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private SignInButton mPlusSignInButton;
     private View mSignOutButtons;
     private View mLoginFormView;
+    private LoginButton authButton;
+    private UiLifecycleHelper uiHelper;
+    private String facebookAccessToken = "";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,16 +126,86 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             }
         });
 
+        progressBar = (ProgressBar) findViewById(R.id.login_progress);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
         mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
+
+        authButton = (LoginButton) findViewById(R.id.facebook_auth_button);
+        authButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showProgress(true);
+            }
+        });
+        uiHelper = new UiLifecycleHelper(this, callback);
+        uiHelper.onCreate(savedInstanceState);
+        authButton.setReadPermissions(Arrays.asList("email"));
     }
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
 
+
+    private Session.StatusCallback callback = new Session.StatusCallback() {
+        @Override
+        public void call(Session session, SessionState state, Exception exception) {
+            Log.i(LogTags.FACEBOOK_LOGIN, "User ID ");
+            onSessionStateChange(session, state, exception);
+        }
+    };
+
+    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+        if (state.isOpened()) {
+            Log.i(LogTags.FACEBOOK_LOGIN, "Logged in...");
+            facebookAccessToken = session.getAccessToken();
+            Request.newMeRequest(session,
+                    new Request.GraphUserCallback() {
+                        @Override
+                        public void onCompleted(GraphUser user, Response response) {
+                            if (user != null) {
+                                showProgress(true);
+                                String id = user.getId();
+                                Log.i(LogTags.FACEBOOK_LOGIN, "User ID " + id);
+                                Object o = user.asMap().get("email");
+                                String email = "";
+                                if (o != null) {
+                                    email = o.toString();
+
+                                    Log.i(LogTags.FACEBOOK_LOGIN, "Email " + email);
+                                }
+
+                                //SingleRequestManager.authenticateWithFacebook(LoginActivity.this, email, id, facebookAccessToken);
+                                UserManager.getInstance(LoginActivity.this).authenticateWithFacebook(email, id, facebookAccessToken);
+                            }
+                        }
+                    }).executeAsync();
+
+        } else if (state.isClosed()) {
+            facebookAccessToken = "";
+            Log.i(LogTags.FACEBOOK_LOGIN, "Logged out...");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.activity_login_register_button:
+                //jumpToRegisterPage();
+                break;
+            case R.id.email_sign_in_button:
+                // hide virtual keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(),
+                        InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                attemptLogin();
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.

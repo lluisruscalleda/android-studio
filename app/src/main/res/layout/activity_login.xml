@@ -97,7 +97,20 @@
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"/>
 
+
             </LinearLayout>
+
+            <com.facebook.widget.LoginButton
+                xmlns:fb="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/facebook_auth_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                fb:login_text="@string/log_in_with_facebook"
+                fb:logout_text=""
+                style="@style/FacebookLoginButton"
+                android:layout_above="@+id/activity_login_register_button"
+                android:layout_centerInParent="true"
+                />
         </LinearLayout>
     </ScrollView>
 
