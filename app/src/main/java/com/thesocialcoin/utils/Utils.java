@@ -1,7 +1,10 @@
 package com.thesocialcoin.utils;
 
 /**
- * Created by lluisruscalleda on 14/07/2015.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 14/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class Utils {
 

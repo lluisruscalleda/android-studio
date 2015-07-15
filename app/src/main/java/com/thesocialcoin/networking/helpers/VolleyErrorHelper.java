@@ -1,11 +1,16 @@
-package com.thesocialcoin.networking.volley;
+package com.thesocialcoin.networking.helpers;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-
-import ad.andorra.turismeactiu.R;
+import com.thesocialcoin.R;
 
 /**
  * Created by lluisruscalleda on 17/12/14.
@@ -26,9 +31,9 @@ public class VolleyErrorHelper {
         } else if (isServerProblem(error)) {
             return handleServerError(error, context);
         } else if (isNetworkProblem(error)) {
-            return context.getResources().getString(R.string.no_network_connection);
+            return context.getResources().getString(R.string.no_internet);
         }
-        return context.getResources().getString(R.string.generic_server_down);
+        return context.getResources().getString(R.string.generic_error);
     }
 
 
@@ -46,13 +51,13 @@ public class VolleyErrorHelper {
         } else if (error instanceof AuthFailureError) {
             return context.getResources().getString(R.string.auth_failed);
         } else if (error instanceof NetworkError) {
-            return context.getResources().getString(R.string.no_network_connection);
+            return context.getResources().getString(R.string.no_internet);
         } else if (error instanceof NoConnectionError) {
             return context.getResources().getString(R.string.no_network_connection);
         } else if (error instanceof ParseError) {
             return context.getResources().getString(R.string.parsing_failed);
         }
-        return context.getResources().getString(R.string.generic_server_down);
+        return context.getResources().getString(R.string.generic_error);
     }
 
     /**
@@ -92,7 +97,7 @@ public class VolleyErrorHelper {
             switch (response.statusCode) {
                 case 404:
                 case 422:
-                    return context.getResources().getString(R.string.generic_server_down);
+                    return context.getResources().getString(R.string.generic_error);
                 case 401:
                     return context.getResources().getString(R.string.auth_failed);
                     /*try {
@@ -117,7 +122,7 @@ public class VolleyErrorHelper {
                     return context.getResources().getString(R.string.generic_server_down);
             }
         }
-        return context.getResources().getString(R.string.generic_server_down);
+        return context.getResources().getString(R.string.generic_error);
     }
 }
 

@@ -6,7 +6,10 @@ import android.support.v4.util.LruCache;
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 
 /**
- * Created by identitat on 18/09/14.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 14/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageCache {
 

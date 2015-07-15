@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.thesocialcoin.networking.volley;
+package com.thesocialcoin.networking.helpers;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;

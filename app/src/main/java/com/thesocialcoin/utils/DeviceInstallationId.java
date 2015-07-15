@@ -9,7 +9,10 @@ import java.io.RandomAccessFile;
 import java.util.UUID;
 
 /**
- * Created by lluisruscalleda on 14/07/2015.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 14/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class DeviceInstallationId {
     private static String sID = null;

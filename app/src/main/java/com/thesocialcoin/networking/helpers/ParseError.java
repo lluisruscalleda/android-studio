@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-package com.thesocialcoin.networking.volley;
+package com.thesocialcoin.networking.helpers;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 
 /**
- * Indicates that the server responded with an error response.
+ * Indicates that the server's response could not be parsed.
  */
 @SuppressWarnings("serial")
-public class ServerError extends VolleyError {
-    public ServerError(NetworkResponse networkResponse) {
+public class ParseError extends VolleyError {
+    public ParseError() { }
+
+    public ParseError(NetworkResponse networkResponse) {
         super(networkResponse);
     }
+    
+    public ParseError(String exceptionMessage) {
+        super(exceptionMessage);
+    }
 
-    public ServerError() {
-        super();
+    public ParseError(Throwable cause) {
+        super(cause);
     }
 }

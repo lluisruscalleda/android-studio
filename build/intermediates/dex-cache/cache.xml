@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/identitat/Git/the-social-coin/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="/Users/identitat/Git/the-social-coin/app/build/intermediates/pre-dexed/debug/classes-0c421fc855793a2e3de7631c4ae8a28b8d78fde7.jar" />
+    </item>
+
+</items>
