@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="blanc">#ffffff</color>
-    <color name="blanc_alfa">#5fffffff</color>
-    <color name="blanc_molt_alfa">#40ffffff</color>
-    <color name="negre">#000000</color>
-    <color name="grisfort">#58585b</color>
-    <color name="grisclar">#b3b3b3</color>
-    <color name="verd">#68923c</color>
-    <color name="verdclar">#eff4eb</color>
-    <color name="verdfosc">#517236</color>
-    <color name="grana">#a81d34</color>
-    <color name="granaclar">#f6e8ea</color>
-    <color name="taronja">#f08f2c</color>
-    <color name="taronjaclar">#fdf3ea</color>
-    <color name="blau">#17718d</color>
-    <color name="blauclar">#e7f0f3</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <!-- Text -->
+    <color name="primary">#3172b3</color>
+    <color name="primary_dark">#3172b3</color>
+    <color name="accent">#ccc</color>
+    <color name="dark_green">#00825e</color>
+
+    <!-- Other -->
+
+    <color name="genre">#666666</color>
+    <color name="year">#888888</color>
+    <color name="list_divider">#d9d9d9</color>
+    <color name="feed_row_start_color">#99000000</color>
+    <color name="feed_row_middle_color">#40000000</color>
+    <color name="feed_row_end_color">#00000000</color>
+    <color name="list_row_start_color">#ffffff</color>
+    <color name="list_row_end_color">#ffffff</color>
+    <color name="list_row_hover_start_color">#ebeef0</color>
+    <color name="list_row_hover_end_color">#ebeef0</color>
+
+    <color name="feed_item_start_color">#99000000</color>
+    <color name="feed_item_middle_color">#99000000</color>
+    <color name="feed_item_end_color">#1A000000</color>
+
+    <color name="background_photo_tint">#4f808080</color>
+    <color name="main_photo_tint">#2f505050</color>
 
     <color name="background_for_save">#488AC7</color>
     <!-- Per llistes -->
@@ -24,4 +37,11 @@
     <color name="alpha_white_light">#10FFFFFF</color>
     <color name="alpha_white_middle">#49FFFFFF</color>
 
+
+    <color name="oa_green">#A8DD00</color>
+    <color name="oa_blue">#276E9B</color>
+    <color name="oa_blue_facebook">#3048BD</color>
+    <color name="oa_black_transparent">#CC000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="oa_grey_text">#A1A1A1</color>
 </resources>
