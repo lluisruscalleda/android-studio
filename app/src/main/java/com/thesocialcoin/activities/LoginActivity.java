@@ -3,9 +3,13 @@ package com.thesocialcoin.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -27,19 +31,34 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.thesocialcoin.R;
 import com.thesocialcoin.controllers.UserManager;
-import com.thesocialcoin.utils.LogTags;
+import com.thesocialcoin.models.pojos.APILoginResponse;
+import com.thesocialcoin.networking.SSL.SslHttpClient;
+import com.thesocialcoin.networking.SSL.SslHttpStack;
+import com.thesocialcoin.utils.ToastUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +72,9 @@ import java.util.List;
  * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
-public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, View.OnClickListener  {
+public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, View.OnClickListener, UserManager.OnRegisterResponseListener  {
+
+    private final static String TAG = "LoginActivity";
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -67,6 +88,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      */
     private UserLoginTask mAuthTask = null;
 
+
+    // List of additional write permissions being requested
+    private static final List<String> PERMISSIONS = Arrays.asList("user_status, email");
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -76,13 +101,25 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private View mSignOutButtons;
     private View mLoginFormView;
     private LoginButton authButton;
-    private UiLifecycleHelper uiHelper;
-    private String facebookAccessToken = "";
+    CallbackManager callbackManager;
+    private AccessToken facebookAccessToken;
+    //private UiLifecycleHelper uiHelper;
+    //private String facebookAccessToken = "";
     private ProgressBar progressBar;
+
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mActivity = this;
+
+        //init facebook sdk and crashlitics
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        //Crashlytics.start(this);
+
+
         setContentView(R.layout.activity_login);
 
         // Find the Google+ sign in button.
@@ -132,16 +169,92 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mEmailLoginFormView = findViewById(R.id.email_login_form);
         mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
 
+        callbackManager = CallbackManager.Factory.create();
         authButton = (LoginButton) findViewById(R.id.facebook_auth_button);
+//        uiHelper = new UiLifecycleHelper(this, callback);
+//        uiHelper.onCreate(savedInstanceState);
+        authButton.setReadPermissions(PERMISSIONS);
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showProgress(true);
+            public void onClick(View v) {
+                //showProgress(true);
             }
         });
-        uiHelper = new UiLifecycleHelper(this, callback);
-        uiHelper.onCreate(savedInstanceState);
-        authButton.setReadPermissions(Arrays.asList("email"));
+        authButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                authButton.setVisibility(View.GONE);
+                facebookAccessToken = loginResult.getAccessToken();
+                showProgress(false);
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                showProgress(true);
+                                if (response.getError() != null) {
+                                    // handle error
+                                    ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
+                                    authButton.setVisibility(View.VISIBLE);
+                                } else {
+                                    Log.d(TAG, facebookAccessToken.getToken());  // App code
+                                    //email verification
+                                    String email = object.optString("email");
+                                    if (email == "" || email == null) {
+                                        LoginManager.getInstance().logOut();
+                                        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                                                (Request.Method.DELETE, "https://graph.facebook.com/v2.3/me/permissions?access_token=" + facebookAccessToken.getToken(), "", new Response.Listener<JSONObject>() {
+
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        Log.d(TAG, "Token: " + response.toString());
+                                                        ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
+                                                        authButton.setVisibility(View.VISIBLE);
+                                                    }
+                                                }, new Response.ErrorListener() {
+
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
+                                                        authButton.setVisibility(View.VISIBLE);
+                                                    }
+                                                });
+                                        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                                        // Access the RequestQueue through your singleton class.
+                                        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                                        requestQueue.add(jsObjRequest);
+
+                                    } else {
+                                        UserManager.getInstance(LoginActivity.this).authenticateWithFacebook(facebookAccessToken.getToken(), LoginActivity.this);
+                                    }
+                                }
+                            }
+                        });
+                showProgress(false);
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,link,email");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "Cancel");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Log.d(TAG, "Mal");
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void populateAutoComplete() {
@@ -149,7 +262,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
 
-    private Session.StatusCallback callback = new Session.StatusCallback() {
+    /*private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
             Log.i(LogTags.FACEBOOK_LOGIN, "User ID ");
@@ -188,11 +301,11 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             Log.i(LogTags.FACEBOOK_LOGIN, "Logged out...");
         }
     }
-
+*/
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.activity_login_register_button:
+            case R.id.facebook_auth_button:
                 //jumpToRegisterPage();
                 break;
             case R.id.email_sign_in_button:
@@ -475,6 +588,65 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    public void onRegisterSucceed(APILoginResponse response) {
+
+        //try {
+
+            if (response.getToken() != null) {
+
+                alert(response.getToken(), 1);
+            }
+
+            showProgress(false);
+        //} catch (JSONException je) {
+        /*    showProgress(false);
+            alert(getString(R.string.auth_failed), 1);
+            Log.e(TAG, "JSONException RegisterNewUser " + je.toString());
+            je.printStackTrace();
+        }*/
+    }
+
+    @Override
+    public void onRegisterFailed(String error) {
+        showProgress(false);
+        String msgToShow = "";
+        if (error != null) {
+            if (getResources().getIdentifier(error, "string", LoginActivity.this.getPackageName()) != 0) {
+                msgToShow = (String) getResources().getText(getResources().getIdentifier(error, "string", LoginActivity.this.getPackageName()));
+            }
+            if (msgToShow.equals("")) {
+                msgToShow = error;
+            }
+        }
+        ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + msgToShow);
+    }
+
+    /**
+     * Alert amb acceptació i finalitzat de l'activity en funció dels
+     * parametres.
+     *
+     * @param section Missatge que es mostra en l'alert.
+     * @param finish Si finish val 1, treu l'usari de l'activity i si és 0 el
+     *            manté a l'activity.
+     */
+    private void alert(String msg, final int finish) {
+        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+        myAlertDialog.setTitle(getString(R.string.action_sign_in));
+        myAlertDialog.setMessage(msg);
+
+        myAlertDialog.setPositiveButton("ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        if (finish == 1)
+                            finish();
+                    }
+                });
+
+        myAlertDialog.show();
     }
 }
 

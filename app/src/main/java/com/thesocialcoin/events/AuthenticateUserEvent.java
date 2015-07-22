@@ -1,6 +1,6 @@
 package com.thesocialcoin.events;
 
-import com.thesocialcoin.models.pojos.Login;
+import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.networking.error.AuthenticateUserVolleyError;
 
 
@@ -18,15 +18,15 @@ public class AuthenticateUserEvent extends AbstractEvent {
         LOGOUT_ERROR
     }
 
-    private Login userLoginData;
+    private APILoginResponse userAPILoginResponseData;
     private AuthenticateUserVolleyError error;
 
     public AuthenticateUserEvent(Type type) {
         super(type);
     }
-    public static AuthenticateUserEvent AuthenticateUserEventWithUserData(Type type, Login userLoginData) {
+    public static AuthenticateUserEvent AuthenticateUserEventWithUserData(Type type, APILoginResponse userAPILoginResponseData) {
         AuthenticateUserEvent event = new AuthenticateUserEvent(type);
-        event.setLoginData(userLoginData);
+        event.setLoginData(userAPILoginResponseData);
 
         return event;
     }
@@ -37,8 +37,8 @@ public class AuthenticateUserEvent extends AbstractEvent {
         return event;
     }
 
-    public Login getLoginData(){return userLoginData;}
-    public void setLoginData(Login userLoginData){this.userLoginData = userLoginData;}
+    public APILoginResponse getLoginData(){return userAPILoginResponseData;}
+    public void setLoginData(APILoginResponse userAPILoginResponseData){this.userAPILoginResponseData = userAPILoginResponseData;}
 
     public AuthenticateUserVolleyError getError(){return error;}
     public void setError(AuthenticateUserVolleyError error){this.error = error;}

@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
-import com.thesocialcoin.controllers.ApplicationController;
+import com.thesocialcoin.App;
 import com.thesocialcoin.networking.ottovolley.core.OttoGsonResponseBuffer;
 import com.thesocialcoin.networking.volleyextensions.VolleySingleton;
 
@@ -39,7 +39,7 @@ public class RequestManager {
      */
     public static <T> void addToRequestQueue(Request<T> req, String tag) {
         // set the default tag if tag is empty
-        req.setTag(TextUtils.isEmpty(tag) ? ApplicationController.TAG : tag);
+        req.setTag(TextUtils.isEmpty(tag) ? App.TAG : tag);
 
         VolleyLog.d("Adding request to queue: %s", req.getUrl());
 
@@ -54,7 +54,7 @@ public class RequestManager {
      */
     public static <T> void addToRequestQueue(Request<T> req) {
         // set the default tag if tag is empty
-        req.setTag(ApplicationController.TAG);
+        req.setTag(App.TAG);
 
         VolleyRequestQueue.add(req);
     }

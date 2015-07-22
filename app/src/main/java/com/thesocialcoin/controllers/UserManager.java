@@ -4,22 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.otto.Subscribe;
+import com.thesocialcoin.App;
+import com.thesocialcoin.R;
 import com.thesocialcoin.activities.LoginActivity;
 import com.thesocialcoin.events.AuthenticateUserEvent;
-import com.thesocialcoin.models.pojos.Login;
+import com.thesocialcoin.helpers.JsonTrimMessage;
+import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.models.pojos.Logout;
 import com.thesocialcoin.models.pojos.User;
+import com.thesocialcoin.models.pojos.iPojo;
 import com.thesocialcoin.models.shared_preferences.SessionData;
+import com.thesocialcoin.networking.SSL.SslHttpClient;
+import com.thesocialcoin.networking.SSL.SslHttpStack;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.AuthenticateUserVolleyError;
 import com.thesocialcoin.networking.error.LoginRequestFailed;
 import com.thesocialcoin.networking.error.RegisterRequestFailed;
+import com.thesocialcoin.networking.helpers.VolleyErrorHelper;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
-import com.thesocialcoin.requests.FacebookRequest;
 import com.thesocialcoin.requests.LoginRequest;
 import com.thesocialcoin.requests.RegisterRequest;
 import com.thesocialcoin.utils.Codes;
+import com.thesocialcoin.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -31,6 +48,18 @@ public class UserManager extends BaseManager {
     private static String TAG = UserManager.class.getSimpleName();
     private static UserManager instance = null;
 
+
+    /*
+    * Interfaces
+    */
+    public interface OnLoginResponseListener {
+        public void onLoginSucceed(APILoginResponse response);
+        public void onLoginFailed(String error);
+    }
+    public interface OnRegisterResponseListener {
+        public void onRegisterSucceed(APILoginResponse response);
+        public void onRegisterFailed(String error);
+    }
 
     private UserManager(Context context) {
 
@@ -88,22 +117,90 @@ public class UserManager extends BaseManager {
     /**
      * Authenticate the user using facebook credentials
      *
-     * @param email
-     *            Email for the account
-     * @param facebookId
-     *            facebookId for the account
-     * @param facebookAccessToken
-     *            facebookAccessToken for the account
+     * @param facebookToken
+     *            token account
+     * @param OnRegisterResponseListener
+     *            listener
+     *
      */
-    public void authenticateWithFacebook(String email, String facebookId, String facebookAccessToken)
-    {
-        postEvent(produceUserSignInStartEvent());
+    public void authenticateWithFacebook(String facebookToken, final OnRegisterResponseListener listener) {
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext, new SslHttpStack(new SslHttpClient(mContext, 44400)));
 
-        HashMap<String,String> loginParams = new HashMap<String,String>();
-        loginParams.put(Codes.EMAIL_VALUE, email);
-        loginParams.put(Codes.FACEBOOK_ID_VALUE, facebookId);
-        loginParams.put(Codes.FACEBOOK_ACCESS_TOKEN_VALUE, facebookAccessToken);
-        RequestManager.addToRequestQueue(new FacebookRequest().create(loginParams));
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put(Codes.reg_user_facebook_token, facebookToken);
+            requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
+        } catch (JSONException e1) {
+            Log.e("JSONObject", "JSONException " + e1);
+            e1.printStackTrace();
+        }
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.POST, mContext.getResources().getString(R.string.bc_api_server_url)+ "api-facebook-auth", requestJson.toString(), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listener.onRegisterSucceed((APILoginResponse) new iPojo().create(response.toString(), APILoginResponse.class));
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        NetworkResponse response = error.networkResponse;
+                        if(response != null && response.data != null){
+                            String errorMsg = null;
+                            switch(response.statusCode){
+                                case 400:
+                                    errorMsg = null;
+                                    errorMsg = new String(error.getMessage());
+                                    if(errorMsg != null) {
+                                        errorMsg = JsonTrimMessage.trimMessage(errorMsg, "Error");
+                                        listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
+                                    }else{
+                                        listener.onRegisterFailed("generic_server_down");
+                                    }
+                                    break;
+                                default:
+                                    errorMsg = VolleyErrorHelper.getMessage(error, mContext);
+                                    listener.onRegisterFailed(errorMsg);
+                                    break;
+                            }
+                        }else{
+                            String errorMsg = null;
+                            errorMsg = new String(error.getMessage());
+                            if(errorMsg != null) {
+                                if(JsonTrimMessage.trimMessage(errorMsg, "Error") == null){
+                                    listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
+                                }else {
+                                    listener.onRegisterFailed("WS_ERROR_CODE_" + JsonTrimMessage.trimMessage(errorMsg, "Error"));
+                                }
+
+                            }else{
+                                listener.onRegisterFailed("generic_server_down");
+                            }
+                        }
+
+                    }
+                }){
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+
+        RequestManager.addToRequestQueue(jsObjRequest);
+
+        /*postEvent(produceUserSignInStartEvent());
+
+        HashMap<String,String> requestJson = new HashMap<String,String> ();
+        requestJson.put(Codes.reg_user_facebook_token, facebookToken);
+        requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
+
+        RequestManager.addToRequestQueue(new LoginRequest().create(requestJson));*/
     }
 
     /**
@@ -121,17 +218,12 @@ public class UserManager extends BaseManager {
         postEvent(produceUserSignInErrorEvent(new AuthenticateUserVolleyError(requestError.error)));
     }
     @Subscribe
-    public void onLoginResponseReceived(VolleyRequestSuccess<Login> response)
+    public void onLoginResponseReceived(VolleyRequestSuccess<APILoginResponse> response)
     {
         Log.d(TAG, "Request end: " + response.requestId);
-        if (response.response instanceof Login)
+        if (response.response instanceof APILoginResponse)
         {
-            sessionData.setAuthenticationTokenCreationDate(response.response.getCreateDate());
-            sessionData.setSessionToken(response.response.getToken());
-            sessionData.setTimeToLive(response.response.getTimeToLive());
-            sessionData.setUserId(response.response.getUserID());
-            sessionData.setLoggedIn(true);
-            sessionData.apply();
+
 
             AppManager.getInstance(mContext).postLoginActions();
         }
@@ -165,23 +257,18 @@ public class UserManager extends BaseManager {
             postEvent(produceUserSignInSuccessEvent());
         }
     }
-    public void logoutActions()
+    public void doLogout()
     {
         // stop services
         AppManager.getInstance(mContext).stopAppServices();
 
         //RequestManager.addToRequestQueue(new LogoutRequest().create());
-        SessionData sessionData = new SessionData(ApplicationController.getAppContext());
-        sessionData.setLoggedIn(false);
-        sessionData.setTimeToLive(null);
-        sessionData.setUserId(null);
-        sessionData.setSessionToken(null);
-        sessionData.setAuthenticationTokenCreationDate(null);
-        sessionData.apply();
+        SessionData sessionData = new SessionData(App.getAppContext());
+        sessionData.clearEditor();
 
-        Intent mIntent = new Intent(ApplicationController.getAppContext(), LoginActivity.class);
+        Intent mIntent = new Intent(App.getAppContext(), LoginActivity.class);
         mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        ApplicationController.getAppContext().startActivity(mIntent);
+        App.getAppContext().startActivity(mIntent);
     }
 
     /**
@@ -196,7 +283,7 @@ public class UserManager extends BaseManager {
         {
 
             //RequestManager.EventBus.post(new FeedEvent(FeedEvent.Type.COMPLETED));
-            SessionData sessionData = new SessionData(ApplicationController.getAppContext());
+            SessionData sessionData = new SessionData(App.getAppContext());
             sessionData.setLoggedIn(false);
             sessionData.setTimeToLive(null);
             sessionData.setUserId(null);
@@ -204,9 +291,9 @@ public class UserManager extends BaseManager {
             sessionData.setAuthenticationTokenCreationDate(null);
             sessionData.apply();
 
-            Intent mIntent = new Intent(ApplicationController.getAppContext(), LoginActivity.class);
+            Intent mIntent = new Intent(App.getAppContext(), LoginActivity.class);
             mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            ApplicationController.getAppContext().startActivity(mIntent);
+            App.getAppContext().startActivity(mIntent);
         }
     }
 
@@ -258,7 +345,7 @@ public class UserManager extends BaseManager {
      *            User currently signed in
      * @return
      */
-    public AuthenticateUserEvent produceUserSignOutSuccessEvent(Login user)
+    public AuthenticateUserEvent produceUserSignOutSuccessEvent(APILoginResponse user)
     {
         return AuthenticateUserEvent.AuthenticateUserEventWithUserData(AuthenticateUserEvent.Type.LOGOUT_SUCCESS, user);
     }

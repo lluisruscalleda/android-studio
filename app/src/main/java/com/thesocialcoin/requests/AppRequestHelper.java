@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * mobdala-android-client
+ * thesocialcoin
  * <p/>
- * Created by Lluis Ruscalleda Abad on 26/01/15.
+ * Created by Lluis Ruscalleda Abad on 15/07/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class AppRequestHelper {

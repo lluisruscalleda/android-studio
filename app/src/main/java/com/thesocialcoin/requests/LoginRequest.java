@@ -6,10 +6,9 @@ import android.util.Log;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.thesocialcoin.App;
 import com.thesocialcoin.R;
-import com.thesocialcoin.controllers.ApplicationController;
-import com.thesocialcoin.models.pojos.Login;
-import com.thesocialcoin.models.shared_preferences.SessionData;
+import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.networking.core.RequestInterface;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
@@ -21,7 +20,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * Created by dcacenabes on 27/10/14.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 15/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class LoginRequest extends RequestInterface {
 
@@ -42,15 +44,10 @@ public class LoginRequest extends RequestInterface {
 
     public Request create(HashMap<String,String> params)
     {
-        this.context = ApplicationController.getAppContext();
+        this.context = App.getAppContext();
         this._params = params;
 
         URL = context.getResources().getString(R.string.bc_api_server_url)+"users/login";
-
-        String myVersion = android.os.Build.VERSION.RELEASE; // e.g. myVersion := "1.6"
-        int sdkVersion = android.os.Build.VERSION.SDK_INT;
-
-        SessionData sessionData = new SessionData(context);
 
 
         try {
@@ -66,7 +63,7 @@ public class LoginRequest extends RequestInterface {
 
         // JSON Post Request receiving GSON pojo model
         //LoginRequest ha de ser el POJO creado
-        OttoGsonPostRequest<Login> request = new OttoGsonPostRequest<Login>(RequestManager.EventBus, jsonObjectParams, AppRequestHelper.getInstance(context).getAuthorizationToken(), URL, Login.class, _requestErrorListener);
+        OttoGsonPostRequest<APILoginResponse> request = new OttoGsonPostRequest<APILoginResponse>(RequestManager.EventBus, jsonObjectParams, AppRequestHelper.getInstance(context).getAuthorizationToken(), URL, APILoginResponse.class, _requestErrorListener);
         request.setRetryPolicy(new DefaultRetryPolicy(RequestManager.REQUEST_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 

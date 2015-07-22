@@ -1,53 +1,87 @@
 package com.thesocialcoin.models.pojos;
 
 /**
- * Created by identitat on 13/11/14.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 15/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-import com.google.gson.annotations.Expose;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+
+@Parcel
 public class User extends iPojo {
 
     @Expose
-    private String realm;
+    private String id;
     @Expose
+    private String url;
+    @Expose
+    @SerializedName("name")
     private String username;
     @Expose
-    private String credentials;
-    @Expose
-    private String challenges;
+    private String gender;
     @Expose
     private String email;
     @Expose
-    private String emailVerified;
+    private String picture;
     @Expose
-    private String verificationToken;
+    @SerializedName("city_name")
+    private String city;
     @Expose
-    private String status;
+    @SerializedName("country_name")
+    private String country;
     @Expose
     private String created;
     @Expose
     private String lastUpdated;
+
     @Expose
-    private String id;
+    private String score;
     @Expose
-    private String projectId;
+    private String company;
+    @Expose
+    private String location;
+
+    public User() {}
 
     /**
      *
      * @return
-     * The realm
+     * The id
      */
-    public String getRealm() {
-        return realm;
+    public String getId() {
+        return id;
     }
 
     /**
      *
-     * @param realm
-     * The realm
+     * @param id
+     * The id
      */
-    public void setRealm(String realm) {
-        this.realm = realm;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     *
+     * @return
+     * The url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     *
+     * @param url
+     * The url
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**
@@ -71,37 +105,37 @@ public class User extends iPojo {
     /**
      *
      * @return
-     * The credentials
+     * The gender
      */
-    public String getCredentials() {
-        return credentials;
+    public String getGender() {
+        return gender;
     }
 
     /**
      *
-     * @param credentials
-     * The credentials
+     * @param gender
+     * The gender
      */
-    public void setCredentials(String credentials) {
-        this.credentials = credentials;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     /**
      *
      * @return
-     * The challenges
+     * The picture
      */
-    public String getChallenges() {
-        return challenges;
+    public String getPicture() {
+        return picture;
     }
 
     /**
      *
-     * @param challenges
-     * The challenges
+     * @param picture
+     * The picture
      */
-    public void setChallenges(String challenges) {
-        this.challenges = challenges;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     /**
@@ -125,55 +159,55 @@ public class User extends iPojo {
     /**
      *
      * @return
-     * The emailVerified
+     * The city
      */
-    public String getEmailVerified() {
-        return emailVerified;
+    public String getCity() {
+        return city;
     }
 
     /**
      *
-     * @param emailVerified
-     * The emailVerified
+     * @param city
+     * The city
      */
-    public void setEmailVerified(String emailVerified) {
-        this.emailVerified = emailVerified;
-    }
-
-    /**
-     *
-     * @return
-     * The verificationToken
-     */
-    public String getVerificationToken() {
-        return verificationToken;
-    }
-
-    /**
-     *
-     * @param verificationToken
-     * The verificationToken
-     */
-    public void setVerificationToken(String verificationToken) {
-        this.verificationToken = verificationToken;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     /**
      *
      * @return
-     * The status
+     * The country
      */
-    public String getStatus() {
-        return status;
+    public String getCountry() {
+        return country;
     }
 
     /**
      *
-     * @param status
-     * The status
+     * @param country
+     * The country
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    /**
+     *
+     * @return
+     * The score
+     */
+    public String getScore() {
+        return score;
+    }
+
+    /**
+     *
+     * @param score
+     * The score
+     */
+    public void setScore(String score) {
+        this.score = score;
     }
 
     /**
@@ -215,37 +249,37 @@ public class User extends iPojo {
     /**
      *
      * @return
-     * The id
+     * The company
      */
-    public String getId() {
-        return id;
+    public String getCompany() {
+        return company;
     }
 
     /**
      *
-     * @param id
-     * The id
+     * @param company
+     * The company
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     /**
      *
      * @return
-     * The projectId
+     * The location
      */
-    public String getProjectId() {
-        return projectId;
+    public String getLocation() {
+        return location;
     }
 
     /**
      *
-     * @param projectId
-     * The projectId
+     * @param location
+     * The location
      */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
 

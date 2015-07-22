@@ -6,24 +6,27 @@ import android.util.Log;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.thesocialcoin.App;
 import com.thesocialcoin.R;
-import com.thesocialcoin.controllers.ApplicationController;
-import com.thesocialcoin.models.pojos.Login;
+import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.core.RequestInterface;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.ottovolley.core.OttoGsonPostRequest;
 import com.thesocialcoin.utils.Codes;
+import com.thesocialcoin.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * Created by dcacenabes on 27/10/14.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 15/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class FacebookRequest extends RequestInterface {
 
@@ -43,39 +46,27 @@ public class FacebookRequest extends RequestInterface {
 
     public Request create(HashMap<String,String> params)
     {
-        this.context = ApplicationController.getAppContext();
+        this.context = App.getAppContext();
         this._params = params;
 
-        URL = context.getResources().getString(R.string.bc_api_server_url)+ "users/facebookAccess";
+        URL = context.getResources().getString(R.string.bc_api_server_url)+ "api-facebook-auth";
 
         String myVersion = android.os.Build.VERSION.RELEASE; // e.g. myVersion := "1.6"
         int sdkVersion = android.os.Build.VERSION.SDK_INT;
 
         SessionData sessionData = new SessionData(context);
-        JSONObject jsonParams = new JSONObject();
+        JSONObject requestJson = new JSONObject();
 
         try {
+            requestJson.put(Codes.reg_user_facebook_token, params.get("facebookToken"));
+            requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
 
-            jsonParams.put("email", params.get(Codes.EMAIL_VALUE));
-            jsonParams.put("facebookId", "_" + params.get(Codes.FACEBOOK_ID_VALUE));
-            jsonParams.put("projectId", params.get(Codes.PROJECT_IDENTIFIER_VALUE));
-            jsonParams.put("token", params.get(Codes.FACEBOOK_ACCESS_TOKEN_VALUE));
-
-            jsonObjectParams = new JSONObject();
-            jsonObjectParams.put("data", jsonParams);
-
-            String json = jsonObjectParams.toString();
-            Log.d(TAG, json);
+            Log.d(TAG, requestJson.toString());
         } catch (JSONException e){
             Log.e(TAG, e.toString());
         }
 
-        // JSON Post Request receiving GSON pojo model
-        //LoginRequest ha de ser el POJO creado
-        Map<String, String> headers = AppRequestHelper.getInstance(context).getAuthorizationToken();
-        String json = jsonParams.toString();
-        headers.put("data", json);
-        OttoGsonPostRequest<Login> request = new OttoGsonPostRequest<Login>(RequestManager.EventBus, jsonObjectParams, headers, URL, Login.class, _requestErrorListener);
+        OttoGsonPostRequest<APILoginResponse> request = new OttoGsonPostRequest<APILoginResponse>(RequestManager.EventBus, jsonObjectParams, null, URL, APILoginResponse.class, _requestErrorListener);
         request.setRetryPolicy(new DefaultRetryPolicy(RequestManager.REQUEST_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         return request;

@@ -27,15 +27,23 @@ import icepick.Icicle;
  * Created by Lluis Ruscalleda Abad on 15/07/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class BaseActivity extends Activity {
+
+/**
+ * Base Activity that performs various functions that all Activities in this app
+ * should do. Such as:
+ *
+ * Registering for the event bus. Setting the current site's theme. Finishing
+ * the Activity if the user logs out but the Activity requires authentication.
+ */
+
+public abstract class BaseActivity extends Activity {
 
     private static String TAG = BaseActivity.class.getSimpleName();
 
     private ProgressDialog pDialog;
     protected SessionData sessionData;
 
-    @Icicle
-    private int mActivityid;
+    @Icicle int mActivityid;
 
 
     protected LinearLayout no_connection_view;
@@ -118,6 +126,7 @@ public class BaseActivity extends Activity {
         lightType = FontUtils.getAppsBoldFont(this);
 
         Icepick.restoreInstanceState(this, savedInstanceState);
+
 
         getActionBar().setDisplayShowCustomEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(false);

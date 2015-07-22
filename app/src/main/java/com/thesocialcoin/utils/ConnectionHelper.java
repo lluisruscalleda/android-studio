@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.thesocialcoin.controllers.ApplicationController;
+import com.thesocialcoin.App;
 
 /**
  * thesocialcoin
@@ -16,7 +16,7 @@ public class ConnectionHelper {
 
     public static Boolean hasConnection(){
 
-        ConnectivityManager connectivity = (ConnectivityManager) ApplicationController.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivity = (ConnectivityManager) App.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null)
         {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
@@ -40,7 +40,7 @@ public class ConnectionHelper {
     }
 
     public static Boolean wifiConnection(){
-        ConnectivityManager connectivity = (ConnectivityManager) ApplicationController.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivity = (ConnectivityManager) App.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
             NetworkInfo info = connectivity.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (info != null) {
@@ -53,7 +53,7 @@ public class ConnectionHelper {
     }
 
     public static Boolean mobileConnection(){
-        ConnectivityManager connectivity = (ConnectivityManager) ApplicationController.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivity = (ConnectivityManager) App.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
             NetworkInfo info = connectivity.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (info != null) {

@@ -9,7 +9,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
-import com.thesocialcoin.controllers.ApplicationController;
+import com.thesocialcoin.App;
 
 import java.io.File;
 
@@ -28,7 +28,7 @@ public class ExternalCacheVolleyRequestQueue {
         // define cache folder
         File rootCache = context.getExternalCacheDir();
         if (rootCache == null) {
-            Log.w(ApplicationController.TAG, "Can't find External Cache Dir, switching to application specific cache directory");
+            Log.w(App.TAG, "Can't find External Cache Dir, switching to application specific cache directory");
             rootCache = context.getCacheDir();
         }
 

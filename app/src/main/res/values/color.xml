@@ -4,14 +4,23 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
-    <!-- Text -->
-    <color name="primary">#3172b3</color>
-    <color name="primary_dark">#3172b3</color>
-    <color name="accent">#ccc</color>
-    <color name="dark_green">#00825e</color>
+    <!-- Main colours -->
+    <color name="petrol">#00444f</color>
+    <color name="lake">#008c7f</color>
+    <color name="tomato">#ff2f37</color>
+    <color name="night">#1e2627</color>
+
+    <!-- Main colours palette -->
+    <color name="light_lake">#72c7bf</color>
+    <color name="soft_lake">#33a399</color>
+    <color name="middle_lake">#008c7f</color>
+    <color name="hard_lake">#008074</color>
+
+    <color name="soft_tomato">#ff2f74</color>
+    <color name="middle_grey">#bcbdbd</color>
+    <color name="light_grey">#f1f1f1</color>
 
     <!-- Other -->
-
     <color name="genre">#666666</color>
     <color name="year">#888888</color>
     <color name="list_divider">#d9d9d9</color>

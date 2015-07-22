@@ -51,7 +51,7 @@ public class Codes {
     public static final String reg_user_height = "height";
     public static final String reg_user_birthday = "birthday";
     public static final String reg_user_language = "language";
-    public static final String reg_user_facebook_token = "facebook_token";
+    public static final String reg_user_facebook_token = "access_token";
 
 
 

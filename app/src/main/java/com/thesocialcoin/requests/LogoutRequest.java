@@ -3,19 +3,20 @@ package com.thesocialcoin.requests;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.mobdala.acapulcoopen.R;
-import com.mobdala.application.models.pojo.Logout;
-import com.mobdala.application.models.pojo.MDBeacon;
-import com.mobdala.controllers.MyApplication;
-import com.mobdala.networking.core.RequestInterface;
-import com.mobdala.networking.core.RequestManager;
-import com.mobdala.networking.ottovolley.core.OttoGsonPostRequest;
+import com.thesocialcoin.R;
+import com.thesocialcoin.App;
+import com.thesocialcoin.models.pojos.Logout;
+import com.thesocialcoin.networking.core.RequestInterface;
+import com.thesocialcoin.networking.core.RequestManager;
+import com.thesocialcoin.networking.ottovolley.core.OttoGsonPostRequest;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
- * Created by dcacenabes on 28/10/14.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 15/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class LogoutRequest extends RequestInterface {
 
@@ -26,17 +27,13 @@ public class LogoutRequest extends RequestInterface {
     public LogoutRequest() {
 
     }
-    public Request create(List<MDBeacon> params)
-    {
-        return this.create();
-    }
     public Request create(HashMap<String,String> params) {
         return this.create();
     }
 
     public Request create(){
 
-        context = MyApplication.getAppContext();
+        context = App.getAppContext();
         URL = context.getResources().getString(R.string.bc_api_server_url)+"users/logout";
         // JSON Post Request receiving GSON pojo model
         OttoGsonPostRequest<Logout> request = new OttoGsonPostRequest<Logout>(RequestManager.EventBus, null, AppRequestHelper.getInstance(context).getAuthorizationToken(), URL, Logout.class, null);
