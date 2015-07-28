@@ -4,39 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.App;
-import com.thesocialcoin.R;
 import com.thesocialcoin.activities.LoginActivity;
 import com.thesocialcoin.events.AuthenticateUserEvent;
-import com.thesocialcoin.helpers.JsonTrimMessage;
 import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.models.pojos.Logout;
 import com.thesocialcoin.models.pojos.User;
-import com.thesocialcoin.models.pojos.iPojo;
 import com.thesocialcoin.models.shared_preferences.SessionData;
-import com.thesocialcoin.networking.SSL.SslHttpClient;
-import com.thesocialcoin.networking.SSL.SslHttpStack;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.AuthenticateUserVolleyError;
 import com.thesocialcoin.networking.error.LoginRequestFailed;
 import com.thesocialcoin.networking.error.RegisterRequestFailed;
-import com.thesocialcoin.networking.helpers.VolleyErrorHelper;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
+import com.thesocialcoin.requests.FacebookRequest;
 import com.thesocialcoin.requests.LoginRequest;
 import com.thesocialcoin.requests.RegisterRequest;
 import com.thesocialcoin.utils.Codes;
 import com.thesocialcoin.utils.Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -62,8 +47,7 @@ public class UserManager extends BaseManager {
     }
 
     private UserManager(Context context) {
-
-        RequestManager.EventBus.register(this);
+        super();
     }
 
 
@@ -124,83 +108,83 @@ public class UserManager extends BaseManager {
      *
      */
     public void authenticateWithFacebook(String facebookToken, final OnRegisterResponseListener listener) {
-        RequestQueue requestQueue = Volley.newRequestQueue(mContext, new SslHttpStack(new SslHttpClient(mContext, 44400)));
+//        /*RequestQueue requestQueue = Volley.newRequestQueue(mContext, new SslHttpStack(new SslHttpClient(mContext, 44400)));
+//
+//        JSONObject requestJson = new JSONObject();
+//        try {
+//            requestJson.put(Codes.reg_user_facebook_token, facebookToken);
+//            requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
+//        } catch (JSONException e1) {
+//            Log.e("JSONObject", "JSONException " + e1);
+//            e1.printStackTrace();
+//        }
+//
+//        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+//                (Request.Method.POST, mContext.getResources().getString(R.string.bc_api_server_url)+ "api-facebook-auth", requestJson.toString(), new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        listener.onRegisterSucceed((APILoginResponse) new iPojo().create(response.toString(), APILoginResponse.class));
+//                    }
+//                }, new Response.ErrorListener() {
+//
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        NetworkResponse response = error.networkResponse;
+//                        if(response != null && response.data != null){
+//                            String errorMsg = null;
+//                            switch(response.statusCode){
+//                                case 400:
+//                                    errorMsg = null;
+//                                    errorMsg = new String(error.getMessage());
+//                                    if(errorMsg != null) {
+//                                        errorMsg = JsonTrimMessage.trimMessage(errorMsg, "Error");
+//                                        listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
+//                                    }else{
+//                                        listener.onRegisterFailed("generic_server_down");
+//                                    }
+//                                    break;
+//                                default:
+//                                    errorMsg = VolleyErrorHelper.getMessage(error, mContext);
+//                                    listener.onRegisterFailed(errorMsg);
+//                                    break;
+//                            }
+//                        }else{
+//                            String errorMsg = null;
+//                            errorMsg = new String(error.getMessage());
+//                            if(errorMsg != null) {
+//                                if(JsonTrimMessage.trimMessage(errorMsg, "Error") == null){
+//                                    listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
+//                                }else {
+//                                    listener.onRegisterFailed("WS_ERROR_CODE_" + JsonTrimMessage.trimMessage(errorMsg, "Error"));
+//                                }
+//
+//                            }else{
+//                                listener.onRegisterFailed("generic_server_down");
+//                            }
+//                        }
+//
+//                    }
+//                }){
+//            @Override
+//            protected VolleyError parseNetworkError(VolleyError volleyError){
+//                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+//                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+//                    volleyError = error;
+//                }
+//
+//                return volleyError;
+//            }
+//        };
+//
+//        RequestManager.addToRequestQueue(jsObjRequest);*/
 
-        JSONObject requestJson = new JSONObject();
-        try {
-            requestJson.put(Codes.reg_user_facebook_token, facebookToken);
-            requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
-        } catch (JSONException e1) {
-            Log.e("JSONObject", "JSONException " + e1);
-            e1.printStackTrace();
-        }
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.POST, mContext.getResources().getString(R.string.bc_api_server_url)+ "api-facebook-auth", requestJson.toString(), new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        listener.onRegisterSucceed((APILoginResponse) new iPojo().create(response.toString(), APILoginResponse.class));
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        NetworkResponse response = error.networkResponse;
-                        if(response != null && response.data != null){
-                            String errorMsg = null;
-                            switch(response.statusCode){
-                                case 400:
-                                    errorMsg = null;
-                                    errorMsg = new String(error.getMessage());
-                                    if(errorMsg != null) {
-                                        errorMsg = JsonTrimMessage.trimMessage(errorMsg, "Error");
-                                        listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
-                                    }else{
-                                        listener.onRegisterFailed("generic_server_down");
-                                    }
-                                    break;
-                                default:
-                                    errorMsg = VolleyErrorHelper.getMessage(error, mContext);
-                                    listener.onRegisterFailed(errorMsg);
-                                    break;
-                            }
-                        }else{
-                            String errorMsg = null;
-                            errorMsg = new String(error.getMessage());
-                            if(errorMsg != null) {
-                                if(JsonTrimMessage.trimMessage(errorMsg, "Error") == null){
-                                    listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
-                                }else {
-                                    listener.onRegisterFailed("WS_ERROR_CODE_" + JsonTrimMessage.trimMessage(errorMsg, "Error"));
-                                }
-
-                            }else{
-                                listener.onRegisterFailed("generic_server_down");
-                            }
-                        }
-
-                    }
-                }){
-            @Override
-            protected VolleyError parseNetworkError(VolleyError volleyError){
-                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
-                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
-                    volleyError = error;
-                }
-
-                return volleyError;
-            }
-        };
-
-        RequestManager.addToRequestQueue(jsObjRequest);
-
-        /*postEvent(produceUserSignInStartEvent());
+        postEvent(produceUserSignInStartEvent());
 
         HashMap<String,String> requestJson = new HashMap<String,String> ();
         requestJson.put(Codes.reg_user_facebook_token, facebookToken);
         requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
 
-        RequestManager.addToRequestQueue(new LoginRequest().create(requestJson));*/
+        RequestManager.addToRequestQueue(new FacebookRequest().create(requestJson));
     }
 
     /**
@@ -214,7 +198,7 @@ public class UserManager extends BaseManager {
         Log.d(TAG, "Volley error : " + requestError.error.toString());
         Log.d(TAG, "Volley error : " + requestError.error.getMessage());
 
-        // post succes event
+        // post login failed event
         postEvent(produceUserSignInErrorEvent(new AuthenticateUserVolleyError(requestError.error)));
     }
     @Subscribe
@@ -223,7 +207,8 @@ public class UserManager extends BaseManager {
         Log.d(TAG, "Request end: " + response.requestId);
         if (response.response instanceof APILoginResponse)
         {
-
+            // post login success event
+            postEvent(produceUserSignInSuccessEvent());
 
             AppManager.getInstance(mContext).postLoginActions();
         }

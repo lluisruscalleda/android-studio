@@ -1,7 +1,5 @@
 package com.thesocialcoin.networking.volleyextensions;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -59,7 +57,6 @@ public class GsonPostRequest<T> extends JsonRequest<T> {
         try {
             String json = new String(
                     response.data, HttpHeaderParser.parseCharset(response.headers));
-            Log.d("RESPUESTA_A_LLAMADA", json);
             T parsedObject = gson.fromJson(json, clazz);
             return Response.success(parsedObject, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {

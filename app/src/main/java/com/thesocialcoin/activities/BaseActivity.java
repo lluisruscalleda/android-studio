@@ -11,9 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.squareup.otto.Subscribe;
 import com.thesocialcoin.controllers.AppManager;
-import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.FontUtils;
@@ -216,17 +214,5 @@ public abstract class BaseActivity extends Activity {
 //        mDrawerAdapter.notifyDataSetChanged();
 //    }
 
-
-    /**
-     * **********************************
-     * <p/>
-     * Event handling
-     */
-    @Subscribe
-    public void onAuthenticationEvent(AuthenticateUserEvent event) {
-        if (event.getType().equals(AuthenticateUserEvent.Type.ERROR)) {
-            goToLogin();
-        }
-    }
 
 }

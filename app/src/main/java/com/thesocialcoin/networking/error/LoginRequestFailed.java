@@ -1,6 +1,5 @@
 package com.thesocialcoin.networking.error;
 
-import com.android.volley.VolleyError;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestFailed;
 
 /**
@@ -8,7 +7,14 @@ import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestFailed;
  */
 public class LoginRequestFailed extends VolleyRequestFailed {
 
-    public LoginRequestFailed(int requestId, VolleyError error){
-        super(requestId, error);
+    private String msg;
+
+    public LoginRequestFailed(int requestId, VolleyErrorWrapper error){
+        super(requestId, error.getError());
+        this.msg = error.getErrorMessage();
+    }
+
+    public String getErrorMessage(){
+        return msg;
     }
 }

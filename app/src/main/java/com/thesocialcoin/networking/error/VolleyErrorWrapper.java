@@ -1,6 +1,8 @@
 package com.thesocialcoin.networking.error;
 
 import com.android.volley.VolleyError;
+import com.thesocialcoin.App;
+import com.thesocialcoin.networking.helpers.VolleyErrorHelper;
 
 /**
  * Created by lluisruscalleda on 19/10/14.
@@ -30,7 +32,7 @@ public abstract class VolleyErrorWrapper {
      * 		Message for the error.
      */
     public String getErrorMessage(){
-        return error.getMessage();
+        return (error.getMessage() != null)?error.getMessage(): VolleyErrorHelper.getErrorType(error, App.getAppContext());
     }
 
     public VolleyError getError(){

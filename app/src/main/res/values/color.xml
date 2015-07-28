@@ -20,6 +20,15 @@
     <color name="middle_grey">#bcbdbd</color>
     <color name="light_grey">#f1f1f1</color>
 
+
+    <!-- Social colours palette -->
+    <color name="facebook_blue">#48649b</color>
+    <color name="twitter_blue">#61aadb</color>
+    <color name="linkedin_blue">#1884bb</color>
+    <color name="gplus_red">#d73d32</color>
+
+
+
     <!-- Other -->
     <color name="genre">#666666</color>
     <color name="year">#888888</color>

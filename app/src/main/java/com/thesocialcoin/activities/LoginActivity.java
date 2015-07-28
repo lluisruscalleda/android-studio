@@ -51,11 +51,13 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
+import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
+import com.thesocialcoin.controllers.AppManager;
 import com.thesocialcoin.controllers.UserManager;
+import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.pojos.APILoginResponse;
-import com.thesocialcoin.networking.SSL.SslHttpClient;
-import com.thesocialcoin.networking.SSL.SslHttpStack;
+import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -108,6 +110,24 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private ProgressBar progressBar;
 
     private Activity mActivity;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()");
+
+        RequestManager.EventBus.register(this);
+        RequestManager.ResponseBuffer.stopAndProcess();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause()");
+
+        RequestManager.ResponseBuffer.startSaving();
+        RequestManager.EventBus.unregister(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +230,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                                     public void onResponse(JSONObject response) {
                                                         Log.d(TAG, "Token: " + response.toString());
                                                         ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
+                                                        showProgress(false);
                                                         authButton.setVisibility(View.VISIBLE);
                                                     }
                                                 }, new Response.ErrorListener() {
@@ -217,6 +238,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
                                                         ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
+                                                        showProgress(false);
                                                         authButton.setVisibility(View.VISIBLE);
                                                     }
                                                 });
@@ -648,5 +670,49 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         myAlertDialog.show();
     }
+
+
+
+    /**
+     * **********************************
+     * <p/>
+     * Event Subsctiption handling
+     */
+    @Subscribe
+    public void onAuthenticationEvent(AuthenticateUserEvent event) {
+        showProgress(false);
+        if (event.getType().equals(AuthenticateUserEvent.Type.ERROR)) {
+            authButton.setVisibility(View.VISIBLE);
+            ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
+            LoginManager.getInstance().logOut();
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.DELETE, "https://graph.facebook.com/v2.3/me/permissions?access_token=" + facebookAccessToken.getToken(), "", new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(TAG, "Token: " + response.toString());
+                            ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
+                            authButton.setVisibility(View.VISIBLE);
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
+                            authButton.setVisibility(View.VISIBLE);
+                        }
+                    });
+            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            // Access the RequestQueue through your singleton class.
+            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+            requestQueue.add(jsObjRequest);
+        }
+
+        if (event.getType().equals(AuthenticateUserEvent.Type.SUCCESS)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }
 
