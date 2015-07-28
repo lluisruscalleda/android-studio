@@ -16,6 +16,7 @@ import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.ConnectionHelper;
 import com.thesocialcoin.utils.LruBitmapCache;
 import com.thesocialcoin.utils.StringUtils;
+import com.thesocialcoin.utils.TestTools;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -61,7 +62,9 @@ public class App extends Application {
     public void onCreate(){
         Log.d(TAG, "onCreate()");
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        if(TestTools.TEST_ENABLED) {
+            Fabric.with(this, new Crashlytics());
+        }
 
         DatabaseSpec database = PersistenceConfig.registerSpec(/**db version**/1);
         //database.match(Foo.class, Bar.class);

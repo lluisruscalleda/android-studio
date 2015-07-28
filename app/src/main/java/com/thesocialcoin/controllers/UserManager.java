@@ -4,24 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.App;
+import com.thesocialcoin.R;
 import com.thesocialcoin.activities.LoginActivity;
 import com.thesocialcoin.events.AuthenticateUserEvent;
+import com.thesocialcoin.helpers.JsonTrimMessage;
 import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.models.pojos.Logout;
 import com.thesocialcoin.models.pojos.User;
+import com.thesocialcoin.models.pojos.iPojo;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.AuthenticateUserVolleyError;
 import com.thesocialcoin.networking.error.LoginRequestFailed;
 import com.thesocialcoin.networking.error.RegisterRequestFailed;
+import com.thesocialcoin.networking.helpers.VolleyErrorHelper;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
 import com.thesocialcoin.requests.FacebookRequest;
+import com.thesocialcoin.requests.GplusRequest;
 import com.thesocialcoin.requests.LoginRequest;
 import com.thesocialcoin.requests.RegisterRequest;
 import com.thesocialcoin.utils.Codes;
 import com.thesocialcoin.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -98,6 +113,26 @@ public class UserManager extends BaseManager {
         RequestManager.addToRequestQueue(new RegisterRequest().create(params));
     }
 
+
+    /**
+     * Authenticate the user using google plus credentials
+     *
+     * @param facebookToken
+     *            token account
+     * @param OnRegisterResponseListener
+     *            listener
+     *
+     */
+    public void authenticateWithGoogle(String facebookToken, final OnRegisterResponseListener listener)
+    {
+        postEvent(produceUserSignInStartEvent());
+
+        HashMap<String,String> requestJson = new HashMap<String,String> ();
+        requestJson.put(Codes.reg_user_facebook_token, facebookToken);
+        requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
+
+        RequestManager.addToRequestQueue(new GplusRequest().create(requestJson));
+    }
     /**
      * Authenticate the user using facebook credentials
      *
@@ -107,8 +142,9 @@ public class UserManager extends BaseManager {
      *            listener
      *
      */
-    public void authenticateWithFacebook(String facebookToken, final OnRegisterResponseListener listener) {
-//        /*RequestQueue requestQueue = Volley.newRequestQueue(mContext, new SslHttpStack(new SslHttpClient(mContext, 44400)));
+    public void authenticateWithFacebook(String facebookToken, final OnRegisterResponseListener listener)
+    {
+//        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
 //
 //        JSONObject requestJson = new JSONObject();
 //        try {
@@ -176,7 +212,7 @@ public class UserManager extends BaseManager {
 //            }
 //        };
 //
-//        RequestManager.addToRequestQueue(jsObjRequest);*/
+//        RequestManager.addToRequestQueue(jsObjRequest);
 
         postEvent(produceUserSignInStartEvent());
 
@@ -189,7 +225,7 @@ public class UserManager extends BaseManager {
 
     /**
      *
-     * Login response received subscription
+     * Login request error response received subscription
      */
     @Subscribe
     public void onHttpErrorResponseReceived(LoginRequestFailed requestError)
@@ -201,15 +237,26 @@ public class UserManager extends BaseManager {
         // post login failed event
         postEvent(produceUserSignInErrorEvent(new AuthenticateUserVolleyError(requestError.error)));
     }
+
+    /**
+     *
+     * Login request success response received subscription
+     */
     @Subscribe
     public void onLoginResponseReceived(VolleyRequestSuccess<APILoginResponse> response)
     {
         Log.d(TAG, "Request end: " + response.requestId);
         if (response.response instanceof APILoginResponse)
         {
+            // Save user data to session
+            sessionData.setSessionToken(response.response.getToken());
+            sessionData.setUserData(response.response.getUser().serialize());
+            sessionData.apply();
+
             // post login success event
             postEvent(produceUserSignInSuccessEvent());
 
+            // post login success actions
             AppManager.getInstance(mContext).postLoginActions();
         }
     }

@@ -10,7 +10,8 @@
     <!--Style del Login de facebook-->
     <style name="FacebookLoginButton">
         <item name="android:textSize">14sp</item>
-        <item name="android:background">@drawable/ic_facebook</item>
+        <item name="android:background">@drawable/fb_logo_white</item>
         <item name="android:layout_gravity">center_horizontal</item>
+
     </style>
 </resources>

@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,19 +16,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -47,13 +38,11 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.plus.Plus;
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
-import com.thesocialcoin.controllers.AppManager;
 import com.thesocialcoin.controllers.UserManager;
 import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.pojos.APILoginResponse;
@@ -74,7 +63,7 @@ import java.util.List;
  * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
-public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, View.OnClickListener, UserManager.OnRegisterResponseListener  {
+public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, UserManager.OnRegisterResponseListener  {
 
     private final static String TAG = "LoginActivity";
 
@@ -95,14 +84,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private static final List<String> PERMISSIONS = Arrays.asList("user_status, email");
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
     private View mProgressView;
-    private View mEmailLoginFormView;
-    private SignInButton mPlusSignInButton;
-    private View mSignOutButtons;
+//    private View mEmailLoginFormView;
+    private RelativeLayout mPlusSignInButton;
+//    private View mSignOutButtons;
     private View mLoginFormView;
-    private LoginButton authButton;
+    private RelativeLayout authButton;
     CallbackManager callbackManager;
     private AccessToken facebookAccessToken;
     //private UiLifecycleHelper uiHelper;
@@ -137,13 +124,11 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         //init facebook sdk and crashlitics
         FacebookSdk.sdkInitialize(getApplicationContext());
-        //Crashlytics.start(this);
-
 
         setContentView(R.layout.activity_login);
 
         // Find the Google+ sign in button.
-        mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
+        mPlusSignInButton = (RelativeLayout) findViewById(R.id.btn_gplus_auth);
         if (supportsGooglePlayServices()) {
             // Set a listener to connect the user when the G+ button is clicked.
             mPlusSignInButton.setOnClickListener(new OnClickListener() {
@@ -160,47 +145,20 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         }
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
 
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        mEmailLoginFormView = findViewById(R.id.email_login_form);
-        mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
 
         callbackManager = CallbackManager.Factory.create();
-        authButton = (LoginButton) findViewById(R.id.facebook_auth_button);
-//        uiHelper = new UiLifecycleHelper(this, callback);
-//        uiHelper.onCreate(savedInstanceState);
-        authButton.setReadPermissions(PERMISSIONS);
+        authButton = (RelativeLayout) findViewById(R.id.btn_facebook_auth);
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showProgress(true);
+                LoginManager.getInstance().logInWithReadPermissions(mActivity, PERMISSIONS);
             }
         });
-        authButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
@@ -324,29 +282,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         }
     }
 */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.facebook_auth_button:
-                //jumpToRegisterPage();
-                break;
-            case R.id.email_sign_in_button:
-                // hide virtual keyboard
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(),
-                        InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                attemptLogin();
-                break;
-            default:
-                break;
-        }
-    }
 
-    /**
+   /* *//**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
-     */
+     *//*
     public void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -392,7 +333,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-    }
+    }*/
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -442,21 +383,22 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     @Override
     protected void onPlusClientSignIn() {
+        UserManager.getInstance(LoginActivity.this).authenticateWithGoogle(String.valueOf(Plus.AccountApi.getAccountName(getPlusClient())), LoginActivity.this);
         //Set up sign out and disconnect buttons.
-        Button signOutButton = (Button) findViewById(R.id.plus_sign_out_button);
-        signOutButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-            }
-        });
-        Button disconnectButton = (Button) findViewById(R.id.plus_disconnect_button);
-        disconnectButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                revokeAccess();
-            }
-        });
+//        Button signOutButton = (Button) findViewById(R.id.plus_sign_out_button);
+//        signOutButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                signOut();
+//            }
+//        });
+//        Button disconnectButton = (Button) findViewById(R.id.plus_disconnect_button);
+//        disconnectButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                revokeAccess();
+//            }
+//        });
     }
 
     @Override
@@ -469,9 +411,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         //TODO: Update this logic to also handle the user logged in by email.
         boolean connected = getPlusClient().isConnected();
 
-        mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
+//        mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
         mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
-        mEmailLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
+//        mEmailLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -522,7 +464,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             cursor.moveToNext();
         }
 
-        addEmailsToAutoComplete(emails);
+        //addEmailsToAutoComplete(emails);
     }
 
     @Override
@@ -546,14 +488,14 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
 
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
+//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+//        ArrayAdapter<String> adapter =
+//                new ArrayAdapter<String>(LoginActivity.this,
+//                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+//
+//        mEmailView.setAdapter(adapter);
+//    }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -600,8 +542,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
             }
         }
 

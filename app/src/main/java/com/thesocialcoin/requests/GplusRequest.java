@@ -28,9 +28,9 @@ import java.util.HashMap;
  * Created by Lluis Ruscalleda Abad on 15/07/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class FacebookRequest extends RequestInterface {
+public class GplusRequest extends RequestInterface {
 
-    protected static String TAG = FacebookRequest.class.getSimpleName();
+    protected static String TAG = GplusRequest.class.getSimpleName();
 
     private static JSONObject jsonObjectParams;
     private static String URL;
@@ -40,7 +40,7 @@ public class FacebookRequest extends RequestInterface {
 
     private HashMap<String,String> _params;
 
-    public FacebookRequest() {
+    public GplusRequest() {
         _requestErrorListener = OttoErrorListenerFactory.LOGIN_ERROR_LISTENER;
     }
 
@@ -49,7 +49,7 @@ public class FacebookRequest extends RequestInterface {
         this.context = App.getAppContext();
         this._params = params;
 
-        URL = context.getResources().getString(R.string.bc_api_server_url)+ context.getResources().getString(R.string.bc_api_facebook_auth_endpoint);
+        URL = context.getResources().getString(R.string.bc_api_server_url)+ context.getResources().getString(R.string.bc_api_google_auth_endpoint);
 
         String myVersion = android.os.Build.VERSION.RELEASE; // e.g. myVersion := "1.6"
         int sdkVersion = android.os.Build.VERSION.SDK_INT;

@@ -283,4 +283,16 @@ public class User extends iPojo {
     }
 
 
+    public static User create(String serializedData){
+
+        iPojo<User> jsonObject = new iPojo<User>();
+        return (User) jsonObject.create(serializedData, User.class);
+    }
+
+    public String serialize(){
+
+        iPojo<User> jsonObject = new iPojo<User>();
+        return jsonObject.serialize(this);
+    }
+
 }

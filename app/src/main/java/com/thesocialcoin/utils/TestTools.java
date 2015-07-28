@@ -8,5 +8,5 @@ package com.thesocialcoin.utils;
  */
 public class TestTools {
 
-    public static final boolean TEST_ENABLED = false;
+    public static final boolean TEST_ENABLED = true;
 }

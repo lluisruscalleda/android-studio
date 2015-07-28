@@ -8,4 +8,11 @@
 
     <string name="bc_facebook_id">1409693419325732</string>
 
+    <!-- API endpoints -->
+    <string name="bc_api_google_auth_endpoint">api-google-auth</string>
+    <string name="bc_api_facebook_auth_endpoint">api-facebook-auth</string>
+    <string name="bc_api_linkedin_auth_endpoint">api-linkedin-auth</string>
+    <string name="bc_api_user_registration_endpoint">api-registration</string>
+    <string name="bc_api_login_endpoint">api-token-auth</string>
+
 </resources>

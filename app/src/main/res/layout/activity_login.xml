@@ -5,7 +5,7 @@
               android:gravity="center_horizontal"
               android:orientation="vertical"
               tools:context=".LoginActivity"
-              android:background="@drawable/login_pic_bg">
+              android:background="@drawable/bg_activity_login">
 
     <!-- Login progress -->
     <ProgressBar
@@ -19,50 +19,86 @@
     <RelativeLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp">
         <LinearLayout
             android:id="@+id/row_social_top"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
             android:orientation="horizontal"
             android:layout_weight="1">
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/facebook_auth_button"
-                style="@style/FacebookLoginButton"
-                xmlns:fb="http://schemas.android.com/apk/res-auto"
-                android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                fb:login_text="@string/log_in_with_facebook"
-                fb:logout_text=""/>
             <RelativeLayout
-                android:id="@+id/twitter_auth_button"
+                android:id="@+id/btn_facebook_auth"
                 android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_weight="1"/>
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/com_facebook_blue"
+                android:gravity="center_vertical|center_horizontal">
+
+                <ImageButton
+                    android:id="@+id/facebook_sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_logo_white"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="false"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/btn_twitter_auth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#61aadb"
+                android:gravity="center_vertical">
+                <ImageButton
+                    android:id="@+id/twitter_sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/twitter_logo_white"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="false"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/row_social_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
             android:orientation="horizontal"
             android:layout_weight="1"
             android:layout_below="@id/row_social_top">
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/plus_sign_in_button"
-                android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_weight="1"/>
-
             <RelativeLayout
-                android:id="@+id/linkedin_auth_button"
+                android:id="@+id/btn_gplus_auth"
                 android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_weight="1"/>
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#d73d32"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/plus_sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/google_plus_logo"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="false"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/btn_linkedin_auth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#1884bb"
+                android:gravity="center_vertical">
+                <ImageButton
+                    android:id="@+id/linkedin_sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linkedin_logo_white"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="false"/>
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 
