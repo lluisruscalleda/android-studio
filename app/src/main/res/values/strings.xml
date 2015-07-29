@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
 
 
+    <!-- Login Activity -->
+    <string name="login_activity_main_phrase">Login to start creating a better world</string>
 
 </resources>
