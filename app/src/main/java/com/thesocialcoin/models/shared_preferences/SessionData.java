@@ -25,49 +25,54 @@ public class SessionData {
     private static final String SHARED_PREFERENCES_FILE = "thesocialcoin_session_data";
 
     /** The Constant LOGGED_IN. */
-    private static final String LOGGED_IN = "logged_in";
+    private static final String KEY_LOGGED_IN = "logged_in";
 
     /** The Constant USER_ID. */
-    private static final String USER_ID = "user_id";
+    private static final String KEY_USER_ID = "user_id";
     /** The Constant EMAIL. */
-    private static final String USER_EMAIL = "email";
+    private static final String KEY_USER_EMAIL = "email";
     /** The Constant USER_USERNAME. */
-    private static final String USER_USERNAME = "user_username";
+    private static final String KEY_USER_USERNAME = "user_username";
     /** The Constant USER_FIRSTNAME. */
-    private static final String USER_FIRSTNAME = "user_firstname";
+    private static final String KEY_USER_FIRSTNAME = "user_firstname";
     /** The Constant USER_LASTNAME. */
-    private static final String USER_LASTNAME = "user_lastname";
+    private static final String KEY_USER_LASTNAME = "user_lastname";
     /** The Constant USER_ROLE. */
-    private static final String USER_ROLE = "user_role";
+    private static final String KEY_USER_ROLE = "user_role";
     /** The Constant USER_IMAGE. */
-    private static final String USER_IMAGE = "user_image";
+    private static final String KEY_USER_IMAGE = "user_image";
 
     /** The Constant PASSWORD. */
-    private static final String PASSWORD = "password";
+    private static final String KEY_PASSWORD = "password";
 
     /** The Constant SESSIONID. */
-    private static final String SESSIONID = "sessid";
+    private static final String KEY_SESSIONID = "sessid";
 
     /** The Constant SESSION_TOKEN. */
-    private static final String SESSION_TOKEN = "session_token";
+    private static final String KEY_SESSION_TOKEN = "session_token";
 
     /** The Constant SESSION_NAME. */
-    private static final String SESSION_NAME = "session_name";
+    private static final String KEY_SESSION_NAME = "session_name";
 
     /** The Constant USER_DATA. */
-    private static final String USER_DATA = "user_data";
+    private static final String KEY_USER_DATA = "user_data";
 
     /** The Constant DEVICE_ID. */
-    private static final String DEVICE_ID = "device_id";
+    private static final String KEY_DEVICE_ID = "device_id";
 
     /** The Constant CLIENT_ID. */
-    private static final String CLIENT_ID = "client_id";
+    private static final String KEY_CLIENT_ID = "client_id";
 
     /** The Constant EXPIRATION_DATE. */
-    private static final String CREATION_DATE= "creation_date";
+    private static final String KEY_CREATION_DATE= "creation_date";
 
     /** The Constant TTL. */
-    private static final String TTL= "time_to_live";
+    private static final String KEY_TTL= "time_to_live";
+
+    /** The Constant KEY_GOOGLE_SESSION_TOKEN. */
+    private static final String KEY_GOOGLE_SESSION_TOKEN= "google_session_token";
+    /** The Constant KEY_GOOGLE_ACCOUNT_NAME. */
+    private static final String KEY_GOOGLE_ACCOUNT_NAME= "google_account_name";
 
 
     /**
@@ -85,7 +90,7 @@ public class SessionData {
      * @return true, if is logged in
      */
     public boolean isLoggedIn() {
-        return mPreferences.getBoolean(LOGGED_IN, false);
+        return mPreferences.getBoolean(KEY_LOGGED_IN, false);
     }
 
     /**
@@ -94,7 +99,7 @@ public class SessionData {
      * @param loggedIn the new logged in
      */
     public void setLoggedIn(boolean loggedIn) {
-        getEditor().putBoolean(LOGGED_IN, loggedIn);
+        getEditor().putBoolean(KEY_LOGGED_IN, loggedIn);
     }
 
     /**
@@ -103,7 +108,7 @@ public class SessionData {
      * @return the user id
      */
     public String getUserId() {
-        return mPreferences.getString(USER_ID, null);
+        return mPreferences.getString(KEY_USER_ID, null);
     }
 
     /**
@@ -112,7 +117,7 @@ public class SessionData {
      * @param userId the new user id
      */
     public void setUserId(String userId) {
-        getEditor().putString(USER_ID, userId);
+        getEditor().putString(KEY_USER_ID, userId);
     }
 
     /**
@@ -121,7 +126,7 @@ public class SessionData {
      * @return the user email
      */
     public String getUserEmail() {
-        return mPreferences.getString(USER_EMAIL, null);
+        return mPreferences.getString(KEY_USER_EMAIL, null);
     }
 
     /**
@@ -130,38 +135,38 @@ public class SessionData {
      * @param userEmail the new user email
      */
     public void setUserEmail(String userEmail) {
-        getEditor().putString(USER_EMAIL, userEmail);
+        getEditor().putString(KEY_USER_EMAIL, userEmail);
     }
 
     public String getUserUsername() {
-        return mPreferences.getString(USER_USERNAME, null);
+        return mPreferences.getString(KEY_USER_USERNAME, null);
     }
     public void setUserUsername(String userName) {
-        getEditor().putString(USER_USERNAME, userName);
+        getEditor().putString(KEY_USER_USERNAME, userName);
     }
     public String getUserFirstname() {
-        return mPreferences.getString(USER_FIRSTNAME, null);
+        return mPreferences.getString(KEY_USER_FIRSTNAME, null);
     }
     public void setUserFirstname(String userFirstName) {
-        getEditor().putString(USER_FIRSTNAME, userFirstName);
+        getEditor().putString(KEY_USER_FIRSTNAME, userFirstName);
     }
     public String getUserLastname() {
-        return mPreferences.getString(USER_LASTNAME, null);
+        return mPreferences.getString(KEY_USER_LASTNAME, null);
     }
     public void setUserLastname(String userLastName) {
-        getEditor().putString(USER_LASTNAME, userLastName);
+        getEditor().putString(KEY_USER_LASTNAME, userLastName);
     }
     public String getUserRole() {
-        return mPreferences.getString(USER_ROLE, null);
+        return mPreferences.getString(KEY_USER_ROLE, null);
     }
     public void setUserRole(String userRole) {
-        getEditor().putString(USER_ROLE, userRole);
+        getEditor().putString(KEY_USER_ROLE, userRole);
     }
     public String getUserImage() {
-        return mPreferences.getString(USER_IMAGE, null);
+        return mPreferences.getString(KEY_USER_IMAGE, null);
     }
     public void setUserImage(String userImage) {
-        getEditor().putString(USER_IMAGE, userImage);
+        getEditor().putString(KEY_USER_IMAGE, userImage);
     }
 
     /**
@@ -170,7 +175,7 @@ public class SessionData {
      * @return the password
      */
     public String getPassword() {
-        return mPreferences.getString(PASSWORD, null);
+        return mPreferences.getString(KEY_PASSWORD, null);
     }
 
     /**
@@ -179,7 +184,7 @@ public class SessionData {
      * @param password the new password
      */
     public void setPassword(String password) {
-        getEditor().putString(PASSWORD, password);
+        getEditor().putString(KEY_PASSWORD, password);
     }
 
     /**
@@ -188,7 +193,7 @@ public class SessionData {
      * @return the session id
      */
     public String getSessionId() {
-        return mPreferences.getString(SESSIONID, null);
+        return mPreferences.getString(KEY_SESSIONID, null);
     }
 
     /**
@@ -197,7 +202,7 @@ public class SessionData {
      * @param sessionId the new session id
      */
     public void setSessionId(String sessionId) {
-        getEditor().putString(SESSIONID, sessionId);
+        getEditor().putString(KEY_SESSIONID, sessionId);
     }
 
     /**
@@ -206,7 +211,7 @@ public class SessionData {
      * @return the session token
      */
     public String getSessionToken() {
-        return mPreferences.getString(SESSION_TOKEN, null);
+        return mPreferences.getString(KEY_SESSION_TOKEN, null);
     }
 
     /**
@@ -215,7 +220,7 @@ public class SessionData {
      * @param sessionToken the new session token
      */
     public void setSessionToken(String sessionToken) {
-        getEditor().putString(SESSION_TOKEN, sessionToken);
+        getEditor().putString(KEY_SESSION_TOKEN, sessionToken);
     }
 
     /**
@@ -224,7 +229,7 @@ public class SessionData {
      * @return the session name
      */
     public String getSessionName() {
-        return mPreferences.getString(SESSION_NAME, null);
+        return mPreferences.getString(KEY_SESSION_NAME, null);
     }
 
     /**
@@ -233,7 +238,7 @@ public class SessionData {
      * @param sessionName the new session name
      */
     public void setSessionName(String sessionName) {
-        getEditor().putString(SESSION_NAME, sessionName);
+        getEditor().putString(KEY_SESSION_NAME, sessionName);
     }
 
     /**
@@ -242,7 +247,7 @@ public class SessionData {
      * @return the user data
      */
     public String getUserData() {
-        return mPreferences.getString(USER_DATA, null);
+        return mPreferences.getString(KEY_USER_DATA, null);
     }
 
     /**
@@ -251,7 +256,7 @@ public class SessionData {
      * @param userData the new user data
      */
     public void setUserData(String userData) {
-        getEditor().putString(USER_DATA, userData);
+        getEditor().putString(KEY_USER_DATA, userData);
     }
 
     /**
@@ -260,7 +265,7 @@ public class SessionData {
      * @return the creation date of the authorization token
      */
     public Date getAuthenticationTokenCreationDate() {
-        return this.stringToDate(mPreferences.getString(CREATION_DATE, null));
+        return this.stringToDate(mPreferences.getString(KEY_CREATION_DATE, null));
     }
 
     /**
@@ -270,9 +275,9 @@ public class SessionData {
      */
     public void setAuthenticationTokenCreationDate(Date date) {
         if(date == null ){
-            getEditor().putString(CREATION_DATE, "");
+            getEditor().putString(KEY_CREATION_DATE, "");
         }else{
-            getEditor().putString(CREATION_DATE, this.dateToString(date));
+            getEditor().putString(KEY_CREATION_DATE, this.dateToString(date));
         }
 
     }
@@ -283,7 +288,7 @@ public class SessionData {
      * @return the time to live of the session
      */
     public String getTimeToLive() {
-        return mPreferences.getString(TTL, null);
+        return mPreferences.getString(KEY_TTL, null);
     }
 
     /**
@@ -292,8 +297,47 @@ public class SessionData {
      * @param timeToLive new user data
      */
     public void setTimeToLive(String timeToLive) {
-        getEditor().putString(TTL, timeToLive);
+        getEditor().putString(KEY_TTL, timeToLive);
     }
+
+
+    /**
+     * Gets the google session token of the session
+     *
+     * @return the google session token of the session
+     */
+    public String getGoogleSessionToken() {
+        return mPreferences.getString(KEY_GOOGLE_SESSION_TOKEN, null);
+    }
+
+    /**
+     * Sets the google session token of the session.
+     *
+     * @param googleSessionToken new google session token
+     */
+    public void setGoogleSessionToken(String googleSessionToken) {
+        getEditor().putString(KEY_GOOGLE_SESSION_TOKEN, googleSessionToken);
+    }
+
+    /**
+     * Gets the google account name of the session
+     *
+     * @return the google account name of the session
+     */
+    public String getGoogleAccountName() {
+        return mPreferences.getString(KEY_GOOGLE_ACCOUNT_NAME, null);
+    }
+
+    /**
+     * Sets the google account name of the session.
+     *
+     * @param googleAccountName new google account name
+     */
+    public void setGoogleAccountName(String googleAccountName) {
+        getEditor().putString(KEY_GOOGLE_ACCOUNT_NAME, googleAccountName);
+    }
+
+
 
     /**
      * Gets the expiration date of the session
@@ -342,7 +386,7 @@ public class SessionData {
      * @return the client id
      */
     public String getClientId() {
-        return mPreferences.getString(CLIENT_ID, null);
+        return mPreferences.getString(KEY_CLIENT_ID, null);
     }
 
     /**
@@ -351,7 +395,7 @@ public class SessionData {
      * @param clientId the client id
      */
     public void setClientId(String clientId) {
-        getEditor().putString(CLIENT_ID, clientId);
+        getEditor().putString(KEY_CLIENT_ID, clientId);
     }
 
     /**
@@ -360,7 +404,7 @@ public class SessionData {
      * @return the device id
      */
     public String getDeviceId() {
-        return mPreferences.getString(DEVICE_ID, null);
+        return mPreferences.getString(KEY_DEVICE_ID, null);
     }
 
     /**
@@ -369,7 +413,7 @@ public class SessionData {
      * @param deviceId the device id
      */
     public void setDeviceId(String deviceId) {
-        getEditor().putString(DEVICE_ID, deviceId);
+        getEditor().putString(KEY_DEVICE_ID, deviceId);
     }
 
     public void doLogout(){

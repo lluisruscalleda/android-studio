@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="bc_app_bold_font">Montserrat-Bold.ttf</string>
+    <string name="bc_app_regular_font">Montserrat-Regular.ttf</string>
+
     <string name="bc_db_path">/data/data/ad.andorra.turismeactiu/databases/db.sqlite</string>
     <string name="bc_api_server_url">http://151.80.235.34:8080/</string>
     <string name="bc_session_preferences_filename">thesocialcoin_session_data</string>
     <string name="bc_project_preferences_filename">thesocialcoin_project_data</string>
 
-    <!-- Social API keys -->
     <string name="bc_facebook_id">1409693419325732</string>
-    <string name="bc_facebook_id">1409693419325732</string>
-    <string name="bc_facebook_id">1409693419325732</string>
+    <string name="bc_google_client_id">316699985341-e79nrec7r0pe4bsbsoiidtoi0ark615k.apps.googleusercontent.com</string>
 
-
-    <!-- The Social Coin API endpoints -->
+    <!-- API endpoints -->
     <string name="bc_api_google_auth_endpoint">api-google-auth</string>
     <string name="bc_api_facebook_auth_endpoint">api-facebook-auth</string>
     <string name="bc_api_linkedin_auth_endpoint">api-linkedin-auth</string>

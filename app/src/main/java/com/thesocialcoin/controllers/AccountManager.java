@@ -2,6 +2,7 @@ package com.thesocialcoin.controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
@@ -29,10 +30,15 @@ import java.util.HashMap;
 /**
  * Created by lluisruscalleda on 20/11/14.
  */
-public class UserManager extends BaseManager {
+public class AccountManager extends BaseManager {
 
-    private static String TAG = UserManager.class.getSimpleName();
-    private static UserManager instance = null;
+    public enum LoginType {
+        NONE, AWS, FACEBOOK, GOOGLE
+
+    };
+
+    private static String TAG = AccountManager.class.getSimpleName();
+    private static AccountManager instance = null;
 
 
     /*
@@ -47,15 +53,15 @@ public class UserManager extends BaseManager {
         public void onRegisterFailed(String error);
     }
 
-    private UserManager(Context context) {
+    private AccountManager(Context context) {
         super();
     }
 
 
-    public static UserManager getInstance(Context context) {
+    public static AccountManager getInstance(Context context) {
         if (instance == null) {
             mContext = context;
-            instance = new UserManager(mContext);
+            instance = new AccountManager(mContext);
         }
 
         return instance;
@@ -130,76 +136,6 @@ public class UserManager extends BaseManager {
      */
     public void authenticateWithFacebook(String facebookToken, final OnRegisterResponseListener listener)
     {
-//        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-//
-//        JSONObject requestJson = new JSONObject();
-//        try {
-//            requestJson.put(Codes.reg_user_facebook_token, facebookToken);
-//            requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
-//        } catch (JSONException e1) {
-//            Log.e("JSONObject", "JSONException " + e1);
-//            e1.printStackTrace();
-//        }
-//
-//        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-//                (Request.Method.POST, mContext.getResources().getString(R.string.bc_api_server_url)+ "api-facebook-auth", requestJson.toString(), new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        listener.onRegisterSucceed((APILoginResponse) new iPojo().create(response.toString(), APILoginResponse.class));
-//                    }
-//                }, new Response.ErrorListener() {
-//
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        NetworkResponse response = error.networkResponse;
-//                        if(response != null && response.data != null){
-//                            String errorMsg = null;
-//                            switch(response.statusCode){
-//                                case 400:
-//                                    errorMsg = null;
-//                                    errorMsg = new String(error.getMessage());
-//                                    if(errorMsg != null) {
-//                                        errorMsg = JsonTrimMessage.trimMessage(errorMsg, "Error");
-//                                        listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
-//                                    }else{
-//                                        listener.onRegisterFailed("generic_server_down");
-//                                    }
-//                                    break;
-//                                default:
-//                                    errorMsg = VolleyErrorHelper.getMessage(error, mContext);
-//                                    listener.onRegisterFailed(errorMsg);
-//                                    break;
-//                            }
-//                        }else{
-//                            String errorMsg = null;
-//                            errorMsg = new String(error.getMessage());
-//                            if(errorMsg != null) {
-//                                if(JsonTrimMessage.trimMessage(errorMsg, "Error") == null){
-//                                    listener.onRegisterFailed("WS_ERROR_CODE_" + errorMsg);
-//                                }else {
-//                                    listener.onRegisterFailed("WS_ERROR_CODE_" + JsonTrimMessage.trimMessage(errorMsg, "Error"));
-//                                }
-//
-//                            }else{
-//                                listener.onRegisterFailed("generic_server_down");
-//                            }
-//                        }
-//
-//                    }
-//                }){
-//            @Override
-//            protected VolleyError parseNetworkError(VolleyError volleyError){
-//                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
-//                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
-//                    volleyError = error;
-//                }
-//
-//                return volleyError;
-//            }
-//        };
-//
-//        RequestManager.addToRequestQueue(jsObjRequest);
-
         postEvent(produceUserSignInStartEvent());
 
         HashMap<String,String> requestJson = new HashMap<String,String> ();
@@ -235,9 +171,7 @@ public class UserManager extends BaseManager {
         if (response.response instanceof APILoginResponse)
         {
             // Save user data to session
-            sessionData.setSessionToken(response.response.getToken());
-            sessionData.setUserData(response.response.getUser().serialize());
-            sessionData.apply();
+            saveUserSession(response.response.getToken(), response.response.getUser());
 
             // post login success event
             postEvent(produceUserSignInSuccessEvent());
@@ -253,7 +187,7 @@ public class UserManager extends BaseManager {
         Log.d(TAG, "Volley error : " + requestError.error.toString());
         Log.d(TAG, "Volley error : " + requestError.error.getMessage());
 
-        // post succes event
+        // post register failed event
         postEvent(produceUserSignInErrorEvent(new AuthenticateUserVolleyError(requestError.error)));
     }
 
@@ -380,5 +314,42 @@ public class UserManager extends BaseManager {
     {
         return AuthenticateUserEvent.AuthenticateUserEventWithError(AuthenticateUserEvent.Type.LOGOUT_ERROR, error);
     }
+
+
+
+    /**
+     * Some Session helper functions
+     */
+
+    public static void saveUserSession(String apiToken, User userData) {
+        sessionData.setSessionToken(apiToken);
+        sessionData.setUserData(userData.serialize());
+        sessionData.apply();
+    }
+    public static void removeUserSession(){
+        sessionData.setSessionToken(null);
+        sessionData.setUserData(null);
+        sessionData.apply();
+    }
+
+    public static String getUserSession(){
+        return sessionData.getSessionToken();
+    }
+
+    public static void setGoogleAccountName(String accountName){
+        sessionData.setGoogleAccountName(accountName);
+        sessionData.apply();
+    }
+    public static String getGoogleAccountName(){
+        return sessionData.getGoogleAccountName();
+    }
+    public static void setGoogleSessionToken(String token){
+        sessionData.setGoogleSessionToken(token);
+        sessionData.apply();
+    }
+    public static String getGoogleSessionToken(){
+        return sessionData.getGoogleSessionToken();
+    }
+
 
 }

@@ -10,16 +10,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.plus.Plus;
-
+import com.thesocialcoin.controllers.AccountManager;
+import com.thesocialcoin.tasks.RefreshCredentialsTask;
+import com.thesocialcoin.tasks.iRefreshCredentialsTask;
 
 /**
  * A base class to wrap communication with the Google Play Services PlusClient.
  */
 public abstract class PlusBaseActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, iRefreshCredentialsTask<String> {
 
     private static final String TAG = PlusBaseActivity.class.getSimpleName();
 
@@ -39,6 +40,11 @@ public abstract class PlusBaseActivity extends AppCompatActivity
     // attempt has been made, this is non-null.
     // If this IS null, then the connect method is still running.
     private ConnectionResult mConnectionResult;
+
+    // This is the user account name
+    private String mAccountName;
+
+    private String mSessionCookie;
 
     /**
      * Called when the {@link GoogleApiClient} revokes access to this app.
@@ -68,17 +74,28 @@ public abstract class PlusBaseActivity extends AppCompatActivity
      */
     protected abstract void updateConnectButtonState();
 
+    private void buildPlusClient() {
+        GoogleApiClient.Builder b = new GoogleApiClient.Builder(this, this, this);
+
+        if(mAccountName != null) {
+            b.setAccountName(mAccountName);
+        }
+
+        // Initialize the PlusClient connection.
+        // Scopes indicate the information about the user your application will be able to access.
+        mGoogleApiClient = b
+                .addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN)
+                .addScope(Plus.SCOPE_PLUS_PROFILE).build();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialize the PlusClient connection.
-        // Scopes indicate the information about the user your application will be able to access.
-        mGoogleApiClient =
-                new GoogleApiClient.Builder(this, this, this)
-                        .addApi(Plus.API)
-                        .addScope(Plus.SCOPE_PLUS_LOGIN)
-                        .addScope(Plus.SCOPE_PLUS_PROFILE).build();
+        mAccountName = AccountManager.getGoogleAccountName();
+
+        buildPlusClient();
     }
 
     /**
@@ -129,21 +146,27 @@ public abstract class PlusBaseActivity extends AppCompatActivity
     /**
      * Sign out the user (so they can switch to another account).
      */
-    public void signOut() {
+    public void googleSignOut() {
 
         // We only want to sign out if we're connected.
-        if (mGoogleApiClient.isConnected()) {
-            // Clear the default account in order to allow the user to potentially choose a
-            // different account from the account chooser.
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+        if(mGoogleApiClient != null) {
+            if (mGoogleApiClient.isConnected()) {
 
-            // Disconnect from Google Play Services, then reconnect in order to restart the
-            // process from scratch.
-            initiatePlusClientDisconnect();
+                setAccountName(null);
 
-            Log.v(TAG, "Sign out successful!");
+                // Clear the default account in order to allow the user to potentially choose a
+                // different account from the account chooser.
+                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+
+                mSessionCookie = null;
+
+                // Disconnect from Google Play Services, then reconnect in order to restart the
+                // process from scratch.
+                initiatePlusClientDisconnect();
+
+                Log.v(TAG, "Sign out successful!");
+            }
         }
-
         updateConnectButtonState();
     }
 
@@ -242,20 +265,34 @@ public abstract class PlusBaseActivity extends AppCompatActivity
      */
     @Override
     public void onConnected(Bundle connectionHint) {
-        updateConnectButtonState();
-        setProgressBarVisible(false);
-        onPlusClientSignIn();
+        if (mAccountName == null) {
+            setAccountName(Plus.AccountApi.getAccountName(mGoogleApiClient));
+        }
+        if (mSessionCookie == null) {
+            getSession();
+        }else {
+            updateConnectButtonState();
+            setProgressBarVisible(false);
+            onPlusClientSignIn();
+        }
     }
 
-   /* *//**
+    /**
      * Successfully disconnected (called by PlusClient)
-     *//*
-    @Override
+     */
+
     public void onDisconnected() {
         updateConnectButtonState();
         onPlusClientSignOut();
+        removeSession();
     }
-*/
+
+    private void removeSession() {
+
+        AccountManager.removeUserSession();
+    }
+
+
     /**
      * Connection failed for some reason (called by PlusClient)
      * Try and resolve the result.  Failure here is usually not an indication of a serious error,
@@ -282,6 +319,25 @@ public abstract class PlusBaseActivity extends AppCompatActivity
 
     public GoogleApiClient getPlusClient() {
         return mGoogleApiClient;
+    }
+
+    private void setAccountName(String name) {
+        mAccountName = name;
+        AccountManager.setGoogleAccountName(mAccountName);
+    }
+
+    /**
+     * retrieving the ID token, and sending it to the server.
+     *
+     */
+    private void getSession() {
+        if (mSessionCookie != null) {
+            // We already have a session!
+            return;
+        }
+
+        RefreshCredentialsTask task = new RefreshCredentialsTask(AccountManager.LoginType.GOOGLE, this, mAccountName, this);
+        task.execute();
     }
 
 }

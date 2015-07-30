@@ -16,11 +16,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -43,10 +45,11 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.plus.Plus;
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
-import com.thesocialcoin.controllers.UserManager;
+import com.thesocialcoin.controllers.AccountManager;
 import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.networking.core.RequestManager;
+import com.thesocialcoin.utils.FontUtils;
 import com.thesocialcoin.utils.ToastUtils;
 
 import org.json.JSONObject;
@@ -54,6 +57,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -63,7 +69,7 @@ import java.util.List;
  * https://developers.google.com/+/mobile/android/getting-started#step_1_enable_the_google_api
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
-public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, UserManager.OnRegisterResponseListener  {
+public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>, AccountManager.OnRegisterResponseListener  {
 
     private final static String TAG = "LoginActivity";
 
@@ -96,6 +102,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     //private String facebookAccessToken = "";
     private ProgressBar progressBar;
 
+    private AccountManager.LoginType loginRequestType;
+
+    @Nullable
+    @Bind(R.id.main_phrase)
+    TextView main_phrase;
+
     private Activity mActivity;
 
     @Override
@@ -120,12 +132,17 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+
         mActivity = this;
 
         //init facebook sdk and crashlitics
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        setContentView(R.layout.activity_login);
+        loginRequestType = AccountManager.LoginType.NONE;
+
+        main_phrase.setTypeface(FontUtils.getAppsRegularFont(this));
 
         // Find the Google+ sign in button.
         mPlusSignInButton = (RelativeLayout) findViewById(R.id.btn_gplus_auth);
@@ -134,6 +151,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mPlusSignInButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    loginRequestType = AccountManager.LoginType.GOOGLE;
                     signIn();
                 }
             });
@@ -155,6 +173,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         authButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showProgress(true);
+                loginRequestType = AccountManager.LoginType.FACEBOOK;
                 LoginManager.getInstance().logInWithReadPermissions(mActivity, PERMISSIONS);
             }
         });
@@ -206,7 +226,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                         requestQueue.add(jsObjRequest);
 
                                     } else {
-                                        UserManager.getInstance(LoginActivity.this).authenticateWithFacebook(facebookAccessToken.getToken(), LoginActivity.this);
+                                        AccountManager.getInstance(LoginActivity.this).authenticateWithFacebook(facebookAccessToken.getToken(), LoginActivity.this);
                                     }
                                 }
                             }
@@ -383,7 +403,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     @Override
     protected void onPlusClientSignIn() {
-        UserManager.getInstance(LoginActivity.this).authenticateWithGoogle(String.valueOf(Plus.AccountApi.getAccountName(getPlusClient())), LoginActivity.this);
+        AccountManager.getInstance(LoginActivity.this).authenticateWithGoogle(String.valueOf(Plus.AccountApi.getAccountName(getPlusClient())), LoginActivity.this);
         //Set up sign out and disconnect buttons.
 //        Button signOutButton = (Button) findViewById(R.id.plus_sign_out_button);
 //        signOutButton.setOnClickListener(new OnClickListener() {
@@ -409,7 +429,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     @Override
     protected void updateConnectButtonState() {
         //TODO: Update this logic to also handle the user logged in by email.
-        boolean connected = getPlusClient().isConnected();
+        boolean connected = (getPlusClient() != null)?getPlusClient().isConnected():false;
 
 //        mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
         mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
@@ -618,42 +638,107 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     /**
      * **********************************
      * <p/>
-     * Event Subsctiption handling
+     * Event Subscription handling
      */
     @Subscribe
     public void onAuthenticationEvent(AuthenticateUserEvent event) {
         showProgress(false);
         if (event.getType().equals(AuthenticateUserEvent.Type.ERROR)) {
-            authButton.setVisibility(View.VISIBLE);
-            ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
-            LoginManager.getInstance().logOut();
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.DELETE, "https://graph.facebook.com/v2.3/me/permissions?access_token=" + facebookAccessToken.getToken(), "", new Response.Listener<JSONObject>() {
+            switch (loginRequestType) {
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d(TAG, "Token: " + response.toString());
-                            ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
-                            authButton.setVisibility(View.VISIBLE);
-                        }
-                    }, new Response.ErrorListener() {
+                case GOOGLE:
+                    googleSignOut();
+                    ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
+                    break;
+                case FACEBOOK:
+                    authButton.setVisibility(View.VISIBLE);
+                    ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
+                    detachFacebookAccount();
+                    break;
+                default:
+                    break;
 
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
-                            authButton.setVisibility(View.VISIBLE);
-                        }
-                    });
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            // Access the RequestQueue through your singleton class.
-            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-            requestQueue.add(jsObjRequest);
+            }
+
         }
 
         if (event.getType().equals(AuthenticateUserEvent.Type.SUCCESS)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            startApp();
         }
+    }
+
+
+    /**
+    * Starting the app
+    */
+    private void startApp() {
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Bundle data = new Bundle();
+        intent.putExtras(data);
+        LoginActivity.this.startActivity(intent);
+        LoginActivity.this.finish();
+    }
+
+    @Override
+    public void onFetchSocialTokenComplete(String token, AccountManager.LoginType identityType)
+    {
+        loginRequestType = identityType;
+        if(token != null) {
+            switch (loginRequestType) {
+
+                case GOOGLE:
+                    AccountManager.setGoogleSessionToken(token);
+                    AccountManager.getInstance(LoginActivity.this).authenticateWithGoogle(AccountManager.getGoogleSessionToken(), LoginActivity.this);
+                    break;
+                case FACEBOOK:
+                    //AccountManager.getGoogleSessionToken
+
+                    break;
+                default:
+                    break;
+
+            }
+        }else{
+            showProgress(false);
+            switch (loginRequestType) {
+
+                case GOOGLE:
+                    googleSignOut();
+                case FACEBOOK:
+                    //AccountManager.getGoogleSessionToken
+
+                    break;
+                default:
+                    break;
+
+            }
+        }
+    }
+
+
+    private void detachFacebookAccount() {
+        LoginManager.getInstance().logOut();
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.DELETE, "https://graph.facebook.com/v2.3/me/permissions?access_token=" + facebookAccessToken.getToken(), "", new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "Token: " + response.toString());
+                        ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
+                        authButton.setVisibility(View.VISIBLE);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
+                        authButton.setVisibility(View.VISIBLE);
+                    }
+                });
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Access the RequestQueue through your singleton class.
+        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+        requestQueue.add(jsObjRequest);
     }
 
 }
