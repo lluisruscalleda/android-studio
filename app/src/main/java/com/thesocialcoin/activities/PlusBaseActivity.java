@@ -146,7 +146,7 @@ public abstract class PlusBaseActivity extends AppCompatActivity
     /**
      * Sign out the user (so they can switch to another account).
      */
-    public void signOut() {
+    public void googleSignOut() {
 
         // We only want to sign out if we're connected.
         if(mGoogleApiClient != null) {

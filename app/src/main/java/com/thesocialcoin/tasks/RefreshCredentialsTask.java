@@ -81,7 +81,7 @@ public class RefreshCredentialsTask extends AsyncTask<Void, Void, String> {
 
             case GOOGLE:
                 try {
-                    accessToken = fetchToken();
+                    accessToken = fetchGoogleToken();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -114,14 +114,14 @@ public class RefreshCredentialsTask extends AsyncTask<Void, Void, String> {
      * Gets an authentication token from Google and handles any
      * GoogleAuthException that may occur.
      */
-    protected String fetchToken() throws IOException {
+    protected String fetchGoogleToken() throws IOException {
 
         String accountName = this.googleAccountName;
         Account account = new Account(accountName, GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
         String scopes = "oauth2:" + Scopes.PLUS_LOGIN;
 
         try {
-            return GoogleAuthUtil.getToken(context, accountName, scopes);
+            return GoogleAuthUtil.getToken(context, account, scopes);
         } catch (UserRecoverableAuthException userRecoverableException) {
             // GooglePlayServices.apk is either old, disabled, or not present
             // so we need to show the user some UI in the activity to recover.

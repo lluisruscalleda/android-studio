@@ -638,7 +638,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     /**
      * **********************************
      * <p/>
-     * Event Subsctiption handling
+     * Event Subscription handling
      */
     @Subscribe
     public void onAuthenticationEvent(AuthenticateUserEvent event) {
@@ -647,6 +647,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             switch (loginRequestType) {
 
                 case GOOGLE:
+                    googleSignOut();
                     ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
                     break;
                 case FACEBOOK:
@@ -699,7 +700,18 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             }
         }else{
             showProgress(false);
-            signOut();
+            switch (loginRequestType) {
+
+                case GOOGLE:
+                    googleSignOut();
+                case FACEBOOK:
+                    //AccountManager.getGoogleSessionToken
+
+                    break;
+                default:
+                    break;
+
+            }
         }
     }
 
