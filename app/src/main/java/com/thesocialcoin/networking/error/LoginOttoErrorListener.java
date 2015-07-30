@@ -18,8 +18,8 @@ public class LoginOttoErrorListener extends OttoErrorListener implements OttoErr
     }
 
     public void onErrorResponse(VolleyError error) {
-        LoginRequestFailed message = new LoginRequestFailed(RequestId, error);
-        _eventBus.post(message);
+        LoginRequestFailed loginError = new LoginRequestFailed(RequestId, new AuthenticateUserVolleyError(error));
+        _eventBus.post(loginError);
     }
 
 }

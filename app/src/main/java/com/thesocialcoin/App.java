@@ -1,17 +1,23 @@
-package com.thesocialcoin.controllers;
+package com.thesocialcoin;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.v4.BuildConfig;
 import android.util.Log;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.codeslap.persistence.DatabaseSpec;
 import com.codeslap.persistence.PersistenceConfig;
 import com.crashlytics.android.Crashlytics;
+import com.thesocialcoin.controllers.AppManager;
+import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.ConnectionHelper;
 import com.thesocialcoin.utils.LruBitmapCache;
+import com.thesocialcoin.utils.StringUtils;
+import com.thesocialcoin.utils.TestTools;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -20,9 +26,9 @@ import io.fabric.sdk.android.Fabric;
  * Created by Lluis Ruscalleda Abad on 14/07/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class ApplicationController extends Application {
+public class App extends Application {
 
-    public static final String TAG = ApplicationController.class.getSimpleName();
+    public static final String TAG = App.class.getSimpleName();
     private static Context mContext;
     private ImageLoader mImageLoader;
     private static String password = "";
@@ -30,7 +36,7 @@ public class ApplicationController extends Application {
     /**
      * A singleton instance of the application class for easy access in other places
      */
-    private static ApplicationController sInstance;
+    private static App sInstance;
 
     public static Context getAppContext(){ return mContext; }
 
@@ -41,13 +47,13 @@ public class ApplicationController extends Application {
     }
 
     public static void setPassword(String password) {
-        ApplicationController.password = password;
+        App.password = password;
     }
 
     /**
-     * @return ApplicationController singleton instance
+     * @return App singleton instance
      */
-    public static synchronized ApplicationController getInstance() {
+    public static synchronized App getInstance() {
         return sInstance;
     }
 
@@ -56,7 +62,9 @@ public class ApplicationController extends Application {
     public void onCreate(){
         Log.d(TAG, "onCreate()");
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        if(TestTools.TEST_ENABLED) {
+            Fabric.with(this, new Crashlytics());
+        }
 
         DatabaseSpec database = PersistenceConfig.registerSpec(/**db version**/1);
         //database.match(Foo.class, Bar.class);
@@ -95,6 +103,11 @@ public class ApplicationController extends Application {
         }
 
         sInstance = this;
+    }
+
+    // Returns true if the app is in debug mode (not in production)
+    public static boolean inDebug() {
+        return BuildConfig.DEBUG;
     }
 
     /**
@@ -171,6 +184,12 @@ public class ApplicationController extends Application {
 
         }*/
 
+    }
+
+    // Check for login
+    public boolean isUserLoggedIn(){
+        SessionData mSession = new SessionData(this);
+        return !StringUtils.isEmpty(mSession.getSessionToken());
     }
 }
 

@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
-    <color name="oa_green">#A8DD00</color>
-    <color name="oa_blue">#276E9B</color>
-    <color name="oa_blue_facebook">#3048BD</color>
-    <color name="oa_black_transparent">#CC000000</color>
-    <color name="transparent">#00000000</color>
-    <color name="oa_grey_text">#A1A1A1</color>
+    <!-- Main colours -->
+    <color name="petrol">#00444f</color>
+    <color name="lake">#008c7f</color>
+    <color name="tomato">#ff2f37</color>
+    <color name="night">#1e2627</color>
 
-    <!-- Text -->
-    <color name="primary">#3172b3</color>
-    <color name="primary_dark">#3172b3</color>
-    <color name="accent">#ccc</color>
-    <color name="dark_green">#00825e</color>
+    <!-- Main colours palette -->
+    <color name="light_lake">#72c7bf</color>
+    <color name="soft_lake">#33a399</color>
+    <color name="middle_lake">#008c7f</color>
+    <color name="hard_lake">#008074</color>
+
+    <color name="soft_tomato">#ff2f74</color>
+    <color name="middle_grey">#bcbdbd</color>
+    <color name="light_grey">#f1f1f1</color>
+
+
+    <!-- Social colours palette -->
+    <color name="facebook_blue">#48649b</color>
+    <color name="twitter_blue">#61aadb</color>
+    <color name="linkedin_blue">#1884bb</color>
+    <color name="gplus_red">#d73d32</color>
+
+
 
     <!-- Other -->
-
     <color name="genre">#666666</color>
     <color name="year">#888888</color>
     <color name="list_divider">#d9d9d9</color>
@@ -35,4 +47,19 @@
 
     <color name="background_photo_tint">#4f808080</color>
     <color name="main_photo_tint">#2f505050</color>
+
+    <color name="background_for_save">#488AC7</color>
+    <!-- Per llistes -->
+    <color name="alpha_white">#30FFFFFF</color>
+    <color name="alpha_white_80">#CCFFFFFF</color>
+    <color name="alpha_white_light">#10FFFFFF</color>
+    <color name="alpha_white_middle">#49FFFFFF</color>
+
+
+    <color name="oa_green">#A8DD00</color>
+    <color name="oa_blue">#276E9B</color>
+    <color name="oa_blue_facebook">#3048BD</color>
+    <color name="oa_black_transparent">#CC000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="oa_grey_text">#A1A1A1</color>
 </resources>

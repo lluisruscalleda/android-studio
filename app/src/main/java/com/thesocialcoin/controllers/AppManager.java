@@ -6,7 +6,6 @@ import android.util.Log;
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.shared_preferences.SessionData;
-import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestFailed;
 
 /**
@@ -24,8 +23,8 @@ public class AppManager extends BaseManager {
     private static String clientId;
 
     private AppManager(Context context) {
+        super();
         sessionData = new SessionData(mContext);
-        RequestManager.EventBus.register(this);
     }
 
     public static AppManager getInstance(Context context) {

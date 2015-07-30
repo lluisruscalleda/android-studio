@@ -11,4 +11,9 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+
+    <string name="error_login_failed">Login Failed</string>
+    <string name="log_in_with_facebook">Sign in with Facebook</string>
+    <string name="facebook_email_validation">Your username has not yet been activated in this application. Please accept the permits required by your Facebook account for the application to accept it problem-free.</string>
+    <string name="facebook_login_error">Facebook login error</string>
 </resources>

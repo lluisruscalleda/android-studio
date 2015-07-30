@@ -2,8 +2,6 @@ package com.thesocialcoin.utils;
 
 import android.os.Build;
 
-import java.util.Locale;
-
 /**
  * thesocialcoin
  * <p/>
@@ -36,10 +34,6 @@ public class DeviceVersion {
 
     public static boolean hasKitKat() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    }
-
-    public static String getAppLanguage(){
-        return Locale.getDefault().getLanguage().substring(0,2);
     }
 
 }

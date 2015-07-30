@@ -11,9 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.squareup.otto.Subscribe;
 import com.thesocialcoin.controllers.AppManager;
-import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.FontUtils;
@@ -27,15 +25,23 @@ import icepick.Icicle;
  * Created by Lluis Ruscalleda Abad on 15/07/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class BaseActivity extends Activity {
+
+/**
+ * Base Activity that performs various functions that all Activities in this app
+ * should do. Such as:
+ *
+ * Registering for the event bus. Setting the current site's theme. Finishing
+ * the Activity if the user logs out but the Activity requires authentication.
+ */
+
+public abstract class BaseActivity extends Activity {
 
     private static String TAG = BaseActivity.class.getSimpleName();
 
     private ProgressDialog pDialog;
     protected SessionData sessionData;
 
-    @Icicle
-    private int mActivityid;
+    @Icicle int mActivityid;
 
 
     protected LinearLayout no_connection_view;
@@ -118,6 +124,7 @@ public class BaseActivity extends Activity {
         lightType = FontUtils.getAppsBoldFont(this);
 
         Icepick.restoreInstanceState(this, savedInstanceState);
+
 
         getActionBar().setDisplayShowCustomEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(false);
@@ -207,17 +214,5 @@ public class BaseActivity extends Activity {
 //        mDrawerAdapter.notifyDataSetChanged();
 //    }
 
-
-    /**
-     * **********************************
-     * <p/>
-     * Event handling
-     */
-    @Subscribe
-    public void onAuthenticationEvent(AuthenticateUserEvent event) {
-        if (event.getType().equals(AuthenticateUserEvent.Type.ERROR)) {
-            goToLogin();
-        }
-    }
 
 }

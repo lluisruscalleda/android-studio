@@ -1,5 +1,7 @@
 package com.thesocialcoin.utils;
 
+import java.util.Locale;
+
 /**
  * thesocialcoin
  * <p/>
@@ -9,7 +11,8 @@ package com.thesocialcoin.utils;
 public class Utils {
 
 
-
-
+    public static String getAppLanguage(){
+        return Locale.getDefault().getLanguage().substring(0,2);
+    }
 
 }

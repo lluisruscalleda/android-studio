@@ -3,19 +3,24 @@ package com.thesocialcoin.models.pojos;
 import com.google.gson.Gson;
 
 /**
- * Created by identitat on 26/11/14.
+ * thesocialcoin
+ * <p/>
+ * Created by Lluis Ruscalleda Abad on 15/07/15.
+ * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class iPojo {
+public class iPojo<T> {
 
-    public String serialize() {
+    public iPojo() {}
+
+    public String serialize(Object object) {
         // Serialize this class into a JSON string using GSON
         Gson gson = new Gson();
-        return gson.toJson(this);
+        return gson.toJson(object);
     }
 
-    static protected iPojo create(String serializedData) {
+    public Object create(String serializedData, Class<T> classType) {
         // Use GSON to instantiate this class using the JSON representation of the state
         Gson gson = new Gson();
-        return gson.fromJson(serializedData, iPojo.class);
+        return gson.fromJson(serializedData, classType);
     }
 }

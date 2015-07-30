@@ -17,9 +17,12 @@ public class BaseManager {
     protected static SessionData sessionData;
     protected static Context mContext;
 
-    public void BaseManager()
-    {
+    public BaseManager(Context context) {
+        RequestManager.EventBus.register(this);
+    }
 
+    public BaseManager()
+    {
         RequestManager.EventBus.register(this);
     }
 

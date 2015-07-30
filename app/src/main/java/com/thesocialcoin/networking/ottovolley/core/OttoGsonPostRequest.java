@@ -1,8 +1,9 @@
 package com.thesocialcoin.networking.ottovolley.core;
 
+import com.android.volley.VolleyError;
+import com.squareup.otto.Bus;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.volleyextensions.GsonPostRequest;
-import com.squareup.otto.Bus;
 
 import org.json.JSONObject;
 
@@ -35,5 +36,15 @@ public class OttoGsonPostRequest<T> extends GsonPostRequest<T> {
 
     public void setSuccesListener(){
 
+    }
+
+    @Override
+    protected VolleyError parseNetworkError(VolleyError volleyError){
+        if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+            VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+            volleyError = error;
+        }
+
+        return volleyError;
     }
 }
