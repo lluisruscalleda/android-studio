@@ -28,9 +28,9 @@ import java.util.HashMap;
  * Created by Lluis Ruscalleda Abad on 15/07/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class FacebookRequest extends RequestInterface {
+public class LinkedinLoginRequest extends RequestInterface {
 
-    protected static String TAG = FacebookRequest.class.getSimpleName();
+    protected static String TAG = LinkedinLoginRequest.class.getSimpleName();
 
     private static JSONObject jsonObjectParams;
     private static String URL;
@@ -40,7 +40,7 @@ public class FacebookRequest extends RequestInterface {
 
     private HashMap<String,String> _params;
 
-    public FacebookRequest() {
+    public LinkedinLoginRequest() {
         _requestErrorListener = OttoErrorListenerFactory.LOGIN_ERROR_LISTENER;
     }
 
@@ -49,7 +49,7 @@ public class FacebookRequest extends RequestInterface {
         this.context = App.getAppContext();
         this._params = params;
 
-        URL = context.getResources().getString(R.string.bc_api_server_url)+ context.getResources().getString(R.string.bc_api_facebook_auth_endpoint);
+        URL = context.getResources().getString(R.string.bc_api_server_url)+ context.getResources().getString(R.string.bc_api_linkedin_auth_endpoint);
 
         String myVersion = android.os.Build.VERSION.RELEASE; // e.g. myVersion := "1.6"
         int sdkVersion = android.os.Build.VERSION.SDK_INT;
@@ -77,8 +77,3 @@ public class FacebookRequest extends RequestInterface {
     }
 
 }
-
-
-//CAAUCG9OASSQBAMdY1ghZCYVrYDUFwYGCeGMh0zjYNrZB9BHQ82Q4M1AVmSIAOu1yGFCqqNivAYSEzU1rCpNDkt5LShAdpMZBn0QlZB4ZBKgdMSldrvbvgHamblQFYBZAC7CiVfF7cMfqR931QqzXyfZCZAiuqKiqdwJH88HQ5QxQLaL2DpvjpHxuqmSTV2jxQKDZACm0dfpIZBQ3SIh5BvZC691
-//CAAUCG9OASSQBAHtbCezVU0rvy8UfZAPvWZCV4Reev9lrXVQhF1L22RiH39ZCMGDcFGBF7kfZAMYkZCPfLvFfDONCn144hukPBOD8T8ZBrPNm8WPbuGQaO9a2ny19gKBs2ZCSS0L8x1JtSvi4bIuAThF9ONcaL8Mo7N8i53Ua0iUuykd3Vl3vAscLbhw4ItrZAsDYLYaMuBdXzoShT9snEXZA1uNeZAz4hnbIoOLs2PTqNSqQZDZD
-//CAAUCG9OASSQBAJZBeUjp73AQWEYHTruYS1zT0hW3yjRKPgLtYPZBFP6ATVdnzx6GdT1a2hLusZCsCHAwbeq3Dl8Htn9ZASp1eQ5KFEk3WaVNQlZB2QH5IS3j185eAoqo8ZBHejlAZBpaySX8ZBlK22WsC0MwgU3vfa11MxFixQq7G9Ddbgaqygn0Q8t3DJjGPdFKyPixJHNEVBtqnqpnW4crYPrpRvlfrCPR6VEYwIy2BwZDZD

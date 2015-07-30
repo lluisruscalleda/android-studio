@@ -6,9 +6,13 @@
     <string name="bc_session_preferences_filename">thesocialcoin_session_data</string>
     <string name="bc_project_preferences_filename">thesocialcoin_project_data</string>
 
+    <!-- Social API keys -->
+    <string name="bc_facebook_id">1409693419325732</string>
+    <string name="bc_facebook_id">1409693419325732</string>
     <string name="bc_facebook_id">1409693419325732</string>
 
-    <!-- API endpoints -->
+
+    <!-- The Social Coin API endpoints -->
     <string name="bc_api_google_auth_endpoint">api-google-auth</string>
     <string name="bc_api_facebook_auth_endpoint">api-facebook-auth</string>
     <string name="bc_api_linkedin_auth_endpoint">api-linkedin-auth</string>

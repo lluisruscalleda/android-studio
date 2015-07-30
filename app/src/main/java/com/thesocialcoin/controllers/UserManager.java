@@ -4,39 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.App;
-import com.thesocialcoin.R;
 import com.thesocialcoin.activities.LoginActivity;
 import com.thesocialcoin.events.AuthenticateUserEvent;
-import com.thesocialcoin.helpers.JsonTrimMessage;
 import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.models.pojos.Logout;
 import com.thesocialcoin.models.pojos.User;
-import com.thesocialcoin.models.pojos.iPojo;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.AuthenticateUserVolleyError;
 import com.thesocialcoin.networking.error.LoginRequestFailed;
 import com.thesocialcoin.networking.error.RegisterRequestFailed;
-import com.thesocialcoin.networking.helpers.VolleyErrorHelper;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
-import com.thesocialcoin.requests.FacebookRequest;
-import com.thesocialcoin.requests.GplusRequest;
+import com.thesocialcoin.requests.FacebookLoginRequest;
+import com.thesocialcoin.requests.GoogleLoginRequest;
 import com.thesocialcoin.requests.LoginRequest;
 import com.thesocialcoin.requests.RegisterRequest;
 import com.thesocialcoin.utils.Codes;
 import com.thesocialcoin.utils.Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -131,7 +117,7 @@ public class UserManager extends BaseManager {
         requestJson.put(Codes.reg_user_facebook_token, facebookToken);
         requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
 
-        RequestManager.addToRequestQueue(new GplusRequest().create(requestJson));
+        RequestManager.addToRequestQueue(new GoogleLoginRequest().create(requestJson));
     }
     /**
      * Authenticate the user using facebook credentials
@@ -220,7 +206,7 @@ public class UserManager extends BaseManager {
         requestJson.put(Codes.reg_user_facebook_token, facebookToken);
         requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
 
-        RequestManager.addToRequestQueue(new FacebookRequest().create(requestJson));
+        RequestManager.addToRequestQueue(new FacebookLoginRequest().create(requestJson));
     }
 
     /**
