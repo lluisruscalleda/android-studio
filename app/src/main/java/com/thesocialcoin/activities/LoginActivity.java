@@ -12,15 +12,16 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ProgressBar;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,17 +50,26 @@ import com.thesocialcoin.controllers.AccountManager;
 import com.thesocialcoin.events.AuthenticateUserEvent;
 import com.thesocialcoin.models.pojos.APILoginResponse;
 import com.thesocialcoin.networking.core.RequestManager;
+import com.thesocialcoin.tasks.RefreshCredentialsTask;
 import com.thesocialcoin.utils.FontUtils;
 import com.thesocialcoin.utils.ToastUtils;
 
 import org.json.JSONObject;
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.builder.api.LinkedInApi;
+import org.scribe.exceptions.OAuthException;
+import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -83,7 +93,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private RefreshCredentialsTask mAuthTask = null;
 
 
     // List of additional write permissions being requested
@@ -91,22 +101,22 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     // UI references.
     private View mProgressView;
-//    private View mEmailLoginFormView;
     private RelativeLayout mPlusSignInButton;
-//    private View mSignOutButtons;
     private View mLoginFormView;
     private RelativeLayout authButton;
     CallbackManager callbackManager;
     private AccessToken facebookAccessToken;
-    //private UiLifecycleHelper uiHelper;
-    //private String facebookAccessToken = "";
-    private ProgressBar progressBar;
 
     private AccountManager.LoginType loginRequestType;
+
+
 
     @Nullable
     @Bind(R.id.main_phrase)
     TextView main_phrase;
+    @Bind(R.id.linkedin_login_webview)
+    WebView linkedin_login_webview;
+
 
     private Activity mActivity;
 
@@ -133,6 +143,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy);
+        }
         ButterKnife.bind(this);
 
         mActivity = this;
@@ -152,7 +165,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 @Override
                 public void onClick(View view) {
                     loginRequestType = AccountManager.LoginType.GOOGLE;
-                    signIn();
+                    googleSignIn();
                 }
             });
         } else {
@@ -164,7 +177,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         // Set up the login form.
 
-        progressBar = (ProgressBar) findViewById(R.id.login_progress);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
@@ -251,6 +263,100 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     }
 
+    private OAuthService mLinkedinService;
+    // Linkedin Login Button
+    @OnClick(R.id.btn_linkedin_auth)
+    public void linkedInLogin() {
+
+        //Show a progress dialog to the user
+        showProgress(true);
+
+        if (AccountManager.getInstance(LoginActivity.this).getLinkedinSessionToken() != null && !AccountManager.getInstance(LoginActivity.this).getLinkedinSessionToken().isEmpty()) {
+            // We already have a session!
+            getLinkedinSession(AccountManager.getInstance(LoginActivity.this).getLinkedinSessionToken());
+            return;
+        }
+
+        mLinkedinService = new ServiceBuilder()
+                .provider(LinkedInApi.class)
+                .apiKey(getString(R.string.bc_linkedin_client_id))
+                .apiSecret(getString(R.string.bc_linkedin_client_secret))
+                .callback("oauth://linkedin")
+                .scope("r_basicprofile")
+                .scope("r_emailaddress")
+                .build();
+
+        String authUrl = "http://api.linkedin.com/";
+        Token mLinkedinRequestToken = null;
+        try {
+            mLinkedinRequestToken = mLinkedinService.getRequestToken();
+            authUrl = mLinkedinService.getAuthorizationUrl(mLinkedinRequestToken);
+        }
+        catch ( OAuthException e ) {
+            e.printStackTrace();
+        }
+
+
+        Log.i(TAG, "Linkedin request token: " + mLinkedinRequestToken);
+
+        // Request an Authorization Code
+
+        linkedin_login_webview.setVisibility(View.VISIBLE);
+        //Request focus for the webview
+        linkedin_login_webview.requestFocus(View.FOCUS_DOWN);
+
+        final Token finalMLinkedinRequestToken = mLinkedinRequestToken;
+        linkedin_login_webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                showProgress(false);
+            }
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                super.shouldOverrideUrlLoading(view, url);
+
+                if( url.startsWith(mActivity.getResources().getString(R.string.bc_linkedin_url_redirect)) ) {
+                    linkedin_login_webview.setVisibility(WebView.GONE);
+
+
+                            Uri uri = Uri.parse(url);
+
+                            String verifier = uri.getQueryParameter("oauth_verifier");
+                            String stateToken = uri.getQueryParameter(STATE_PARAM);
+                            if(stateToken==null || !stateToken.equals(mActivity.getResources().getString(R.string.bc_linkedin_url_state))){
+                                Log.e("Authorize", "State token doesn't match");
+                                return true;
+                            }
+
+                            //If the user doesn't allow authorization to our application, the authorizationToken Will be null.
+                            String authorizationToken = uri.getQueryParameter(RESPONSE_TYPE_VALUE);
+                            if(authorizationToken==null){
+                                Log.i("Authorize", "The user doesn't allow authorization.");
+                                return true;
+                            }
+                            Log.i("Authorize", "Auth token received: "+authorizationToken);
+
+
+                            // Exchange Authorization Code for a Request Token
+                            getLinkedinSession(authorizationToken);
+
+
+//                                        Intent intent = new Intent();
+//                                        intent.putExtra("access_token", accessToken.getToken());
+//                                        intent.putExtra("access_secret", accessToken.getSecret());
+//                                        setResult(RESULT_OK, intent);
+//                                        finish();
+
+
+                }
+
+                return false;
+            }
+        });
+
+        linkedin_login_webview.loadUrl(getAuthorizationUrl());
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -261,47 +367,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         getLoaderManager().initLoader(0, null, this);
     }
 
-
-    /*private Session.StatusCallback callback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state, Exception exception) {
-            Log.i(LogTags.FACEBOOK_LOGIN, "User ID ");
-            onSessionStateChange(session, state, exception);
-        }
-    };
-
-    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        if (state.isOpened()) {
-            Log.i(LogTags.FACEBOOK_LOGIN, "Logged in...");
-            facebookAccessToken = session.getAccessToken();
-            Request.newMeRequest(session,
-                    new Request.GraphUserCallback() {
-                        @Override
-                        public void onCompleted(GraphUser user, Response response) {
-                            if (user != null) {
-                                showProgress(true);
-                                String id = user.getId();
-                                Log.i(LogTags.FACEBOOK_LOGIN, "User ID " + id);
-                                Object o = user.asMap().get("email");
-                                String email = "";
-                                if (o != null) {
-                                    email = o.toString();
-
-                                    Log.i(LogTags.FACEBOOK_LOGIN, "Email " + email);
-                                }
-
-                                //SingleRequestManager.authenticateWithFacebook(LoginActivity.this, email, id, facebookAccessToken);
-                                UserManager.getInstance(LoginActivity.this).authenticateWithFacebook(email, id, facebookAccessToken);
-                            }
-                        }
-                    }).executeAsync();
-
-        } else if (state.isClosed()) {
-            facebookAccessToken = "";
-            Log.i(LogTags.FACEBOOK_LOGIN, "Logged out...");
-        }
-    }
-*/
 
    /* *//**
      * Attempts to sign in or register the account specified by the login form.
@@ -404,21 +469,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     @Override
     protected void onPlusClientSignIn() {
         AccountManager.getInstance(LoginActivity.this).authenticateWithGoogle(String.valueOf(Plus.AccountApi.getAccountName(getPlusClient())), LoginActivity.this);
-        //Set up sign out and disconnect buttons.
-//        Button signOutButton = (Button) findViewById(R.id.plus_sign_out_button);
-//        signOutButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                signOut();
-//            }
-//        });
-//        Button disconnectButton = (Button) findViewById(R.id.plus_disconnect_button);
-//        disconnectButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                revokeAccess();
-//            }
-//        });
     }
 
     @Override
@@ -431,9 +481,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         //TODO: Update this logic to also handle the user logged in by email.
         boolean connected = (getPlusClient() != null)?getPlusClient().isConnected():false;
 
-//        mSignOutButtons.setVisibility(connected ? View.VISIBLE : View.GONE);
         mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
-//        mEmailLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -494,7 +542,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     @Override
     public void onConnectionSuspended(int i) {
-        signIn();
+        googleSignIn();
     }
 
     private interface ProfileQuery {
@@ -505,73 +553,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
-    }
-
-
-//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-//        ArrayAdapter<String> adapter =
-//                new ArrayAdapter<String>(LoginActivity.this,
-//                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-//
-//        mEmailView.setAdapter(adapter);
-//    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
 
     @Override
@@ -655,6 +636,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
                     detachFacebookAccount();
                     break;
+                case LINKEDIN:
+                    ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
+                    break;
                 default:
                     break;
 
@@ -672,7 +656,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     * Starting the app
     */
     private void startApp() {
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
         Bundle data = new Bundle();
         intent.putExtras(data);
         LoginActivity.this.startActivity(intent);
@@ -680,18 +664,22 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     @Override
-    public void onFetchSocialTokenComplete(String token, AccountManager.LoginType identityType)
+    public void onFetchSocialTokenComplete(final String token, AccountManager.LoginType identityType)
     {
         loginRequestType = identityType;
         if(token != null) {
             switch (loginRequestType) {
 
                 case GOOGLE:
-                    AccountManager.setGoogleSessionToken(token);
+                    AccountManager.getInstance(LoginActivity.this).setGoogleSessionToken(token);
                     AccountManager.getInstance(LoginActivity.this).authenticateWithGoogle(AccountManager.getGoogleSessionToken(), LoginActivity.this);
                     break;
                 case FACEBOOK:
                     //AccountManager.getGoogleSessionToken
+                    break;
+                case LINKEDIN:
+                    AccountManager.setLinkedinSessionToken(token);
+                    AccountManager.getInstance(LoginActivity.this).authenticateWithLinkedin(AccountManager.getGoogleSessionToken(), LoginActivity.this);
 
                     break;
                 default:
@@ -705,7 +693,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 case GOOGLE:
                     googleSignOut();
                 case FACEBOOK:
-                    //AccountManager.getGoogleSessionToken
+
+                    break;
+                case LINKEDIN:
 
                     break;
                 default:
@@ -715,7 +705,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         }
     }
 
-
+    /**
+     * Function to remove the linked facebook account to the app, Ex. when APi response fails we need to detach account or IMPORTANT! when user diddn't selected email authorisation
+     *
+     */
     private void detachFacebookAccount() {
         LoginManager.getInstance().logOut();
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -740,6 +733,86 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
         requestQueue.add(jsObjRequest);
     }
+
+
+    //These are constants used for build the urls
+    private static final String AUTHORIZATION_URL = "https://www.linkedin.com/uas/oauth2/authorization";
+    private static final String ACCESS_TOKEN_URL = "https://www.linkedin.com/uas/oauth2/accessToken";
+    private static final String SECRET_KEY_PARAM = "client_secret";
+    private static final String RESPONSE_TYPE_PARAM = "response_type";
+    private static final String GRANT_TYPE_PARAM = "grant_type";
+    private static final String GRANT_TYPE = "authorization_code";
+    private static final String RESPONSE_TYPE_VALUE ="code";
+    private static final String CLIENT_ID_PARAM = "client_id";
+    private static final String STATE_PARAM = "state";
+    private static final String SCOPE_PARAM = "scope";
+    private static final String REDIRECT_URI_PARAM = "redirect_uri";
+    /*---------------------------------------*/
+    private static final String QUESTION_MARK = "?";
+    private static final String AMPERSAND = "&";
+    private static final String EQUALS = "=";
+
+    /**
+     * Method that generates the url for get the access token from the Service
+     * @return Url
+     */
+    private String getAccessTokenUrl(String authorizationToken){
+        String encodedurl = "";
+        try {
+            encodedurl = URLEncoder.encode(mActivity.getResources().getString(R.string.bc_linkedin_url_redirect), "UTF-8");
+            Log.d("TEST", encodedurl);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return ACCESS_TOKEN_URL
+                +QUESTION_MARK
+                +GRANT_TYPE_PARAM+EQUALS+GRANT_TYPE
+                +AMPERSAND
+                +RESPONSE_TYPE_VALUE+EQUALS+authorizationToken
+                +AMPERSAND
+                +CLIENT_ID_PARAM+EQUALS+ mActivity.getResources().getString(R.string.bc_linkedin_client_id)
+                +AMPERSAND
+                +REDIRECT_URI_PARAM+EQUALS+ encodedurl
+                +AMPERSAND
+                +SECRET_KEY_PARAM+EQUALS+ mActivity.getResources().getString(R.string.bc_linkedin_client_secret);
+    }
+    /**
+     * Method that generates the url for get the authorization token from the Service
+     * @return Url
+     */
+    private String getAuthorizationUrl(){
+        String encodedurl = "";
+        try {
+            encodedurl = URLEncoder.encode(mActivity.getResources().getString(R.string.bc_linkedin_url_redirect), "UTF-8");
+            Log.d("TEST", encodedurl);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return AUTHORIZATION_URL
+                +QUESTION_MARK+RESPONSE_TYPE_PARAM+EQUALS+RESPONSE_TYPE_VALUE
+                +AMPERSAND+CLIENT_ID_PARAM+EQUALS+ mActivity.getResources().getString(R.string.bc_linkedin_client_id)
+                +AMPERSAND+STATE_PARAM+EQUALS+ mActivity.getResources().getString(R.string.bc_linkedin_url_state)
+                +AMPERSAND+REDIRECT_URI_PARAM+EQUALS+ encodedurl
+                +AMPERSAND+SCOPE_PARAM+EQUALS+ mActivity.getResources().getString(R.string.bc_linkedin_url_scopes);
+    }
+
+
+    /**
+     * retrieving the linkedin ID token, and sending it to the server.
+     *
+     */
+    private void getLinkedinSession(String authorizationToken) {
+        // Exchange Authorization Code for a Request Token
+
+        //Generate URL for requesting Access Token
+        String accessTokenUrl = getAccessTokenUrl(authorizationToken);
+        //We make the request in a AsyncTask
+        mAuthTask = new RefreshCredentialsTask(AccountManager.LoginType.LINKEDIN, mActivity, accessTokenUrl, this);
+        mAuthTask.execute();
+    }
+// Excha
 
 }
 

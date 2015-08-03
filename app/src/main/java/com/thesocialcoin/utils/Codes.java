@@ -21,10 +21,6 @@ public class Codes {
     public static final String API_LOCALHOST = "";
 
 
-    public static final String API_LOGIN = "/login";
-    public static final String API_REGISTER_FACEBOOK = "/register_facebook";
-    public static final String API_REGISTER = "/register";
-
 
     public static final String KEY_AUTH = "AUTHORIZATION";
 
@@ -50,8 +46,6 @@ public class Codes {
     public static final String reg_user_weight = "weight";
     public static final String reg_user_height = "height";
     public static final String reg_user_birthday = "birthday";
-    public static final String reg_user_language = "language";
-    public static final String reg_user_facebook_token = "access_token";
 
 
 

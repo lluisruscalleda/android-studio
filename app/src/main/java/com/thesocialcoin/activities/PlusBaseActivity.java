@@ -101,7 +101,7 @@ public abstract class PlusBaseActivity extends AppCompatActivity
     /**
      * Try to sign in the user.
      */
-    public void signIn() {
+    public void googleSignIn() {
         if (!mGoogleApiClient.isConnected()) {
             // Show the dialog as we are now signing in.
             setProgressBarVisible(true);

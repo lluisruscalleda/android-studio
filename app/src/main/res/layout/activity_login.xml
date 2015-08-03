@@ -25,6 +25,13 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="170dp"/>
 
+    <!-- Linkedin Login Webview -->
+    <WebView
+        android:id="@+id/linkedin_login_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <RelativeLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"

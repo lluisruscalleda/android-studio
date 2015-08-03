@@ -2,7 +2,6 @@ package com.thesocialcoin.controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.squareup.otto.Subscribe;
@@ -20,6 +19,7 @@ import com.thesocialcoin.networking.error.RegisterRequestFailed;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
 import com.thesocialcoin.requests.FacebookLoginRequest;
 import com.thesocialcoin.requests.GoogleLoginRequest;
+import com.thesocialcoin.requests.LinkedinLoginRequest;
 import com.thesocialcoin.requests.LoginRequest;
 import com.thesocialcoin.requests.RegisterRequest;
 import com.thesocialcoin.utils.Codes;
@@ -32,8 +32,13 @@ import java.util.HashMap;
  */
 public class AccountManager extends BaseManager {
 
+    public static final String PARAM_AUTHTOKEN_TYPE = "auth.token";
+    public static final String PARAM_AUTHTOKEN = "access_token";
+    public static final String PARAM_LANGUAGE = "language";
+
+
     public enum LoginType {
-        NONE, AWS, FACEBOOK, GOOGLE
+        NONE, LINKEDIN, FACEBOOK, GOOGLE
 
     };
 
@@ -109,41 +114,62 @@ public class AccountManager extends BaseManager {
     /**
      * Authenticate the user using google plus credentials
      *
-     * @param facebookToken
+     * @param token
      *            token account
      * @param OnRegisterResponseListener
      *            listener
      *
      */
-    public void authenticateWithGoogle(String facebookToken, final OnRegisterResponseListener listener)
+    public void authenticateWithGoogle(String token, final OnRegisterResponseListener listener)
     {
         postEvent(produceUserSignInStartEvent());
 
         HashMap<String,String> requestJson = new HashMap<String,String> ();
-        requestJson.put(Codes.reg_user_facebook_token, facebookToken);
-        requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
+        requestJson.put(PARAM_AUTHTOKEN, token);
+        requestJson.put(PARAM_LANGUAGE, Utils.getAppLanguage());
 
         RequestManager.addToRequestQueue(new GoogleLoginRequest().create(requestJson));
     }
     /**
      * Authenticate the user using facebook credentials
      *
-     * @param facebookToken
+     * @param token
      *            token account
      * @param OnRegisterResponseListener
      *            listener
      *
      */
-    public void authenticateWithFacebook(String facebookToken, final OnRegisterResponseListener listener)
+    public void authenticateWithFacebook(String token, final OnRegisterResponseListener listener)
     {
         postEvent(produceUserSignInStartEvent());
 
         HashMap<String,String> requestJson = new HashMap<String,String> ();
-        requestJson.put(Codes.reg_user_facebook_token, facebookToken);
-        requestJson.put(Codes.reg_user_language, Utils.getAppLanguage());
+        requestJson.put(PARAM_AUTHTOKEN, token);
+        requestJson.put(PARAM_LANGUAGE, Utils.getAppLanguage());
+
+        RequestManager.addToRequestQueue(new LinkedinLoginRequest().create(requestJson));
+    }
+
+    /**
+     * Authenticate the user using facebook credentials
+     *
+     * @param token
+     *            token account
+     * @param OnRegisterResponseListener
+     *            listener
+     *
+     */
+    public void authenticateWithLinkedin(String token, final OnRegisterResponseListener listener)
+    {
+        postEvent(produceUserSignInStartEvent());
+
+        HashMap<String,String> requestJson = new HashMap<String,String> ();
+        requestJson.put(PARAM_AUTHTOKEN, token);
+        requestJson.put(PARAM_LANGUAGE, Utils.getAppLanguage());
 
         RequestManager.addToRequestQueue(new FacebookLoginRequest().create(requestJson));
     }
+
 
     /**
      *
@@ -180,6 +206,7 @@ public class AccountManager extends BaseManager {
             AppManager.getInstance(mContext).postLoginActions();
         }
     }
+
     @Subscribe
     public void onHttpErrorResponseReceived(RegisterRequestFailed requestError)
     {
@@ -209,23 +236,24 @@ public class AccountManager extends BaseManager {
             postEvent(produceUserSignInSuccessEvent());
         }
     }
+
+    /**
+     * Do logout method will perform logout actions on the app
+     * */
     public void doLogout()
     {
-        // stop services
+        // Stop App services
         AppManager.getInstance(mContext).stopAppServices();
 
-        //RequestManager.addToRequestQueue(new LogoutRequest().create());
-        SessionData sessionData = new SessionData(App.getAppContext());
-        sessionData.clearEditor();
 
-        Intent mIntent = new Intent(App.getAppContext(), LoginActivity.class);
-        mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        App.getAppContext().startActivity(mIntent);
+        // Clear all session data
+        removeUserSession();
+        sessionData.clearEditor();
     }
 
     /**
      *
-     * Logout response received subscription
+     * Logout API response received subscription (if endpoint exists)
      */
     @Subscribe
     public void onLogoutResponseReceived(VolleyRequestSuccess<Logout> response)
@@ -321,17 +349,46 @@ public class AccountManager extends BaseManager {
      * Some Session helper functions
      */
 
+    /**
+     * Check login method wil check user login status
+     * If false it will redirect user to login page
+     * Else won't do anything
+     * */
+    public static void checkLogin(){
+        // Check login status
+        if(!isLoggedIn()){
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(mContext, LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Staring Login Activity
+            mContext.startActivity(i);
+        }
+    }
+
+    /**
+     * Save user session method will save api session token and user data
+     * */
     public static void saveUserSession(String apiToken, User userData) {
         sessionData.setSessionToken(apiToken);
         sessionData.setUserData(userData.serialize());
         sessionData.apply();
     }
+
+    /**
+     * Remove user session method will remove api session token and user data from de shared preferences
+     * */
     public static void removeUserSession(){
         sessionData.setSessionToken(null);
         sessionData.setUserData(null);
         sessionData.apply();
     }
 
+    /**
+     * Get user session method will retrieve the api token saved in shared preferences
+     * */
     public static String getUserSession(){
         return sessionData.getSessionToken();
     }
@@ -351,5 +408,24 @@ public class AccountManager extends BaseManager {
         return sessionData.getGoogleSessionToken();
     }
 
+    public static void setLinkedinAccesToken(String newToken){
+        sessionData.setLinkedinAccessToken(newToken);
+    }
+    public static String getLinkedinAccessToken(){
+        return sessionData.getLinkedinAccesToken();
+    }
+    public static void setLinkedinSessionToken(String token){
+        sessionData.setGoogleSessionToken(token);
+    }
+    public static String getLinkedinSessionToken(){
+        return sessionData.getGoogleSessionToken();
+    }
 
+
+    /**
+     * Is logged in method will return if there's an active user in session
+     * */
+    private static boolean isLoggedIn(){
+        return (getUserSession() != null)?true:false;
+    }
 }

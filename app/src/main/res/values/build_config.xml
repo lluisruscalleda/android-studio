@@ -9,10 +9,17 @@
     <string name="bc_session_preferences_filename">thesocialcoin_session_data</string>
     <string name="bc_project_preferences_filename">thesocialcoin_project_data</string>
 
+    <!-- Social API credentials -->
     <string name="bc_facebook_id">1409693419325732</string>
     <string name="bc_google_client_id">316699985341-e79nrec7r0pe4bsbsoiidtoi0ark615k.apps.googleusercontent.com</string>
+    <string name="bc_linkedin_client_id">77cs96q321mt9e</string>
+    <string name="bc_linkedin_client_secret">8lCkG79mVSwE4jUs</string>
+    <string name="bc_linkedin_url_redirect">http://thesocialcoin.org/en/linkedin-auth</string>
+    <string name="bc_linkedin_url_scopes">r_basicprofile r_emailaddress</string>
+    <string name="bc_linkedin_url_state">BuBuBuAhaAha</string>
 
-    <!-- API endpoints -->
+
+    <!-- TheSocialCoin API endpoints -->
     <string name="bc_api_google_auth_endpoint">api-google-auth</string>
     <string name="bc_api_facebook_auth_endpoint">api-facebook-auth</string>
     <string name="bc_api_linkedin_auth_endpoint">api-linkedin-auth</string>

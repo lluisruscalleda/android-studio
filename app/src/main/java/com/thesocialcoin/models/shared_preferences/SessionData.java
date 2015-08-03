@@ -3,6 +3,8 @@ package com.thesocialcoin.models.shared_preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.github.pwittchen.prefser.library.Prefser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +16,8 @@ import java.util.Date;
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class SessionData {
+
+    protected Prefser prefser;
 
     /** The m preferences. */
     protected SharedPreferences mPreferences;
@@ -74,6 +78,11 @@ public class SessionData {
     /** The Constant KEY_GOOGLE_ACCOUNT_NAME. */
     private static final String KEY_GOOGLE_ACCOUNT_NAME= "google_account_name";
 
+    /** The Constant KEY_LINKEDIN_ACCESS_TOKEN. */
+    private static final String KEY_LINKEDIN_ACCESS_TOKEN= "linkedin_access_token";
+    /** The Constant KEY_LINKEDIN_SESSION_TOKEN. */
+    private static final String KEY_LINKEDIN_SESSION_TOKEN= "linkedin_session_token";
+
 
     /**
      * Instantiates a new session data.
@@ -82,6 +91,7 @@ public class SessionData {
      */
     public SessionData(Context context) {
         mPreferences = context.getSharedPreferences(SHARED_PREFERENCES_FILE, 0);
+        prefser = new Prefser(mPreferences);
     }
 
     /**
@@ -337,6 +347,41 @@ public class SessionData {
         getEditor().putString(KEY_GOOGLE_ACCOUNT_NAME, googleAccountName);
     }
 
+    /**
+     * Gets the linkedin access token of the session
+     *
+     * @return the linkedin access token of the session
+     */
+    public String getLinkedinAccesToken() {
+        return prefser.get(KEY_LINKEDIN_ACCESS_TOKEN, String.class, "");
+    }
+
+    /**
+     * Sets the linkedin access token of the session.
+     *
+     * @param linkedinAccessToken new linkedin access token
+     */
+    public void setLinkedinAccessToken(String linkedinAccessToken) {
+        prefser.put(KEY_LINKEDIN_ACCESS_TOKEN, linkedinAccessToken);
+    }
+
+    /**
+     * Gets the linkedin session token of the session
+     *
+     * @return the linkedin session token of the session
+     */
+    public String getLinkedinSessionToken() {
+        return prefser.get(KEY_LINKEDIN_SESSION_TOKEN, String.class, null);
+    }
+
+    /**
+     * Sets the linkedin session token of the session.
+     *
+     * @param linkedinSessionToken new linkedin session token
+     */
+    public void setLinkedinSessionToken(String linkedinSessionToken) {
+        prefser.put(KEY_LINKEDIN_SESSION_TOKEN, linkedinSessionToken);
+    }
 
 
     /**

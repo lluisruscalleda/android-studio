@@ -19,7 +19,16 @@ import com.google.android.gms.common.Scopes;
 import com.thesocialcoin.R;
 import com.thesocialcoin.controllers.AccountManager;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * A task to refresh credentials after adding facebook logins
@@ -38,6 +47,8 @@ public class RefreshCredentialsTask extends AsyncTask<Void, Void, String> {
     AccountManager.LoginType identityType;
     Context context = null;
     String googleAccountName;
+    String accesTokenUrl;
+
 
 //    public RefreshCredentialsTask(Session session) {
 //        this.session = session;
@@ -57,13 +68,23 @@ public class RefreshCredentialsTask extends AsyncTask<Void, Void, String> {
         this.listener=listener;
     }
 
-    public RefreshCredentialsTask(AccountManager.LoginType identityType, Context context, String googleAccountName, iRefreshCredentialsTask listener) {
+    // Google & Linkedin Token fetcher
+    public RefreshCredentialsTask(AccountManager.LoginType identityType, Context context, String accountNameAccesUrl, iRefreshCredentialsTask listener) {
         super();
         this.identityType = identityType;
         this.context = context;
-        this.googleAccountName = googleAccountName;
+        switch (identityType) {
+            case GOOGLE:
+                this.googleAccountName = accountNameAccesUrl;
+                break;
+            case LINKEDIN:
+                this.accesTokenUrl = accountNameAccesUrl;
+                break;
+        }
+
         this.listener=listener;
     }
+
 
     @Override
     protected void onPreExecute() {
@@ -73,35 +94,74 @@ public class RefreshCredentialsTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
 
-
-        Log.i(TAG, "google clientid: " + context.getResources().getString(R.string.bc_google_client_id));
-
         String accessToken = null;
         switch (identityType) {
 
             case GOOGLE:
+
+                Log.i(TAG, "google clientid: " + context.getResources().getString(R.string.bc_google_client_id));
+
                 try {
                     accessToken = fetchGoogleToken();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                Log.i(TAG, "google token: " + accessToken);
+                Log.i(TAG, "Google Authorization token: " + accessToken);
                 //Add Google Access Token to Cognito Sessions Provider
 
                 break;
             case FACEBOOK:
-                //Log.i(TAG, "facebook token: " + session.getAccessToken());
+                //Log.i(TAG, "Facebook token: " + accessToken);
                 //Add Facebook Session Token to Cognito Sessions Provider
+
+                break;
+            case LINKEDIN:
+
+                    String url = this.accesTokenUrl;
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpost = new HttpPost(url);
+                    try{
+                        HttpResponse response = httpClient.execute(httpost);
+                        if(response!=null){
+                            //If status is OK 200
+                            if(response.getStatusLine().getStatusCode()==200){
+                                String result = EntityUtils.toString(response.getEntity());
+                                //Convert the string result to a JSON Object
+                                JSONObject resultJson = new JSONObject(result);
+                                //Extract data from JSON Response
+                                int expiresIn = resultJson.has("expires_in") ? resultJson.getInt("expires_in") : 0;
+
+                                accessToken = resultJson.has("access_token") ? resultJson.getString("access_token") : null;
+                                Log.e("Tokenm", ""+accessToken);
+                                if(expiresIn>0 && accessToken!=null){
+                                    Log.i("Authorize", "This is the access Token: "+accessToken+". It will expires in "+expiresIn+" secs");
+
+                                    //Calculate date of expiration
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.add(Calendar.SECOND, expiresIn);
+                                    long expireDate = calendar.getTimeInMillis();
+
+
+                                }
+                            }
+                        }
+                    }catch(IOException e){
+                        Log.e("Authorize","Error Http response "+e.getLocalizedMessage());
+                    } catch (JSONException e) {
+                        Log.e("Authorize", "Error Parsing Http response " + e.getLocalizedMessage());
+                    }
+
+
+                Log.i(TAG, "Linkedin Authorization token: " + accessToken);
 
                 break;
             default:
                 break;
 
         }
-
-
         return accessToken;
+
     }
 
     @Override
