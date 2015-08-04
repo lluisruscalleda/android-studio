@@ -9,4 +9,8 @@
     <!-- Login Activity -->
     <string name="login_activity_main_phrase">Login to start creating a better world</string>
 
+     <string name="long_text">Android 5.0 Lollipop was one of the most significant Android releases ever,
+        in no small part due to the introduction of material design,
+        a new design language that refreshed the entire Android experience
+    </string>
 </resources>

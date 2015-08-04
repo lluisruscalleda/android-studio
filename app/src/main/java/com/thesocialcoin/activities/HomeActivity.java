@@ -3,7 +3,9 @@ package com.thesocialcoin.activities;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,16 +18,26 @@ import com.thesocialcoin.adapters.HomeFragmentPagerAdapter;
 import com.thesocialcoin.utils.FontUtils;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
 
-    @Bind(R.id.title)
-    TextView title;
+
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @Bind(R.id.tab_layout)
+    TabLayout tabLayout;
+    @Bind(R.id.view_pager)
+    ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        ButterKnife.bind(this);
 
         // If the Android version is lower than Jellybean, use this call to hide
         // the status bar.
@@ -41,20 +53,12 @@ public class HomeActivity extends AppCompatActivity {
          * */
         //AccountManager.getInstance(this).checkLogin();
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager()));
 
-        // Give the PagerSlidingTabStrip the ViewPager
-        TabLayout tabsStrip = (TabLayout) findViewById(R.id.tabs);
-        LinearLayout view = (LinearLayout) tabsStrip.getChildAt(0);
-        for (int i=0; i < view.getChildCount(); i++){
-            TextView textView = (TextView) view.getChildAt(i);
-            textView.setTypeface(FontUtils.getAppsBoldFont(this));
-        }
 
-        // Attach the view pager to the tab strip
-        tabsStrip.setupWithViewPager(viewPager);
+        setupNavigationView();
+        setupToolbar();
+        setupTabPager();
+
     }
 
     @Override
@@ -78,4 +82,38 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void setupNavigationView(){
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawers();
+    }
+
+    @OnClick(R.id.nav_burguer)
+    public void setupToolbar(){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    private void setupTabPager(){
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager()));
+
+
+        if(tabLayout == null)
+            return;
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        // Give the TabLayout the ViewPager
+        LinearLayout view = (LinearLayout) tabLayout.getChildAt(0);
+        for (int i=0; i < view.getChildCount(); i++){
+            TextView textView = (TextView) view.getChildAt(i);
+            textView.setTypeface(FontUtils.getAppsBoldFont(this));
+        }
+
+        // Attach the view pager to the tab strip
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
 }
+
