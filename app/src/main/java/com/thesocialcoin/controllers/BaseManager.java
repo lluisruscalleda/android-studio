@@ -18,7 +18,8 @@ public class BaseManager {
     protected static Context mContext;
 
     public BaseManager(Context context) {
-        RequestManager.EventBus.register(this);
+        sessionData = new SessionData(context);
+        RequestManager.EventBus.register(context);
     }
 
     public BaseManager()

@@ -1,5 +1,6 @@
 package com.thesocialcoin.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.thesocialcoin.R;
 import com.thesocialcoin.adapters.HomeFragmentPagerAdapter;
+import com.thesocialcoin.controllers.AccountManager;
 import com.thesocialcoin.utils.FontUtils;
 
 import butterknife.Bind;
@@ -51,7 +53,9 @@ public class HomeActivity extends AppCompatActivity {
          * This will redirect user to LoginActivity is he is not
          * logged in
          * */
-        //AccountManager.getInstance(this).checkLogin();
+        if(!AccountManager.getInstance(this).isLoggedIn()){
+            gotoLogin();
+        }
 
 
 
@@ -115,5 +119,16 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void gotoLogin(){
+        // user is not logged in redirect him to Login Activity
+        Intent i = new Intent(this, LoginActivity.class);
+        // Closing all the Activities
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // Add new Flag to start new Activity
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // Staring Login Activity
+        this.startActivity(i);
+        this.finish();
+    }
 }
 

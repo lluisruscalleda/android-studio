@@ -59,7 +59,7 @@ public class AccountManager extends BaseManager {
     }
 
     private AccountManager(Context context) {
-        super();
+        super(context);
     }
 
 
@@ -147,7 +147,7 @@ public class AccountManager extends BaseManager {
         requestJson.put(PARAM_AUTHTOKEN, token);
         requestJson.put(PARAM_LANGUAGE, Utils.getAppLanguage());
 
-        RequestManager.addToRequestQueue(new LinkedinLoginRequest().create(requestJson));
+        RequestManager.addToRequestQueue(new FacebookLoginRequest().create(requestJson));
     }
 
     /**
@@ -167,7 +167,7 @@ public class AccountManager extends BaseManager {
         requestJson.put(PARAM_AUTHTOKEN, token);
         requestJson.put(PARAM_LANGUAGE, Utils.getAppLanguage());
 
-        RequestManager.addToRequestQueue(new FacebookLoginRequest().create(requestJson));
+        RequestManager.addToRequestQueue(new LinkedinLoginRequest().create(requestJson));
     }
 
 
@@ -357,14 +357,7 @@ public class AccountManager extends BaseManager {
     public static void checkLogin(){
         // Check login status
         if(!isLoggedIn()){
-            // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(mContext, LoginActivity.class);
-            // Closing all the Activities
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            // Staring Login Activity
-            mContext.startActivity(i);
+
         }
     }
 
@@ -425,7 +418,7 @@ public class AccountManager extends BaseManager {
     /**
      * Is logged in method will return if there's an active user in session
      * */
-    private static boolean isLoggedIn(){
+    public static boolean isLoggedIn(){
         return (getUserSession() != null)?true:false;
     }
 }

@@ -1,7 +1,6 @@
 package com.thesocialcoin.requests;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -14,7 +13,6 @@ import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.ottovolley.core.OttoGsonPostRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -47,23 +45,11 @@ public class LoginRequest extends RequestInterface {
         this.context = App.getAppContext();
         this._params = params;
 
-        URL = context.getResources().getString(R.string.bc_api_server_url)+"users/login";
+        URL = context.getResources().getString(R.string.bc_api_server_url)+ context.getResources().getString(R.string.bc_api_login_endpoint);
 
-
-        try {
-            jsonObjectParams = new JSONObject();
-            jsonObjectParams.put("email", params.get("user_name"));
-            jsonObjectParams.put("password", params.get("password"));
-            jsonObjectParams.put("ttl", 1209600000);
-
-            Log.d(TAG, jsonObjectParams.toString());
-        } catch (JSONException e){
-            Log.e(TAG, e.toString());
-        }
 
         // JSON Post Request receiving GSON pojo model
-        //LoginRequest ha de ser el POJO creado
-        OttoGsonPostRequest<APILoginResponse> request = new OttoGsonPostRequest<APILoginResponse>(RequestManager.EventBus, jsonObjectParams, AppRequestHelper.getInstance(context).getAuthorizationToken(), URL, APILoginResponse.class, _requestErrorListener);
+        OttoGsonPostRequest<APILoginResponse> request = new OttoGsonPostRequest<APILoginResponse>(RequestManager.EventBus, new JSONObject(params), AppRequestHelper.getInstance(context).getAuthorizationToken(), URL, APILoginResponse.class, _requestErrorListener);
         request.setRetryPolicy(new DefaultRetryPolicy(RequestManager.REQUEST_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 

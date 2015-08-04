@@ -3,6 +3,7 @@ package com.thesocialcoin.requests;
 import android.content.Context;
 import android.util.Log;
 
+import com.thesocialcoin.controllers.AccountManager;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class AppRequestHelper {
     */
     public static Map<String, String> getAuthorizationToken() {
         Map<String, String> params = new HashMap<String, String>();
-        String authToken = new SessionData(mContext).getSessionToken();
+        String authToken = AccountManager.getInstance(mContext).getUserSession();
         if (authToken != null) {
             params.put("Authorization", authToken);
         }

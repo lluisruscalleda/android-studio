@@ -24,7 +24,7 @@ public class RequestManager {
         if (!_isInitialized) {
             _isInitialized = true;
             mContext = context;
-            VolleyRequestQueue = VolleySingleton.getInstance(context.getApplicationContext()).getRequestQueue();
+            VolleyRequestQueue = VolleySingleton.getInstance(mContext).getRequestQueue();
             EventBus = new AndroidBus();
             ResponseBuffer = new OttoGsonResponseBuffer(EventBus);
         }

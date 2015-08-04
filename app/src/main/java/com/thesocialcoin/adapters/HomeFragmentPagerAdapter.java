@@ -16,6 +16,8 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "ALL", "MY COMPANY" };
 
+
+
     public HomeFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
