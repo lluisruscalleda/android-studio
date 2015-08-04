@@ -11,9 +11,15 @@ import com.thesocialcoin.networking.error.TimelineVolleyError;
 public class TimelineEvent extends AbstractEvent {
 
     public enum Type {
-        START,
-        SUCCESS,
-        ERROR
+        START_ALL,
+        SUCCESS_ALL,
+        ERROR_ALL,
+        START_CO,
+        SUCCESS_CO,
+        ERROR_CO,
+        START_YOURS,
+        SUCCESS_YOURS,
+        ERROR_YOURS
     }
 
     private TimelineVolleyError error;

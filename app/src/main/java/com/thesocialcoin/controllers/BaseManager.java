@@ -19,12 +19,11 @@ public class BaseManager {
 
     public BaseManager(Context context) {
         sessionData = new SessionData(context);
-        RequestManager.EventBus.register(context);
     }
 
     public BaseManager()
     {
-        RequestManager.EventBus.register(this);
+
     }
 
     protected static void postEvent(Object event){

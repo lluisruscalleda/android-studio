@@ -60,6 +60,7 @@ public class AccountManager extends BaseManager {
 
     private AccountManager(Context context) {
         super(context);
+        RequestManager.EventBus.register(this);
     }
 
 

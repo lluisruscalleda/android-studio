@@ -57,8 +57,6 @@ public class HomeActivity extends AppCompatActivity {
             gotoLogin();
         }
 
-
-
         setupNavigationView();
         setupToolbar();
         setupTabPager();

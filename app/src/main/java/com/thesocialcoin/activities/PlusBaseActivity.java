@@ -10,6 +10,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.thesocialcoin.controllers.AccountManager;
 import com.thesocialcoin.tasks.RefreshCredentialsTask;
@@ -86,7 +87,8 @@ public abstract class PlusBaseActivity extends AppCompatActivity
         mGoogleApiClient = b
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
-                .addScope(Plus.SCOPE_PLUS_PROFILE).build();
+                .addScope(Plus.SCOPE_PLUS_PROFILE)
+                .addScope(new Scope("email")).build();
     }
 
     @Override
@@ -269,7 +271,7 @@ public abstract class PlusBaseActivity extends AppCompatActivity
             setAccountName(Plus.AccountApi.getAccountName(mGoogleApiClient));
         }
         if (mSessionCookie == null) {
-            getSession();
+            getGoogleSession();
         }else {
             updateConnectButtonState();
             setProgressBarVisible(false);
@@ -330,7 +332,7 @@ public abstract class PlusBaseActivity extends AppCompatActivity
      * retrieving the ID token, and sending it to the server.
      *
      */
-    private void getSession() {
+    protected void getGoogleSession() {
         if (mSessionCookie != null) {
             // We already have a session!
             return;

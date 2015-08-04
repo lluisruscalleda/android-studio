@@ -481,7 +481,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         //TODO: Update this logic to also handle the user logged in by email.
         boolean connected = (getPlusClient() != null)?getPlusClient().isConnected():false;
 
-        mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
+        //mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
+        //we have a google account connected so we call our API
+        if(connected)
+            getGoogleSession();
     }
 
     @Override

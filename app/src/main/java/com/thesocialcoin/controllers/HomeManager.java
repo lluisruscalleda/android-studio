@@ -8,6 +8,7 @@ import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
 import com.thesocialcoin.events.TimelineEvent;
 import com.thesocialcoin.models.pojos.APITimelinePageResponse;
+import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
 import com.thesocialcoin.requests.AppVersionedRequest;
@@ -34,6 +35,7 @@ public class HomeManager extends BaseManager {
 
     private HomeManager(Context context) {
         super();
+        RequestManager.EventBus.register(this);
     }
 
 
@@ -46,7 +48,7 @@ public class HomeManager extends BaseManager {
         return instance;
     }
 
-    public void fetchTimeline(){
+    public void fetchAllTimeline(){
         String timelineUrl = mContext.getResources().getString(R.string.bc_api_server_url)
                 + "/" + mContext.getResources().getString(R.string.bc_api_current_version)
                 + "/" + mContext.getResources().getString(R.string.bc_api_timeline_endpoint);
@@ -68,13 +70,22 @@ public class HomeManager extends BaseManager {
 
 
     /**
-     * Creates an event notifying that timeline has downloaded
+     * Creates an event notifying that all timeline has downloaded
      *
      * @return
      */
-    public TimelineEvent produceTimelineDownloadedEvent()
+    public TimelineEvent produceAllTimelineDownloadedEvent()
     {
-        return new TimelineEvent(TimelineEvent.Type.SUCCESS);
+        return new TimelineEvent(TimelineEvent.Type.SUCCESS_ALL);
+    }
+    /**
+     * Creates an event notifying that your company timeline has downloaded
+     *
+     * @return
+     */
+    public TimelineEvent produceCompanyTimelineDownloadedEvent()
+    {
+        return new TimelineEvent(TimelineEvent.Type.SUCCESS_CO);
     }
 
 }

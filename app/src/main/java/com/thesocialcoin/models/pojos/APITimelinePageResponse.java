@@ -19,7 +19,7 @@ public class APITimelinePageResponse {
     private String previous;
     @Expose
     @SerializedName("results")
-    private Ripple[] results;
+    private TimelineItem[] results;
 
     public String getNext() {
         return next;
@@ -37,11 +37,11 @@ public class APITimelinePageResponse {
         this.previous = previous;
     }
 
-    public Ripple[] getResults() {
+    public TimelineItem[] getResults() {
         return results;
     }
 
-    public void setResults(Ripple[] previous) {
+    public void setResults(TimelineItem[] previous) {
         this.results = results;
     }
 
