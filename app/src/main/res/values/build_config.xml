@@ -25,5 +25,16 @@
     <string name="bc_api_linkedin_auth_endpoint">api-linkedin-auth</string>
     <string name="bc_api_user_registration_endpoint">api-registration</string>
     <string name="bc_api_login_endpoint">api-token-auth</string>
+    <!-- Versioned endpoints -->
+    <string name="bc_api_current_version">v0.1</string>
+    <string name="bc_api_activities_endpoint">activity</string>
+    <string name="bc_api_timeline_endpoint">timeline</string>
+    <string name="bc_api_user_info_endpoint">me</string>
+    <string name="bc_api_ripple_acts_endpoint">ripples/%1$s/acts</string>
+    <string name="bc_api_act_comments_endpoint">acts/%1$s/comments</string>
+    <string name="bc_api_acts_new_endpoint">acts/new</string>
+    <string name="bc_api_ripple_detail_endpoint">ripples/%1$s</string>
+    <string name="bc_api_my_acts_endpoint">me/acts</string>
+    <string name="bc_api_location_endpoint">me/location</string>
 
 </resources>
