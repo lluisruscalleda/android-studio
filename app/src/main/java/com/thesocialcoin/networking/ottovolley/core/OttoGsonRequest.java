@@ -1,5 +1,7 @@
 package com.thesocialcoin.networking.ottovolley.core;
 
+import com.android.volley.VolleyError;
+import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.volleyextensions.GsonRequest;
 import com.squareup.otto.Bus;
 
@@ -14,12 +16,22 @@ public class OttoGsonRequest<T> extends GsonRequest<T> {
     /** A ID for this request, unique for the lifetime of the process (given that you do < 2BN requests) */
     public int requestId;
 
-    public OttoGsonRequest(Bus eventBus, Map<String, String> headers, String url, Class<T> classType) {
+    public OttoGsonRequest(Bus eventBus, Map<String, String> headers, String url, Class<T> classType, String ottoErrorListener) {
         super(url,
                 classType, headers,
                 new OttoSuccessListener<T>(eventBus, _idCounter),
-                new OttoErrorListener(eventBus, _idCounter));
+                OttoErrorListenerFactory.getOttoErrorListener(ottoErrorListener, eventBus, _idCounter));
         requestId = _idCounter;
         _idCounter++;
+    }
+
+    @Override
+    protected VolleyError parseNetworkError(VolleyError volleyError){
+        if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+            VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+            volleyError = error;
+        }
+
+        return volleyError;
     }
 }

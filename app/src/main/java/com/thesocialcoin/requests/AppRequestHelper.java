@@ -44,7 +44,7 @@ public class AppRequestHelper {
         Map<String, String> params = new HashMap<String, String>();
         String authToken = AccountManager.getInstance(mContext).getUserSession();
         if (authToken != null) {
-            params.put("Authorization", authToken);
+            params.put("Authorization", "Token " + authToken);
         }
 
         return params;

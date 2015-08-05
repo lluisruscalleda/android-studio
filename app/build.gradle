@@ -95,6 +95,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:22.0.+'
     compile 'com.android.support:recyclerview-v7:22.0.+'
     compile 'com.hannesdorfmann.fragmentargs:annotation:2.1.2'
+    compile 'com.hannesdorfmann.fragmentargs:bundler-parceler:2.1.2'
     apt 'com.hannesdorfmann.fragmentargs:processor:2.1.2'
 
 }

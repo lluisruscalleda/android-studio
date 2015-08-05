@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.thesocialcoin.App;
 import com.thesocialcoin.R;
 import com.thesocialcoin.controllers.HomeManager;
 import com.thesocialcoin.models.pojos.TimelineItem;
@@ -28,7 +30,7 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
     /**
      * We define a parent ViewHolder for the two different Card type
      */
-    public static class TimelineViewHolder extends RecyclerView.ViewHolder {
+    public static class TimelineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.card_view)
         CardView cardView;
         @Bind(R.id.ripple_title)
@@ -41,7 +43,7 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
         TimelineViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
+            itemView.setOnClickListener(this);
         }
 
         // Method called onBindViewHolder is called from the adapter
@@ -49,6 +51,15 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
             mItem = item;
             this.rippleDescription.setText(item.getDescription());
             this.rippleTitle.setText(item.getRipple().getTitle());
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItem != null) {
+                Toast.makeText(App.getAppContext(),
+                        mItem.getDescription(),
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 

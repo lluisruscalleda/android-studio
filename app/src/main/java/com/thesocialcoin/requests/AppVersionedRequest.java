@@ -7,9 +7,7 @@ import com.android.volley.Request;
 import com.thesocialcoin.App;
 import com.thesocialcoin.networking.core.RequestInterface;
 import com.thesocialcoin.networking.core.RequestManager;
-import com.thesocialcoin.networking.ottovolley.core.OttoGsonPostRequest;
-
-import org.json.JSONObject;
+import com.thesocialcoin.networking.ottovolley.core.OttoGsonRequest;
 
 import java.util.HashMap;
 
@@ -31,7 +29,7 @@ public class AppVersionedRequest<T> extends RequestInterface {
     {
         this.context = App.getAppContext();
 
-        OttoGsonPostRequest<T> request = new OttoGsonPostRequest<T>(RequestManager.EventBus, (params!= null)?new JSONObject(params):null, AppRequestHelper.getInstance(context).getAuthorizationToken(), endpoint, classType, requestErrorListener);
+        OttoGsonRequest<T> request = new OttoGsonRequest<T>(RequestManager.EventBus, AppRequestHelper.getInstance(context).getAuthorizationToken(), endpoint, classType, requestErrorListener);
         request.setRetryPolicy(new DefaultRetryPolicy(RequestManager.REQUEST_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         return request;

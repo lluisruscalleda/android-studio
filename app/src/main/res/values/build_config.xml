@@ -4,7 +4,6 @@
     <string name="bc_app_bold_font">Montserrat-Bold.ttf</string>
     <string name="bc_app_regular_font">Montserrat-Regular.ttf</string>
 
-    <string name="bc_db_path">/data/data/ad.andorra.turismeactiu/databases/db.sqlite</string>
     <string name="bc_api_server_url">http://151.80.235.34:8080/</string>
     <string name="bc_session_preferences_filename">thesocialcoin_session_data</string>
     <string name="bc_project_preferences_filename">thesocialcoin_project_data</string>

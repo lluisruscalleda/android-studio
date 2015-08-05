@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,10 +14,15 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
 import com.thesocialcoin.adapters.HomeFragmentPagerAdapter;
 import com.thesocialcoin.controllers.AccountManager;
+import com.thesocialcoin.controllers.HomeManager;
+import com.thesocialcoin.events.TimelineEvent;
+import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.FontUtils;
 
 import butterknife.Bind;
@@ -33,6 +39,22 @@ public class HomeActivity extends AppCompatActivity {
     @Bind(R.id.view_pager)
     ViewPager viewPager;
 
+    private HomeFragmentPagerAdapter mHomePagerAdapter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RequestManager.EventBus.register(this);
+
+        //We retrieve the timeline data
+        HomeManager.getInstance(this).fetchAllTimeline();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        RequestManager.EventBus.unregister(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         if(!AccountManager.getInstance(this).isLoggedIn()){
             gotoLogin();
         }
+
 
         setupNavigationView();
         setupToolbar();
@@ -98,8 +121,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupTabPager(){
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager()));
-
+        mHomePagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mHomePagerAdapter);
+        viewPager.addOnPageChangeListener(onPageChangeListener);
 
         if(tabLayout == null)
             return;
@@ -117,6 +141,23 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /**
+     * Activity subscription to timeline data changes for notify it
+     */
+    @Subscribe
+    public void onTimelineChange(TimelineEvent event) {
+        if (event.getType().equals(TimelineEvent.Type.SUCCESS_ALL)) {
+            // notify all timeline was updated
+            mHomePagerAdapter.getFragment(viewPager.getCurrentItem()).updateTimeline();
+        }
+        if (event.getType().equals(TimelineEvent.Type.SUCCESS_CO)) {
+            // notify user company timeline was updated
+            mHomePagerAdapter.getFragment(viewPager.getCurrentItem()).updateTimeline();
+        }
+    }
+
+
+
     private void gotoLogin(){
         // user is not logged in redirect him to Login Activity
         Intent i = new Intent(this, LoginActivity.class);
@@ -128,5 +169,35 @@ public class HomeActivity extends AppCompatActivity {
         this.startActivity(i);
         this.finish();
     }
+
+
+    /**
+     * View Pager Scroll Listener
+     *
+     * */
+    OnPageChangeListener onPageChangeListener =
+        new OnPageChangeListener() {
+
+            // This method will be invoked when a new page becomes selected.
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(HomeActivity.this,
+                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            // This method will be invoked when the current page is scrolled
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Code goes here
+            }
+
+            // Called when the scroll state changes:
+            // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Code goes here
+            }
+        };
+
 }
 

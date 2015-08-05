@@ -18,18 +18,25 @@
             android:orientation="vertical"
             android:paddingTop="24dp">
 
-
-            <TextView
-                android:id="@+id/total_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <android.support.v7.widget.RecyclerView
+            <com.thesocialcoin.views.RecycleEmptyErrorView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/rv_timeline"
                 />
 
+            <RelativeLayout
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_empty_timeline_list" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/error_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_error_timeline_list" />
+            </RelativeLayout>
             <!--<android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
