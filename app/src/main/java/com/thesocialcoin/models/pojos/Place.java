@@ -10,19 +10,25 @@ package com.thesocialcoin.models.pojos;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
 
+@Parcel
 public class Place {
 
     @SerializedName("full_name")
     @Expose
-    private String fullName;
+    String fullName;
     @Expose
-    private String country;
+    String country;
     @Expose
-    private String name;
+    String name;
     @SerializedName("country_code")
     @Expose
-    private String countryCode;
+    String countryCode;
+
+
+    public Place(){ /*Required empty bean constructor for parceler lib*/ }
+
 
     /**
      *

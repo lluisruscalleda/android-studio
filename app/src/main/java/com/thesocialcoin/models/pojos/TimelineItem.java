@@ -6,41 +6,48 @@ package com.thesocialcoin.models.pojos;
  * Created by identitat on 04/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class TimelineItem {
 
     @Expose
-    private String url;
+    String url;
     @Expose
-    private int id;
+    int id;
     @Expose
-    private User user;
+    User user;
     @SerializedName("num_comments")
     @Expose
-    private int numComments;
+    int numComments;
     @Expose
-    private String photo;
+    String photo;
     @Expose
-    private int value;
+    int value;
     @Expose
-    private Ripple ripple;
+    Ripple ripple;
     @Expose
-    private String description;
+    String description;
     @Expose
-    private String latitude;
+    String latitude;
     @Expose
-    private String longitude;
+    String longitude;
     @Expose
-    private Place place;
+    Place place;
     @SerializedName("created_at")
     @Expose
-    private String createdAt;
+    String createdAt;
     @Expose
-    private boolean anonymous;
+    boolean anonymous;
     @Expose
-    private String kind;
+    String kind;
+
+
+    public TimelineItem(){ /*Required empty bean constructor for parceler lib*/ }
 
     /**
      *

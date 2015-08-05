@@ -8,10 +8,13 @@ import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
 import com.thesocialcoin.events.TimelineEvent;
 import com.thesocialcoin.models.pojos.APITimelinePageResponse;
+import com.thesocialcoin.models.pojos.TimelineItem;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
 import com.thesocialcoin.requests.AppVersionedRequest;
+
+import java.util.List;
 
 /**
  * thesocialcoin
@@ -27,8 +30,21 @@ public class HomeManager extends BaseManager {
      *
      */
 
+    // Home tabs for listing all ripples or only yours
     public static final int HOME_TAB_ALL = 1;
     public static final int HOME_TAB_COMPANY = 2;
+
+
+    // Timeline Riple Lists : ALL , YOUR COMPANY
+    private List<TimelineItem> mAllTimelineRipples;
+    private List<TimelineItem> mYourCompanyTimelineRipples;
+
+
+    // Different ripple types
+    public static final int NORMAL_RIPPLE = 0;
+    public static final int COMPANY_RIPPLE = 1;
+
+
 
     private static String TAG = HomeManager.class.getSimpleName();
     private static HomeManager instance = null;

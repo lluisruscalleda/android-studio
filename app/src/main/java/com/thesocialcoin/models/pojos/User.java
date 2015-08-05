@@ -16,35 +16,35 @@ import org.parceler.Parcel;
 public class User extends iPojo {
 
     @Expose
-    private String id;
+    String id;
     @Expose
-    private String url;
+    String url;
     @Expose
     @SerializedName("name")
-    private String username;
+    String username;
     @Expose
-    private String gender;
+    String gender;
     @Expose
-    private String email;
+    String email;
     @Expose
-    private String picture;
+    String picture;
     @Expose
     @SerializedName("city_name")
-    private String city;
+    String city;
     @Expose
     @SerializedName("country_name")
-    private String country;
+    String country;
     @Expose
-    private String created;
+    String created;
     @Expose
-    private String lastUpdated;
+    String lastUpdated;
 
     @Expose
-    private String score;
+    String score;
     @Expose
-    private String company;
+    String company;
     @Expose
-    private String location;
+    String location;
 
     public User() {}
 

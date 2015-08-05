@@ -9,41 +9,47 @@ package com.thesocialcoin.models.pojos;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Ripple {
 
     @Expose
-    private String url;
+    String url;
     @Expose
-    private int id;
+    int id;
     @Expose
-    private String title;
+    String title;
     @Expose
-    private String code;
+    String code;
     @SerializedName("user_id")
     @Expose
-    private int userId;
+    int userId;
     @Expose
-    private User user;
+    User user;
     @Expose
-    private Company company;
+    Company company;
     @SerializedName("activated_at")
     @Expose
-    private String activatedAt;
+    String activatedAt;
     @Expose
-    private Object challenge;
+    Object challenge;
     @Expose
-    private String logo;
+    String logo;
     @Expose
-    private int score;
+    int score;
     @SerializedName("num_acts")
     @Expose
-    private int numActs;
+    int numActs;
     @SerializedName("num_users")
     @Expose
-    private int numUsers;
+    int numUsers;
     @SerializedName("num_cities")
     @Expose
-    private int numCities;
+    int numCities;
+
+    public Ripple(){ /*Required empty bean constructor for parceler lib*/ }
+
 
     /**
      *

@@ -9,15 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.bundler.CastedArrayListArgsBundler;
 import com.thesocialcoin.R;
+import com.thesocialcoin.adapters.HomeTimelineRipplesAdapter;
 import com.thesocialcoin.controllers.HomeManager;
-import com.thesocialcoin.models.pojos.Ripple;
+import com.thesocialcoin.models.pojos.TimelineItem;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
 /**
  * thesocialcoin
  * <p/>
@@ -32,11 +35,12 @@ public class HomeListPageFragment extends Fragment {
     @Bind(R.id.total_items)
     TextView total;
     @Bind(R.id.rv_timeline)
-    RecyclerView timelineList;
+    RecyclerView timelineRecyclerView;
 
-    private List<Ripple> ripples;
+    @Arg ( bundler = CastedArrayListArgsBundler.class )
+    List<TimelineItem> mTimelineRipples;   // Foo implements Parcelable
 
-    public static HomeListPageFragment newInstance(int page, String pageTitle) {
+    public static HomeListPageFragment newInstance(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         HomeListPageFragment fragment = new HomeListPageFragment();
@@ -47,7 +51,7 @@ public class HomeListPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
+        FragmentArgs.inject(this);
 
 
     }
@@ -60,7 +64,11 @@ public class HomeListPageFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        timelineList.setLayoutManager(llm);
+        timelineRecyclerView.setLayoutManager(llm);
+
+        mTimelineRipples = HomeManager.getInstance(getActivity()).getCrimes();
+        timelineRecyclerView.setAdapter(new HomeTimelineRipplesAdapter(mTimelineRipples));
+
 
         return view;
     }
