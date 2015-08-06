@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.thesocialcoin.App;
 import com.thesocialcoin.R;
 import com.thesocialcoin.controllers.HomeManager;
+import com.thesocialcoin.models.pojos.Ripple;
 import com.thesocialcoin.models.pojos.TimelineItem;
 
 import java.util.List;
@@ -33,10 +34,10 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
     public static class TimelineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.card_view)
         CardView cardView;
-        @Bind(R.id.ripple_title)
-        TextView rippleTitle;
-        @Bind(R.id.ripple_description)
-        TextView rippleDescription;
+        @Bind(R.id.title)
+        TextView actTitle;
+        @Bind(R.id.description)
+        TextView actDescription;
 
         protected TimelineItem mItem;
 
@@ -49,8 +50,6 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
         // Method called onBindViewHolder is called from the adapter
         protected void bindItem(TimelineItem item){
             mItem = item;
-            this.rippleDescription.setText(item.getDescription());
-            this.rippleTitle.setText(item.getRipple().getTitle());
         }
 
         @Override
@@ -63,94 +62,145 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
         }
     }
 
-    public static class RippleViewHolder extends TimelineViewHolder {
+    public static class ActViewHolder extends TimelineViewHolder {
 
 
-        RippleViewHolder(View itemView) {
+        ActViewHolder(View itemView) {
             super(itemView);
 
         }
 
         // Bind holder data
         public void bindItem(TimelineItem item) {
-
-
+            super.bindItem(item);
+            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"mOck Description");
+            if(item.getRipple()==null){
+                this.actTitle.setText("mOck Title");
+            }else{
+                this.actTitle.setText(item.getRipple().getTitle());
+            }
         }
     }
-    public static class CompanyRippleViewHolder extends TimelineViewHolder {
+    public static class CompanyActViewHolder extends TimelineViewHolder {
 
 
-        CompanyRippleViewHolder(View itemView) {
+        CompanyActViewHolder(View itemView) {
             super(itemView);
 
         }
 
         // Bind holder data
         public void bindItem(TimelineItem item) {
-
-
+            super.bindItem(item);
+            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"mOck Description");
+            if(item.getRipple()==null){
+                this.actTitle.setText("mOck Title");
+            }else{
+                this.actTitle.setText(item.getRipple().getTitle());
+            }
         }
     }
 
-    private List<TimelineItem> items;
+    public static class ChallengeViewHolder extends TimelineViewHolder {
+
+
+        ChallengeViewHolder(View itemView) {
+            super(itemView);
+
+        }
+
+        // Bind holder data
+        public void bindItem(TimelineItem item) {
+            super.bindItem(item);
+            this.actDescription.setText(item.getDescription());
+            this.actTitle.setText(item.getTitle());
+        }
+    }
+
+    private List<TimelineItem> mData;
 
     public HomeTimelineRipplesAdapter(List<TimelineItem> items) {
-        this.items = items;
+        this.mData = items;
     }
 
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return mData.size();
     }
 
     @Override
     public TimelineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if (viewType == HomeManager.NORMAL_RIPPLE) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_ripple_cardview,parent,false); //Inflating the layout
+        switch (viewType) {
+            case HomeManager.NORMAL_ACT:
+                View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_act_cardview,parent,false); //Inflating the layout
 
-            RippleViewHolder vhItem = new RippleViewHolder(v); //Creating ViewHolder and passing the object of type view
+                ActViewHolder vh1 = new ActViewHolder(view1); //Creating ViewHolder and passing the object of type view
 
-            return vhItem; // Returning the created object
+                return vh1; // Returning the created object
 
-            //inflate your layout and pass it to view holder
 
-        } else if (viewType == HomeManager.COMPANY_RIPPLE) {
+            case HomeManager.COMPANY_ACT:
 
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_ripple_company_cardview,parent,false); //Inflating the layout
+                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_act_company_cardview,parent,false); //Inflating the layout
 
-            CompanyRippleViewHolder vhHeader = new CompanyRippleViewHolder(v); //Creating ViewHolder and passing the object of type view
+                CompanyActViewHolder vh2 = new CompanyActViewHolder(view2); //Creating ViewHolder and passing the object of type view
 
-            return vhHeader; //returning the object created
+                return vh2; //returning the object created
 
+            case HomeManager.CHALLENGE_ACT:
+                View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_challenge_cardview,parent,false); //Inflating the layout
+
+                ChallengeViewHolder vh3 = new ChallengeViewHolder(view3); //Creating ViewHolder and passing the object of type view
+
+                return vh3; // Returning the created object
+
+            default:return null;
 
         }
-        return null;
 
     }
 
     @Override
     public void onBindViewHolder(TimelineViewHolder holder, int position) {
-        holder.bindItem(items.get(position));
+        holder.bindItem(mData.get(position));
     }
 
     @Override
     public int getItemViewType(int position) {
         // return 0 or 1 depending on ripple type (normal or company ripple)
-        if (getItem(position).getRipple().getCompany() != null)
-            return HomeManager.COMPANY_RIPPLE;
+        TimelineItem item = getItem(position);
+        if(item != null){
 
-        return HomeManager.NORMAL_RIPPLE;
+            if(item.getKind().equals(HomeManager.KIND_ACT)){
+                Ripple ripple = getItem(position).getRipple();
+                if (ripple.getCompany() != null) {
+                    return HomeManager.COMPANY_ACT;
+                } else{
+                    return HomeManager.NORMAL_ACT;
+                }
+            } else if(item.getKind().equals(HomeManager.KIND_CHALLENGE)){
+                return HomeManager.CHALLENGE_ACT;
+            }
+        }
+
+        return 0;
     }
 
     public TimelineItem getItem(int position) {
-        return items.get(position);
+        return mData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
+
+    public void updateList(List<TimelineItem> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
+
 
 }

@@ -2,7 +2,6 @@ package com.thesocialcoin.controllers;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
@@ -13,8 +12,9 @@ import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.error.TimelineRequestFailed;
 import com.thesocialcoin.networking.error.TimelineVolleyError;
+import com.thesocialcoin.networking.ottovolley.core.OttoGsonRequest;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
-import com.thesocialcoin.requests.AppVersionedRequest;
+import com.thesocialcoin.requests.AppVersionedGetRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,10 +45,16 @@ public class HomeManager extends BaseManager {
 
 
     // Different ripple types
-    public static final int NORMAL_RIPPLE = 0;
-    public static final int COMPANY_RIPPLE = 1;
+    public static final int NORMAL_ACT = 0;
+    public static final int COMPANY_ACT = 1;
+    public static final int CHALLENGE_ACT = 2;
 
-    private static boolean mFetchingTimeline = false;
+    public static final String KIND_ACT = "act";
+    public static final String KIND_CHALLENGE = "challenge";
+
+    //we use an int request state for fecthing switch all or user company acts
+    private static int mFetchingAllTimeline = 0;
+    private static int mFetchingUserCompanyTimeline = 0;
 
     private static String TAG = HomeManager.class.getSimpleName();
     private static HomeManager instance = null;
@@ -68,14 +74,17 @@ public class HomeManager extends BaseManager {
         return instance;
     }
 
-    public static boolean isFetchingTimeline(){
-        return mFetchingTimeline;
+    public static boolean isFetchingAllTimeline(){
+        return (mFetchingAllTimeline==0)?false:true;
+    }
+    public static boolean isFetchingUserCompanyTimeline(){
+        return (mFetchingUserCompanyTimeline==0)?false:true;
     }
 
-    public static List<TimelineItem> getAllTimelineRipples(){
+    public static List<TimelineItem> getAllTimelineActs(){
         return mAllTimelineRipples;
     }
-    public static List<TimelineItem> getUserCompanyTimelineRipples(){
+    public static List<TimelineItem> getUserCompanyTimelineActs(){
         return mUserCompanyTimelineRipples;
     }
 
@@ -83,10 +92,10 @@ public class HomeManager extends BaseManager {
     public static List<TimelineItem> getTimelineRipplesByHomePage(int page){
         switch (page){
             case HOME_TAB_ALL:
-                return getAllTimelineRipples();
+                return getAllTimelineActs();
 
             case HOME_TAB_COMPANY:
-                return getUserCompanyTimelineRipples();
+                return getUserCompanyTimelineActs();
 
         }
 
@@ -95,32 +104,50 @@ public class HomeManager extends BaseManager {
     }
 
     /**
-     * Method to fetch all timeline ripples from API
+     * Method to fetch all timeline act from API
      */
     public void fetchAllTimeline(){
-        //if(!mFetchingTimeline) {
-            mFetchingTimeline = true;
+        if(!isFetchingAllTimeline()) {
             String timelineUrl = mContext.getResources().getString(R.string.bc_api_server_url)
                     + mContext.getResources().getString(R.string.bc_api_current_version)
                     + "/" + mContext.getResources().getString(R.string.bc_api_timeline_endpoint);
 
-        RequestManager.addToRequestQueue(new AppVersionedRequest<APITimelinePageResponse>().create(null, timelineUrl, APITimelinePageResponse.class, OttoErrorListenerFactory.TIMELINE_ERROR_LISTENER));
-        //}
+            OttoGsonRequest request = new AppVersionedGetRequest<APITimelinePageResponse>().create(null, timelineUrl, APITimelinePageResponse.class, OttoErrorListenerFactory.TIMELINE_ERROR_LISTENER);
+            RequestManager.addToRequestQueue(request);
+            mFetchingAllTimeline = request.requestId;
+        }
+    }
+
+    /**
+     * Method to fetch user company timeline act from API
+     */
+    public void fetchUserCompanyTimeline(){
+        if(!isFetchingUserCompanyTimeline()) {
+            String timelineUrl = mContext.getResources().getString(R.string.bc_api_server_url)
+                + mContext.getResources().getString(R.string.bc_api_current_version)
+                + "/" + mContext.getResources().getString(R.string.bc_api_timeline_endpoint) +"?company_id=6";
+
+            OttoGsonRequest request = new AppVersionedGetRequest<APITimelinePageResponse>().create(null, timelineUrl, APITimelinePageResponse.class, OttoErrorListenerFactory.TIMELINE_ERROR_LISTENER);
+            RequestManager.addToRequestQueue(request);
+            mFetchingUserCompanyTimeline = request.requestId;
+        }
     }
 
     @Subscribe
     public void onAPITimelineResponseReceived(VolleyRequestSuccess<APITimelinePageResponse> response)
     {
         Log.d(TAG, "Request end: " + response.requestId);
-        if (response.response instanceof APITimelinePageResponse)
-        {
-            mAllTimelineRipples = Arrays.asList(response.response.getResults());
-            produceAllTimelineDownloadedEvent();
-            mFetchingTimeline = false;
+        if (response.response instanceof APITimelinePageResponse) {
 
-            Toast.makeText(mContext,
-                    String.valueOf(mAllTimelineRipples.size()),
-                    Toast.LENGTH_LONG).show();
+            if (mFetchingAllTimeline == response.requestId){
+                mAllTimelineRipples = Arrays.asList(response.response.getResults());
+                postEvent(produceAllTimelineDownloadedEvent());
+                mFetchingAllTimeline = 0;
+            }else if(mFetchingUserCompanyTimeline == response.requestId){
+                mUserCompanyTimelineRipples = Arrays.asList(response.response.getResults());
+                postEvent(produceCompanyTimelineDownloadedEvent());
+                mFetchingUserCompanyTimeline = 0;
+            }
         }
     }
 
@@ -135,10 +162,16 @@ public class HomeManager extends BaseManager {
         Log.d(TAG, "Volley error : " + requestError.error.toString());
         Log.d(TAG, "Volley error : " + requestError.error.getMessage());
 
-        mFetchingTimeline = false;
+        if (mFetchingAllTimeline == requestError.requestId){
+            // post login failed event
+            postEvent(produceAllTimelineDownloadErrorEvent(new TimelineVolleyError(requestError.error)));
+            mFetchingAllTimeline = 0;
+        }else if(mFetchingUserCompanyTimeline == requestError.requestId){
+            postEvent(produceUserCompanyTimelineDownloadErrorEvent(new TimelineVolleyError(requestError.error)));
+            mFetchingAllTimeline = 0;
+        }
 
-        // post login failed event
-        postEvent(produceDownloadTimelineErrorEvent(new TimelineVolleyError(requestError.error)));
+
     }
 
     /**
@@ -165,9 +198,18 @@ public class HomeManager extends BaseManager {
      *
      * @return
      */
-    public TimelineEvent produceDownloadTimelineErrorEvent(TimelineVolleyError error)
+    public TimelineEvent produceAllTimelineDownloadErrorEvent(TimelineVolleyError error)
     {
         return TimelineEvent.TimelineDownloadEventWithError(TimelineEvent.Type.ERROR_ALL, error);
+    }
+    /**
+     * Creates an even for sign in errors
+     *
+     * @return
+     */
+    public TimelineEvent produceUserCompanyTimelineDownloadErrorEvent(TimelineVolleyError error)
+    {
+        return TimelineEvent.TimelineDownloadEventWithError(TimelineEvent.Type.ERROR_CO, error);
     }
 
     /**

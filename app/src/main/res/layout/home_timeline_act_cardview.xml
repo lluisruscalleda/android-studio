@@ -14,15 +14,15 @@
         android:background="@drawable/cardview_border">
 
         <TextView
-            android:id="@+id/ripple_title"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="Toolbar"
             android:textColor="@color/lake"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
-            android:id="@+id/ripple_description"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"

@@ -3,7 +3,7 @@ package com.thesocialcoin.models.pojos;
 /**
  * thesocialcoin
  * <p/>
- * Created by identitat on 04/08/15.
+ * Created by identitat on 06/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 
@@ -13,41 +13,16 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 @Parcel
-public class TimelineItem {
+public class Challenge {
 
     @Expose
-    String url;
+    private Integer id;
     @Expose
-    int id;
-    @Expose
-    User user;
-    @SerializedName("num_comments")
-    @Expose
-    int numComments;
-    @Expose
-    String photo;
-    @Expose
-    int value;
-    @Expose
-    Ripple ripple;
-    @Expose
-    String description;
-    @Expose
-    String latitude;
-    @Expose
-    String longitude;
-    @Expose
-    Place place;
-    @SerializedName("created_at")
-    @Expose
-    String createdAt;
-    @Expose
-    boolean anonymous;
-    @Expose
-    String kind;
-
+    private String url;
     @Expose
     private String title;
+    @Expose
+    private String description;
     @Expose
     private String image;
     @Expose
@@ -75,7 +50,25 @@ public class TimelineItem {
     @Expose
     private Integer numLikes;
 
-    public TimelineItem(){ /*Required empty bean constructor for parceler lib*/ }
+    public Challenge() {}
+
+    /**
+     *
+     * @return
+     * The id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     *
+     * @param id
+     * The id
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      *
@@ -98,109 +91,19 @@ public class TimelineItem {
     /**
      *
      * @return
-     * The id
+     * The title
      */
-    public int getId() {
-        return id;
+    public String getTitle() {
+        return title;
     }
 
     /**
      *
-     * @param id
-     * The id
+     * @param title
+     * The title
      */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     *
-     * @return
-     * The user
-     */
-    public User getUser() {
-        return user;
-    }
-
-    /**
-     *
-     * @param user
-     * The user
-     */
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    /**
-     *
-     * @return
-     * The numComments
-     */
-    public int getNumComments() {
-        return numComments;
-    }
-
-    /**
-     *
-     * @param numComments
-     * The num_comments
-     */
-    public void setNumComments(int numComments) {
-        this.numComments = numComments;
-    }
-
-    /**
-     *
-     * @return
-     * The photo
-     */
-    public String getPhoto() {
-        return photo;
-    }
-
-    /**
-     *
-     * @param photo
-     * The photo
-     */
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    /**
-     *
-     * @return
-     * The value
-     */
-    public int getValue() {
-        return value;
-    }
-
-    /**
-     *
-     * @param value
-     * The value
-     */
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    /**
-     *
-     * @return
-     * The ripple
-     */
-    public Ripple getRipple() {
-        return ripple;
-    }
-
-    /**
-     *
-     * @param ripple
-     * The ripple
-     */
-    public void setRipple(Ripple ripple) {
-        this.ripple = ripple;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -219,132 +122,6 @@ public class TimelineItem {
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     *
-     * @return
-     * The latitude
-     */
-    public String getLatitude() {
-        return latitude;
-    }
-
-    /**
-     *
-     * @param latitude
-     * The latitude
-     */
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    /**
-     *
-     * @return
-     * The longitude
-     */
-    public String getLongitude() {
-        return longitude;
-    }
-
-    /**
-     *
-     * @param longitude
-     * The longitude
-     */
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    /**
-     *
-     * @return
-     * The place
-     */
-    public Place getPlace() {
-        return place;
-    }
-
-    /**
-     *
-     * @param place
-     * The place
-     */
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
-    /**
-     *
-     * @return
-     * The createdAt
-     */
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     *
-     * @param createdAt
-     * The created_at
-     */
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    /**
-     *
-     * @return
-     * The anonymous
-     */
-    public boolean isAnonymous() {
-        return anonymous;
-    }
-
-    /**
-     *
-     * @param anonymous
-     * The anonymous
-     */
-    public void setAnonymous(boolean anonymous) {
-        this.anonymous = anonymous;
-    }
-
-    /**
-     *
-     * @return
-     * The kind
-     */
-    public String getKind() {
-        return kind;
-    }
-
-    /**
-     *
-     * @param kind
-     * The kind
-     */
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    /**
-     *
-     * @return
-     * The title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     *
-     * @param title
-     * The title
-     */
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**
@@ -526,4 +303,5 @@ public class TimelineItem {
     public void setNumLikes(Integer numLikes) {
         this.numLikes = numLikes;
     }
+
 }

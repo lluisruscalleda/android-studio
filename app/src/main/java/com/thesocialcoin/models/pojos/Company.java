@@ -6,12 +6,15 @@ package com.thesocialcoin.models.pojos;
  * Created by identitat on 04/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Parcel
 public class Company {
 
     @Expose
@@ -42,6 +45,8 @@ public class Company {
     @SerializedName("linkedin_url")
     @Expose
     private String linkedinUrl;
+
+    public Company() {}
 
     /**
      *

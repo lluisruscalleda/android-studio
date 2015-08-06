@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //We retrieve the timeline data
         HomeManager.getInstance(this).fetchAllTimeline();
+        HomeManager.getInstance(this).fetchUserCompanyTimeline();
     }
 
     @Override
@@ -145,16 +146,25 @@ public class HomeActivity extends AppCompatActivity {
      * Activity subscription to timeline data changes for notify it
      */
     @Subscribe
-    public void onTimelineChange(TimelineEvent event) {
+    public void onTimelineEventChange(TimelineEvent event) {
         if (event.getType().equals(TimelineEvent.Type.SUCCESS_ALL)) {
             // notify all timeline was updated
-            mHomePagerAdapter.getFragment(viewPager.getCurrentItem()).updateTimeline();
+            postEvent(TimelineEvent.TimelineDownloadEventWithData(TimelineEvent.Type.DO_UPDATE_ALL, HomeManager.getInstance(this).getAllTimelineActs()));
         }
         if (event.getType().equals(TimelineEvent.Type.SUCCESS_CO)) {
             // notify user company timeline was updated
-            mHomePagerAdapter.getFragment(viewPager.getCurrentItem()).updateTimeline();
+            postEvent(TimelineEvent.TimelineDownloadEventWithData(TimelineEvent.Type.DO_UPDATE_YOURS, HomeManager.getInstance(this).getUserCompanyTimelineActs()));
+        }
+        if(event.getType().equals(TimelineEvent.Type.ERROR_ALL)){
+            // notify all timeline fragment error
+            postEvent(new TimelineEvent(TimelineEvent.Type.DO_ERROR_ALL));
+        }
+        if(event.getType().equals(TimelineEvent.Type.ERROR_YOURS)){
+            // notify all timeline fragment error
+            postEvent(new TimelineEvent(TimelineEvent.Type.DO_ERROR_YOURS));
         }
     }
+
 
 
 
@@ -199,5 +209,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         };
 
+
+    protected static void postEvent(Object event){
+        RequestManager.EventBus.post(event);
+    }
 }
 

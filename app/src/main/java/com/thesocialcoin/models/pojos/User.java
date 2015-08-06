@@ -42,7 +42,7 @@ public class User extends iPojo {
     @Expose
     String score;
     @Expose
-    String company;
+    Company company;
     @Expose
     String location;
 
@@ -251,7 +251,7 @@ public class User extends iPojo {
      * @return
      * The company
      */
-    public String getCompany() {
+    public Company getCompany() {
         return company;
     }
 
@@ -260,7 +260,7 @@ public class User extends iPojo {
      * @param company
      * The company
      */
-    public void setCompany(String company) {
+    public void setCompany(Company company) {
         this.company = company;
     }
 

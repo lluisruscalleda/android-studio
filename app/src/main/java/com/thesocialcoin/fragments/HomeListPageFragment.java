@@ -11,8 +11,11 @@ import android.widget.RelativeLayout;
 
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
 import com.thesocialcoin.adapters.HomeTimelineRipplesAdapter;
+import com.thesocialcoin.controllers.HomeManager;
+import com.thesocialcoin.events.TimelineEvent;
 import com.thesocialcoin.models.pojos.TimelineItem;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.views.RecycleEmptyErrorView;
@@ -50,6 +53,8 @@ public class HomeListPageFragment extends Fragment {
     Parcelable mTimelineRipples;
 
     private HomeTimelineRipplesAdapter mHomeTimelineRipplesAdapter;
+    private List<TimelineItem> items;
+
 
     @Override
     public void onResume() {
@@ -81,7 +86,7 @@ public class HomeListPageFragment extends Fragment {
         timelineRecyclerView.setLayoutManager(llm);
 
         // adding items to the recycler view
-        List<TimelineItem> items = Parcels.unwrap(mTimelineRipples);
+        items = Parcels.unwrap(mTimelineRipples);
         mHomeTimelineRipplesAdapter = new HomeTimelineRipplesAdapter(items);
         timelineRecyclerView.setAdapter(mHomeTimelineRipplesAdapter);
         timelineRecyclerView.setEmptyView(mEmptyView);
@@ -92,10 +97,38 @@ public class HomeListPageFragment extends Fragment {
 
 
     /**
-     *  Communication from activty to pager fragment to update its timeline recycler view
+     * Communication events with parent activity
+     *
      */
-    public void updateTimeline(){
-        mHomeTimelineRipplesAdapter.notifyDataSetChanged();
+    @Subscribe
+    public void onTimelineEventReceived(TimelineEvent event) {
+        if (event.getType().equals(TimelineEvent.Type.DO_ERROR_ALL)) {
+            if(mPage == HomeManager.HOME_TAB_ALL) {
+                timelineRecyclerView.showErrorView();
+            }
+
+        }
+        if (event.getType().equals(TimelineEvent.Type.DO_ERROR_YOURS)) {
+            if(mPage == HomeManager.HOME_TAB_COMPANY) {
+                timelineRecyclerView.showErrorView();
+            }
+        }
+        if(event.getType().equals(TimelineEvent.Type.DO_UPDATE_ALL)){
+            if(mPage == HomeManager.HOME_TAB_ALL) {
+                timelineRecyclerView.hideErrorView();
+                items = event.getData();
+                mHomeTimelineRipplesAdapter = new HomeTimelineRipplesAdapter(items);
+                timelineRecyclerView.setAdapter(mHomeTimelineRipplesAdapter);
+            }
+        }
+        if(event.getType().equals(TimelineEvent.Type.DO_UPDATE_YOURS)){
+            if(mPage == HomeManager.HOME_TAB_COMPANY) {
+                timelineRecyclerView.hideErrorView();
+                items = event.getData();
+                mHomeTimelineRipplesAdapter = new HomeTimelineRipplesAdapter(items);
+                timelineRecyclerView.setAdapter(mHomeTimelineRipplesAdapter);
+            }
+        }
     }
 
 }

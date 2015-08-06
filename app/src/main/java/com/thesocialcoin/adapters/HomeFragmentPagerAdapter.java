@@ -2,7 +2,7 @@ package com.thesocialcoin.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.thesocialcoin.App;
@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by identitat on 03/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "ALL", "MY COMPANY" };
 
@@ -42,7 +42,7 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public HomeListPageFragment getItem(int position) {
         int mPage = position+1;
         List<TimelineItem> mTimelineRipples = HomeManager.getInstance(App.getAppContext()).getTimelineRipplesByHomePage(position + 1);
         return new HomeListPageFragmentBuilder(mPage, Parcels.wrap(mTimelineRipples)).build();
@@ -61,15 +61,17 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
             // record the fragment tag here.
             HomeListPageFragment f = (HomeListPageFragment) obj;
             String tag = f.getTag();
-            mFragmentTags.put(position, tag);
+            mFragmentTags.put(position+1, tag);
         }
         return obj;
     }
 
     public HomeListPageFragment getFragment(int position) {
-        String tag = mFragmentTags.get(position);
+        String tag = mFragmentTags.get(position+1);
         if (tag == null)
             return null;
         return (HomeListPageFragment)mFragmentManager.findFragmentByTag(tag);
     }
+
+
 }

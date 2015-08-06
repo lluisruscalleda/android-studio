@@ -63,6 +63,7 @@ public class AppManager extends BaseManager {
 
         //We retrieve the timeline data
         HomeManager.getInstance(mContext).fetchAllTimeline();
+        HomeManager.getInstance(mContext).fetchUserCompanyTimeline();
     }
 
     public boolean isClientRegistered() {

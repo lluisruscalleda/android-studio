@@ -1,6 +1,9 @@
 package com.thesocialcoin.events;
 
+import com.thesocialcoin.models.pojos.TimelineItem;
 import com.thesocialcoin.networking.error.TimelineVolleyError;
+
+import java.util.List;
 
 /**
  * thesocialcoin
@@ -19,15 +22,25 @@ public class TimelineEvent extends AbstractEvent {
         ERROR_CO,
         START_YOURS,
         SUCCESS_YOURS,
-        ERROR_YOURS
+        ERROR_YOURS,
+        DO_UPDATE_ALL,  /* communicate to home page fragment ALL that has to update */
+        DO_UPDATE_YOURS, /* communicate to home page fragment YOURS that has to update  */
+        DO_ERROR_ALL, /* communicate to home page fragment ALL that has an error */
+        DO_ERROR_YOURS /* communicate to home page fragment YOURS that has an error */
+
     }
 
     private TimelineVolleyError error;
+    private List<TimelineItem> data;
 
     public TimelineEvent(Type type) {
         super(type);
     }
 
+    /**
+     * Event constructor with our type Volley Error associated
+     *
+     */
     public static TimelineEvent TimelineDownloadEventWithError(Type type, TimelineVolleyError error){
         TimelineEvent event = new TimelineEvent(type);
         event.setError(error);
@@ -35,6 +48,20 @@ public class TimelineEvent extends AbstractEvent {
         return event;
     }
 
+    /**
+     * Event constructor with timeline data associated
+     *
+     */
+    public static TimelineEvent TimelineDownloadEventWithData(Type type, List<TimelineItem> data){
+        TimelineEvent event = new TimelineEvent(type);
+        event.setData(data);
+
+        return event;
+    }
+
     public TimelineVolleyError getError(){return error;}
     public void setError(TimelineVolleyError error){this.error = error;}
+
+    public List<TimelineItem> getData(){return data;}
+    public void setData(List<TimelineItem> data){this.data = data;}
 }

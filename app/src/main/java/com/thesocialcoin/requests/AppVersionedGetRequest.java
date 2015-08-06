@@ -17,22 +17,24 @@ import java.util.HashMap;
  * Created by identitat on 04/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class AppVersionedRequest<T> extends RequestInterface {
+public class AppVersionedGetRequest<T> extends RequestInterface {
 
-    protected static String TAG = AppVersionedRequest.class.getSimpleName();
+    protected static String TAG = AppVersionedGetRequest.class.getSimpleName();
     private static Context context;
 
-    public AppVersionedRequest() {
+    public AppVersionedGetRequest() {
     }
 
-    public Request create(HashMap<String,String> params, String endpoint, Class<T> classType, String requestErrorListener)
+    public OttoGsonRequest create(HashMap<String,String> params, String endpoint, Class<T> classType, String requestErrorListener)
     {
         this.context = App.getAppContext();
 
-        OttoGsonRequest<T> request = new OttoGsonRequest<T>(RequestManager.EventBus, AppRequestHelper.getInstance(context).getAuthorizationToken(), endpoint, classType, requestErrorListener);
-        request.setRetryPolicy(new DefaultRetryPolicy(RequestManager.REQUEST_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        return request;
+        OttoGsonRequest<T> getRequest = new OttoGsonRequest<T>(RequestManager.EventBus, AppRequestHelper.getInstance(context).getAuthorizationToken(), endpoint, classType, requestErrorListener);
+        getRequest.setRetryPolicy(new DefaultRetryPolicy(RequestManager.REQUEST_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        return getRequest;
+
     }
 
     public Request create(){

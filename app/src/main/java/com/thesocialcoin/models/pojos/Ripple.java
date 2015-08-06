@@ -33,7 +33,7 @@ public class Ripple {
     @Expose
     String activatedAt;
     @Expose
-    Object challenge;
+    Challenge challenge;
     @Expose
     String logo;
     @Expose
@@ -200,7 +200,7 @@ public class Ripple {
      * @return
      * The challenge
      */
-    public Object getChallenge() {
+    public Challenge getChallenge() {
         return challenge;
     }
 
@@ -209,7 +209,7 @@ public class Ripple {
      * @param challenge
      * The challenge
      */
-    public void setChallenge(Object challenge) {
+    public void setChallenge(Challenge challenge) {
         this.challenge = challenge;
     }
 

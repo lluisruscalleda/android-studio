@@ -9,7 +9,7 @@ import com.thesocialcoin.models.pojos.APITimelinePageResponse;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.networking.error.OttoErrorListenerFactory;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
-import com.thesocialcoin.requests.AppVersionedRequest;
+import com.thesocialcoin.requests.AppVersionedGetRequest;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -44,7 +44,7 @@ public class HomeManagerTest extends InstrumentationTestCase {
 
         String endpoint = "http://151.80.235.34:8080/v0.1/timeline";
 
-        postEvent(new AppVersionedRequest<APITimelinePageResponse>().create(null, endpoint, APITimelinePageResponse.class, OttoErrorListenerFactory.ACTIVITIES_ERROR_LISTENER));
+        postEvent(new AppVersionedGetRequest<APITimelinePageResponse>().create(null, endpoint, APITimelinePageResponse.class, OttoErrorListenerFactory.ACTIVITIES_ERROR_LISTENER));
 
     }
 
