@@ -44,6 +44,8 @@ public class HomeManager extends BaseManager {
     private static List<TimelineItem> mUserCompanyTimelineRipples = new ArrayList<TimelineItem>();
 
 
+
+    
     // Different ripple types
     public static final int NORMAL_ACT = 0;
     public static final int COMPANY_ACT = 1;
