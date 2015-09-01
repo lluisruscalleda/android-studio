@@ -1,0 +1,2569 @@
+{
+  "next": "https://151.80.235.34/v0.1/timeline?cursor=cD0yMDE1LTA4LTI4KzEyJTNBMjglM0EyNg%3D%3D",
+  "previous": null,
+  "results": [
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24198",
+      "id": 24198,
+      "user": {
+        "id": 4283,
+        "url": "https://151.80.235.34/v0.1/users/4283",
+        "name": "test user",
+        "gender": "F",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+        "city_name": "Barcelona",
+        "country_name": "España",
+        "score": 71,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(87).jpg.600x600_q85.jpg.600x600_q85.jpg.600x600_q85.jpg",
+      "value": {
+        "id": 28,
+        "name": "Governance and Ethic",
+        "icon": "tasks",
+        "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+        "color": "#0300a6"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABDG7OR0",
+        "id": 41397,
+        "title": "Write your act title…dfgsdfg",
+        "code": "ABDG7OR0",
+        "user_id": 4283,
+        "user": {
+          "id": 4283,
+          "url": "https://151.80.235.34/v0.1/users/4283",
+          "name": "test user",
+          "gender": "F",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+          "city_name": "Barcelona",
+          "country_name": "España",
+          "score": 71,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-30",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 949,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Tstingnnn!!",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Barcelona, España",
+        "country": "España",
+        "name": "Barcelona",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-30T11:16:13",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24199",
+      "id": 24199,
+      "user": {
+        "id": 4283,
+        "url": "https://151.80.235.34/v0.1/users/4283",
+        "name": "test user",
+        "gender": "F",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+        "city_name": "Barcelona",
+        "country_name": "España",
+        "score": 71,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(136).JPG.600x600_q85.jpg",
+      "value": {
+        "id": 28,
+        "name": "Governance and Ethic",
+        "icon": "tasks",
+        "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+        "color": "#0300a6"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABKW21OH",
+        "id": 41398,
+        "title": "Write your act title…dfgsdfg",
+        "code": "ABKW21OH",
+        "user_id": 4283,
+        "user": {
+          "id": 4283,
+          "url": "https://151.80.235.34/v0.1/users/4283",
+          "name": "test user",
+          "gender": "F",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+          "city_name": "Barcelona",
+          "country_name": "España",
+          "score": 71,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-30",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 356,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Tstingnnn!!",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Barcelona, España",
+        "country": "España",
+        "name": "Barcelona",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-30T11:16:14",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24202",
+      "id": 24202,
+      "user": {
+        "id": 2604,
+        "url": "https://151.80.235.34/v0.1/users/2604",
+        "name": "Jordi Berni",
+        "gender": "M",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20141218121429.jpeg",
+        "city_name": "El Masnou",
+        "country_name": "España",
+        "score": 69,
+        "company": {
+          "id": 216,
+          "url": "https://151.80.235.34/v0.1/companies/216",
+          "name": "identitat",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20141110180035.png",
+          "num_people": 12,
+          "values": [],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/acts/photo_FOO8ldb.jpg.600x600_q85.jpg",
+      "value": null,
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABOLW7WE",
+        "id": 41400,
+        "title": "JORDI BERNI'S RIPPLE",
+        "code": "ABOLW7WE",
+        "user_id": 2604,
+        "user": {
+          "id": 2604,
+          "url": "https://151.80.235.34/v0.1/users/2604",
+          "name": "Jordi Berni",
+          "gender": "M",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20141218121429.jpeg",
+          "city_name": "El Masnou",
+          "country_name": "España",
+          "score": 69,
+          "company": {
+            "id": 216,
+            "url": "https://151.80.235.34/v0.1/companies/216",
+            "name": "identitat",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/ft_20141110180035.png",
+            "num_people": 12,
+            "values": [],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 0
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-31",
+        "challenge": {
+          "id": 62,
+          "url": "https://151.80.235.34/v0.1/challenges/62",
+          "title": "Save the dolphins",
+          "description": "Description",
+          "image": "https://151.80.235.34/contingut/challenges/Dolphin_sYrDNH1.jpg",
+          "company": {
+            "id": 230,
+            "url": "https://151.80.235.34/v0.1/companies/230",
+            "name": "Jesuïtes",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/ft_20141218105514.png",
+            "num_people": 290,
+            "values": [
+              {
+                "id": 21,
+                "name": "Compañerismo",
+                "icon": "hombres",
+                "icon_url": "https://151.80.235.34/static/img/values/hombres.png",
+                "color": "#35c28f"
+              },
+              {
+                "id": 22,
+                "name": "Dedicación",
+                "icon": "yoga",
+                "icon_url": "https://151.80.235.34/static/img/values/yoga.png",
+                "color": "#2b5dde"
+              },
+              {
+                "id": 23,
+                "name": "Puntualidad",
+                "icon": "clock",
+                "icon_url": "https://151.80.235.34/static/img/values/clock.png",
+                "color": "#797cbf"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 20
+          },
+          "completed": 110,
+          "num_people": 5,
+          "num_acts": 32,
+          "num_cities": 3,
+          "objective_value": 50,
+          "objective_completed": 55,
+          "liked": false,
+          "num_likes": 0,
+          "num_comments": 1
+        },
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 524,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Bon dia",
+      "latitude": "41.412881",
+      "longitude": "2.141590",
+      "place": {
+        "country": "España",
+        "full_name": "España",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-31T07:35:54",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24201",
+      "id": 24201,
+      "user": {
+        "id": 2604,
+        "url": "https://151.80.235.34/v0.1/users/2604",
+        "name": "Jordi Berni",
+        "gender": "M",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20141218121429.jpeg",
+        "city_name": "El Masnou",
+        "country_name": "España",
+        "score": 69,
+        "company": {
+          "id": 216,
+          "url": "https://151.80.235.34/v0.1/companies/216",
+          "name": "identitat",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20141110180035.png",
+          "num_people": 12,
+          "values": [],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(30).jpg.600x600_q85.jpg.600x600_q85.jpg.600x600_q85.jpg",
+      "value": null,
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABTN7NL3",
+        "id": 41399,
+        "title": "JORDI BERNI'S RIPPLE",
+        "code": "ABTN7NL3",
+        "user_id": 2604,
+        "user": {
+          "id": 2604,
+          "url": "https://151.80.235.34/v0.1/users/2604",
+          "name": "Jordi Berni",
+          "gender": "M",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20141218121429.jpeg",
+          "city_name": "El Masnou",
+          "country_name": "España",
+          "score": 69,
+          "company": {
+            "id": 216,
+            "url": "https://151.80.235.34/v0.1/companies/216",
+            "name": "identitat",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/ft_20141110180035.png",
+            "num_people": 12,
+            "values": [],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 0
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-31",
+        "challenge": {
+          "id": 62,
+          "url": "https://151.80.235.34/v0.1/challenges/62",
+          "title": "Save the dolphins",
+          "description": "Description",
+          "image": "https://151.80.235.34/contingut/challenges/Dolphin_sYrDNH1.jpg",
+          "company": {
+            "id": 230,
+            "url": "https://151.80.235.34/v0.1/companies/230",
+            "name": "Jesuïtes",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/ft_20141218105514.png",
+            "num_people": 290,
+            "values": [
+              {
+                "id": 21,
+                "name": "Compañerismo",
+                "icon": "hombres",
+                "icon_url": "https://151.80.235.34/static/img/values/hombres.png",
+                "color": "#35c28f"
+              },
+              {
+                "id": 22,
+                "name": "Dedicación",
+                "icon": "yoga",
+                "icon_url": "https://151.80.235.34/static/img/values/yoga.png",
+                "color": "#2b5dde"
+              },
+              {
+                "id": 23,
+                "name": "Puntualidad",
+                "icon": "clock",
+                "icon_url": "https://151.80.235.34/static/img/values/clock.png",
+                "color": "#797cbf"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 20
+          },
+          "completed": 110,
+          "num_people": 5,
+          "num_acts": 32,
+          "num_cities": 3,
+          "objective_value": 50,
+          "objective_completed": 55,
+          "liked": false,
+          "num_likes": 0,
+          "num_comments": 1
+        },
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 38,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Test",
+      "latitude": "41.394324",
+      "longitude": "2.149480",
+      "place": {
+        "country": "España",
+        "full_name": "España",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-31T07:34:41",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24200",
+      "id": 24200,
+      "user": {
+        "id": 2604,
+        "url": "https://151.80.235.34/v0.1/users/2604",
+        "name": "Jordi Berni",
+        "gender": "M",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20141218121429.jpeg",
+        "city_name": "El Masnou",
+        "country_name": "España",
+        "score": 69,
+        "company": {
+          "id": 216,
+          "url": "https://151.80.235.34/v0.1/companies/216",
+          "name": "identitat",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20141110180035.png",
+          "num_people": 12,
+          "values": [],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/acts/photo_Ef1Gccc.jpg.600x600_q85.jpg",
+      "value": {
+        "id": 5,
+        "name": "Ayudar",
+        "icon": "helping",
+        "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+        "color": "#0000ff"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABX1ETTD",
+        "id": 41390,
+        "title": "RUBEN XIFRÉ VERA'S RIPPLE",
+        "code": "ABX1ETTD",
+        "user_id": 4156,
+        "user": {
+          "id": 4156,
+          "url": "https://151.80.235.34/v0.1/users/4156",
+          "name": "Ruben Xifré Vera",
+          "gender": "M",
+          "picture": "https://media.licdn.com/mpr/mprx/0_fU82hfdJ0pSHF59vwVCG5meRsa0EFqsvwJOT6aBvtsYW_zHRdw3hkkxd-Wf",
+          "city_name": "",
+          "country_name": null,
+          "score": 99,
+          "company": {
+            "id": 230,
+            "url": "https://151.80.235.34/v0.1/companies/230",
+            "name": "Jesuïtes",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/ft_20141218105514.png",
+            "num_people": 290,
+            "values": [
+              {
+                "id": 21,
+                "name": "Compañerismo",
+                "icon": "hombres",
+                "icon_url": "https://151.80.235.34/static/img/values/hombres.png",
+                "color": "#35c28f"
+              },
+              {
+                "id": 22,
+                "name": "Dedicación",
+                "icon": "yoga",
+                "icon_url": "https://151.80.235.34/static/img/values/yoga.png",
+                "color": "#2b5dde"
+              },
+              {
+                "id": 23,
+                "name": "Puntualidad",
+                "icon": "clock",
+                "icon_url": "https://151.80.235.34/static/img/values/clock.png",
+                "color": "#797cbf"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 20
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-27",
+        "challenge": {
+          "id": 63,
+          "url": "https://151.80.235.34/v0.1/challenges/63",
+          "title": "Save the dolphins",
+          "description": "Desctip",
+          "image": null,
+          "company": {
+            "id": 230,
+            "url": "https://151.80.235.34/v0.1/companies/230",
+            "name": "Jesuïtes",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/ft_20141218105514.png",
+            "num_people": 290,
+            "values": [
+              {
+                "id": 21,
+                "name": "Compañerismo",
+                "icon": "hombres",
+                "icon_url": "https://151.80.235.34/static/img/values/hombres.png",
+                "color": "#35c28f"
+              },
+              {
+                "id": 22,
+                "name": "Dedicación",
+                "icon": "yoga",
+                "icon_url": "https://151.80.235.34/static/img/values/yoga.png",
+                "color": "#2b5dde"
+              },
+              {
+                "id": 23,
+                "name": "Puntualidad",
+                "icon": "clock",
+                "icon_url": "https://151.80.235.34/static/img/values/clock.png",
+                "color": "#797cbf"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 20
+          },
+          "completed": null,
+          "num_people": 4,
+          "num_acts": 59,
+          "num_cities": 2,
+          "objective_value": null,
+          "objective_completed": null,
+          "liked": false,
+          "num_likes": 1,
+          "num_comments": 0
+        },
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 331,
+        "num_acts": 6,
+        "num_users": 2,
+        "num_cities": 1
+      },
+      "description": "Test",
+      "latitude": "41.414737",
+      "longitude": "2.145950",
+      "place": {
+        "country": "España",
+        "full_name": "España",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-31T06:49:15",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24199",
+      "id": 24199,
+      "user": {
+        "id": 4283,
+        "url": "https://151.80.235.34/v0.1/users/4283",
+        "name": "test user",
+        "gender": "F",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+        "city_name": "Barcelona",
+        "country_name": "España",
+        "score": 71,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(136).JPG.600x600_q85.jpg",
+      "value": {
+        "id": 28,
+        "name": "Governance and Ethic",
+        "icon": "tasks",
+        "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+        "color": "#0300a6"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABKW21OH",
+        "id": 41398,
+        "title": "Write your act title…dfgsdfg",
+        "code": "ABKW21OH",
+        "user_id": 4283,
+        "user": {
+          "id": 4283,
+          "url": "https://151.80.235.34/v0.1/users/4283",
+          "name": "test user",
+          "gender": "F",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+          "city_name": "Barcelona",
+          "country_name": "España",
+          "score": 71,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-30",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 137,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Tstingnnn!!",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Barcelona, España",
+        "country": "España",
+        "name": "Barcelona",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-30T11:16:14",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24198",
+      "id": 24198,
+      "user": {
+        "id": 4283,
+        "url": "https://151.80.235.34/v0.1/users/4283",
+        "name": "test user",
+        "gender": "F",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+        "city_name": "Barcelona",
+        "country_name": "España",
+        "score": 71,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(87).jpg.600x600_q85.jpg.600x600_q85.jpg.600x600_q85.jpg",
+      "value": {
+        "id": 28,
+        "name": "Governance and Ethic",
+        "icon": "tasks",
+        "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+        "color": "#0300a6"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABDG7OR0",
+        "id": 41397,
+        "title": "Write your act title…dfgsdfg",
+        "code": "ABDG7OR0",
+        "user_id": 4283,
+        "user": {
+          "id": 4283,
+          "url": "https://151.80.235.34/v0.1/users/4283",
+          "name": "test user",
+          "gender": "F",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+          "city_name": "Barcelona",
+          "country_name": "España",
+          "score": 71,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-30",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 677,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Tstingnnn!!",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Barcelona, España",
+        "country": "España",
+        "name": "Barcelona",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-30T11:16:13",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24197",
+      "id": 24197,
+      "user": {
+        "id": 4283,
+        "url": "https://151.80.235.34/v0.1/users/4283",
+        "name": "test user",
+        "gender": "F",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+        "city_name": "Barcelona",
+        "country_name": "España",
+        "score": 71,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(125).jpg.600x600_q85.jpg",
+      "value": {
+        "id": 25,
+        "name": "Healthcare",
+        "icon": "caring",
+        "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+        "color": "#e81f4f"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/AB93IV59",
+        "id": 41396,
+        "title": "Write your act title…asd",
+        "code": "AB93IV59",
+        "user_id": 4283,
+        "user": {
+          "id": 4283,
+          "url": "https://151.80.235.34/v0.1/users/4283",
+          "name": "test user",
+          "gender": "F",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+          "city_name": "Barcelona",
+          "country_name": "España",
+          "score": 71,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-28",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 369,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "Write your new act…asd",
+      "latitude": "0.000000",
+      "longitude": "0.000000",
+      "place": {
+        "full_name": "Valles, España",
+        "country": "España",
+        "name": "Valles",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-28T19:58:52",
+      "anonymous": false,
+      "num_likes": 1,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24196",
+      "id": 24196,
+      "user": {
+        "id": 4283,
+        "url": "https://151.80.235.34/v0.1/users/4283",
+        "name": "test user",
+        "gender": "F",
+        "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+        "city_name": "Barcelona",
+        "country_name": "España",
+        "score": 71,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(37).jpg.600x600_q85.jpg.600x600_q85.jpg",
+      "value": {
+        "id": 25,
+        "name": "Healthcare",
+        "icon": "caring",
+        "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+        "color": "#e81f4f"
+      },
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABFGQ21U",
+        "id": 41395,
+        "title": "desc testr",
+        "code": "ABFGQ21U",
+        "user_id": 4283,
+        "user": {
+          "id": 4283,
+          "url": "https://151.80.235.34/v0.1/users/4283",
+          "name": "test user",
+          "gender": "F",
+          "picture": "https://151.80.235.34/contingut/voluntaris/ft_20150630104932.jpg",
+          "city_name": "Barcelona",
+          "country_name": "España",
+          "score": 71,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-28",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 809,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "test",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Valles, España",
+        "country": "España",
+        "name": "Valles",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-28T12:45:56",
+      "anonymous": false,
+      "num_likes": 1,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24195",
+      "id": 24195,
+      "user": {
+        "id": 1313,
+        "url": "https://151.80.235.34/v0.1/users/1313",
+        "name": "Daniel Viñegla",
+        "gender": "M",
+        "picture": "https://media.licdn.com/mpr/mprx/0_1uqWnCu2VnaNOXFsL6d2BnAdes_4MHdMt6HmCyKueUiZMXXMLdHI_P27EUaZHedstOHIGHSoMY_ZUJkxLF56TMD2aY_4UJzV8F5wqCAuUk-AUmkP8_vEtuWeqV",
+        "city_name": "Manresa",
+        "country_name": "España",
+        "score": 90,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(165).jpg.600x600_q85.jpg",
+      "value": null,
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABHT6FNR",
+        "id": 41394,
+        "title": "89809809",
+        "code": "ABHT6FNR",
+        "user_id": 1313,
+        "user": {
+          "id": 1313,
+          "url": "https://151.80.235.34/v0.1/users/1313",
+          "name": "Daniel Viñegla",
+          "gender": "M",
+          "picture": "https://media.licdn.com/mpr/mprx/0_1uqWnCu2VnaNOXFsL6d2BnAdes_4MHdMt6HmCyKueUiZMXXMLdHI_P27EUaZHedstOHIGHSoMY_ZUJkxLF56TMD2aY_4UJzV8F5wqCAuUk-AUmkP8_vEtuWeqV",
+          "city_name": "Manresa",
+          "country_name": "España",
+          "score": 90,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-28",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 950,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "890809890",
+      "latitude": "41.000000",
+      "longitude": "1.000000",
+      "place": {
+        "full_name": "Rubí, España",
+        "country": "España",
+        "name": "Rubí",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-28T12:31:17",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24194",
+      "id": 24194,
+      "user": {
+        "id": 1313,
+        "url": "https://151.80.235.34/v0.1/users/1313",
+        "name": "Daniel Viñegla",
+        "gender": "M",
+        "picture": "https://media.licdn.com/mpr/mprx/0_1uqWnCu2VnaNOXFsL6d2BnAdes_4MHdMt6HmCyKueUiZMXXMLdHI_P27EUaZHedstOHIGHSoMY_ZUJkxLF56TMD2aY_4UJzV8F5wqCAuUk-AUmkP8_vEtuWeqV",
+        "city_name": "Manresa",
+        "country_name": "España",
+        "score": 90,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(22).jpg.600x600_q85.jpg",
+      "value": null,
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABP7EL74",
+        "id": 41393,
+        "title": "popoipo",
+        "code": "ABP7EL74",
+        "user_id": 1313,
+        "user": {
+          "id": 1313,
+          "url": "https://151.80.235.34/v0.1/users/1313",
+          "name": "Daniel Viñegla",
+          "gender": "M",
+          "picture": "https://media.licdn.com/mpr/mprx/0_1uqWnCu2VnaNOXFsL6d2BnAdes_4MHdMt6HmCyKueUiZMXXMLdHI_P27EUaZHedstOHIGHSoMY_ZUJkxLF56TMD2aY_4UJzV8F5wqCAuUk-AUmkP8_vEtuWeqV",
+          "city_name": "Manresa",
+          "country_name": "España",
+          "score": 90,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-28",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 251,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "098098098",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Rubí, España",
+        "country": "España",
+        "name": "Rubí",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-28T12:29:04",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    },
+    {
+      "id": 62,
+      "url": "https://151.80.235.34/v0.1/challenges/62",
+      "title": "Save the dolphins",
+      "description": "Description",
+      "image": "https://151.80.235.34/contingut/challenges/Dolphin_sYrDNH1.jpg",
+      "company": {
+        "id": 230,
+        "url": "https://151.80.235.34/v0.1/companies/230",
+        "name": "Jesuïtes",
+        "description": "",
+        "slogan": "",
+        "color": "",
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20141218105514.png",
+        "num_people": 290,
+        "values": [
+          {
+            "id": 21,
+            "name": "Compañerismo",
+            "icon": "hombres",
+            "icon_url": "https://151.80.235.34/static/img/values/hombres.png",
+            "color": "#35c28f"
+          },
+          {
+            "id": 22,
+            "name": "Dedicación",
+            "icon": "yoga",
+            "icon_url": "https://151.80.235.34/static/img/values/yoga.png",
+            "color": "#2b5dde"
+          },
+          {
+            "id": 23,
+            "name": "Puntualidad",
+            "icon": "clock",
+            "icon_url": "https://151.80.235.34/static/img/values/clock.png",
+            "color": "#797cbf"
+          }
+        ],
+        "twitter_url": "",
+        "facebook_url": "",
+        "linkedin_url": "",
+        "score": 20
+      },
+      "completed": 110,
+      "num_people": 5,
+      "num_acts": 32,
+      "num_cities": 3,
+      "objective_value": 50,
+      "objective_completed": 55,
+      "liked": false,
+      "num_likes": 0,
+      "num_comments": 1,
+      "kind": "challenge"
+    },
+    {
+      "url": "https://151.80.235.34/v0.1/acts/24193",
+      "id": 24193,
+      "user": {
+        "id": 1313,
+        "url": "https://151.80.235.34/v0.1/users/1313",
+        "name": "Daniel Viñegla",
+        "gender": "M",
+        "picture": "https://media.licdn.com/mpr/mprx/0_1uqWnCu2VnaNOXFsL6d2BnAdes_4MHdMt6HmCyKueUiZMXXMLdHI_P27EUaZHedstOHIGHSoMY_ZUJkxLF56TMD2aY_4UJzV8F5wqCAuUk-AUmkP8_vEtuWeqV",
+        "city_name": "Manresa",
+        "country_name": "España",
+        "score": 90,
+        "company": {
+          "id": 100,
+          "url": "https://151.80.235.34/v0.1/companies/100",
+          "name": "CISCO",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+          "num_people": 90,
+          "values": [
+            {
+              "id": 24,
+              "name": "Education",
+              "icon": "cuidar",
+              "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+              "color": "#4f5296"
+            },
+            {
+              "id": 25,
+              "name": "Healthcare",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#e81f4f"
+            },
+            {
+              "id": 26,
+              "name": "Enviroment",
+              "icon": "brujula",
+              "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+              "color": "#2e7d31"
+            },
+            {
+              "id": 27,
+              "name": "Critical Human Needs",
+              "icon": "world",
+              "icon_url": "https://151.80.235.34/static/img/values/world.png",
+              "color": "#016ccf"
+            },
+            {
+              "id": 28,
+              "name": "Governance and Ethic",
+              "icon": "tasks",
+              "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+              "color": "#0300a6"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 18
+        },
+        "location": null
+      },
+      "num_comments": 0,
+      "photo": "https://151.80.235.34/contingut/backgrounds/fons_(83).jpg.600x600_q85.jpg",
+      "value": null,
+      "ripple": {
+        "url": "https://151.80.235.34/v0.1/ripples/ABCH1J8Q",
+        "id": 41392,
+        "title": "popoipo",
+        "code": "ABCH1J8Q",
+        "user_id": 1313,
+        "user": {
+          "id": 1313,
+          "url": "https://151.80.235.34/v0.1/users/1313",
+          "name": "Daniel Viñegla",
+          "gender": "M",
+          "picture": "https://media.licdn.com/mpr/mprx/0_1uqWnCu2VnaNOXFsL6d2BnAdes_4MHdMt6HmCyKueUiZMXXMLdHI_P27EUaZHedstOHIGHSoMY_ZUJkxLF56TMD2aY_4UJzV8F5wqCAuUk-AUmkP8_vEtuWeqV",
+          "city_name": "Manresa",
+          "country_name": "España",
+          "score": 90,
+          "company": {
+            "id": 100,
+            "url": "https://151.80.235.34/v0.1/companies/100",
+            "name": "CISCO",
+            "description": "",
+            "slogan": "",
+            "color": "",
+            "logo": "https://151.80.235.34/contingut/empresa/logoCisco_z1sm2kU.png",
+            "num_people": 90,
+            "values": [
+              {
+                "id": 24,
+                "name": "Education",
+                "icon": "cuidar",
+                "icon_url": "https://151.80.235.34/static/img/values/cuidar.png",
+                "color": "#4f5296"
+              },
+              {
+                "id": 25,
+                "name": "Healthcare",
+                "icon": "caring",
+                "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+                "color": "#e81f4f"
+              },
+              {
+                "id": 26,
+                "name": "Enviroment",
+                "icon": "brujula",
+                "icon_url": "https://151.80.235.34/static/img/values/brujula.png",
+                "color": "#2e7d31"
+              },
+              {
+                "id": 27,
+                "name": "Critical Human Needs",
+                "icon": "world",
+                "icon_url": "https://151.80.235.34/static/img/values/world.png",
+                "color": "#016ccf"
+              },
+              {
+                "id": 28,
+                "name": "Governance and Ethic",
+                "icon": "tasks",
+                "icon_url": "https://151.80.235.34/static/img/values/tasks.png",
+                "color": "#0300a6"
+              }
+            ],
+            "twitter_url": "",
+            "facebook_url": "",
+            "linkedin_url": "",
+            "score": 18
+          },
+          "location": null
+        },
+        "company": {
+          "id": 6,
+          "url": "https://151.80.235.34/v0.1/companies/6",
+          "name": "The Social Coin",
+          "description": "",
+          "slogan": "",
+          "color": "",
+          "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+          "num_people": 61,
+          "values": [
+            {
+              "id": 5,
+              "name": "Ayudar",
+              "icon": "helping",
+              "icon_url": "https://151.80.235.34/static/img/values/helping.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 6,
+              "name": "Compartir",
+              "icon": "sharing",
+              "icon_url": "https://151.80.235.34/static/img/values/sharing.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 7,
+              "name": "Dar",
+              "icon": "giving",
+              "icon_url": "https://151.80.235.34/static/img/values/giving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 8,
+              "name": "Perdonar",
+              "icon": "forgiving",
+              "icon_url": "https://151.80.235.34/static/img/values/forgiving.png",
+              "color": "#0000ff"
+            },
+            {
+              "id": 10,
+              "name": "Cuidar",
+              "icon": "caring",
+              "icon_url": "https://151.80.235.34/static/img/values/caring.png",
+              "color": "#0000FF"
+            }
+          ],
+          "twitter_url": "",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "score": 0
+        },
+        "activated_at": "2015-08-28",
+        "challenge": null,
+        "logo": "https://151.80.235.34/contingut/empresa/ft_20130626213945.png",
+        "score": 899,
+        "num_acts": 1,
+        "num_users": 1,
+        "num_cities": 1
+      },
+      "description": "908098908",
+      "latitude": "41.000000",
+      "longitude": "2.000000",
+      "place": {
+        "full_name": "Rubí, España",
+        "country": "España",
+        "name": "Rubí",
+        "country_code": "ES"
+      },
+      "created_at": "2015-08-28T12:28:26",
+      "anonymous": false,
+      "num_likes": 0,
+      "kind": "act"
+    }
+  ]
+}

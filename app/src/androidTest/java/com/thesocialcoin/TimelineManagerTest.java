@@ -21,11 +21,11 @@ import java.io.IOException;
  * Created by identitat on 04/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class HomeManagerTest extends InstrumentationTestCase {
+public class TimelineManagerTest extends InstrumentationTestCase {
 
-    private final static String TAG = "HomeManagerTest";
+    private final static String TAG = "TimelineManagerTest";
 
-    public HomeManagerTest(){
+    public TimelineManagerTest(){
 
     }
 

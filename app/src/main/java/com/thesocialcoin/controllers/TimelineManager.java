@@ -26,7 +26,7 @@ import java.util.List;
  * Created by identitat on 03/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class HomeManager extends BaseManager {
+public class TimelineManager extends BaseManager {
 
     /**
      * Manager for Home functionalities
@@ -45,7 +45,7 @@ public class HomeManager extends BaseManager {
 
 
 
-    
+
     // Different ripple types
     public static final int NORMAL_ACT = 0;
     public static final int COMPANY_ACT = 1;
@@ -58,19 +58,19 @@ public class HomeManager extends BaseManager {
     private static int mFetchingAllTimeline = 0;
     private static int mFetchingUserCompanyTimeline = 0;
 
-    private static String TAG = HomeManager.class.getSimpleName();
-    private static HomeManager instance = null;
+    private static String TAG = TimelineManager.class.getSimpleName();
+    private static TimelineManager instance = null;
 
-    private HomeManager(Context context) {
+    private TimelineManager(Context context) {
         super();
         RequestManager.EventBus.register(this);
     }
 
 
-    public static HomeManager getInstance(Context context) {
+    public static TimelineManager getInstance(Context context) {
         if (instance == null) {
             mContext = context;
-            instance = new HomeManager(mContext);
+            instance = new TimelineManager(mContext);
         }
 
         return instance;
@@ -84,6 +84,7 @@ public class HomeManager extends BaseManager {
     }
 
     public static List<TimelineItem> getAllTimelineActs(){
+        Log.d(TAG, "getAllTimelineActs: " + mAllTimelineRipples.toString());
         return mAllTimelineRipples;
     }
     public static List<TimelineItem> getUserCompanyTimelineActs(){
@@ -117,6 +118,13 @@ public class HomeManager extends BaseManager {
             OttoGsonRequest request = new AppVersionedGetRequest<APITimelinePageResponse>().create(null, timelineUrl, APITimelinePageResponse.class, OttoErrorListenerFactory.TIMELINE_ERROR_LISTENER);
             RequestManager.addToRequestQueue(request);
             mFetchingAllTimeline = request.requestId;
+
+            //Gson gson = new Gson();
+            //APITimelinePageResponse timelinePage = gson.fromJson( LoadJSONFromAsset.load("timeline"), APITimelinePageResponse.class);
+            //mAllTimelineRipples = Arrays.asList(timelinePage.getResults());
+            //postEvent(produceAllTimelineDownloadedEvent());
+            //mFetchingAllTimeline = 0;
+
         }
     }
 

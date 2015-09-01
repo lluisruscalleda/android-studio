@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -100,10 +101,15 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private static final List<String> PERMISSIONS = Arrays.asList("user_status, email");
 
     // UI references.
-    private View mProgressView;
-    private RelativeLayout mPlusSignInButton;
-    private View mLoginFormView;
-    private RelativeLayout authButton;
+    @Bind(R.id.login_progress)
+    View mProgressView;
+    @Bind(R.id.btn_gplus_auth)
+    RelativeLayout mPlusSignInButton;
+    @Bind(R.id.login_form)
+    View mLoginFormView;
+    @Bind(R.id.btn_facebook_auth)
+    RelativeLayout mFacebookSignInButton;
+
     CallbackManager callbackManager;
     private AccessToken facebookAccessToken;
 
@@ -127,6 +133,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         RequestManager.EventBus.register(this);
         RequestManager.ResponseBuffer.stopAndProcess();
+
+        showProgress(false);
     }
 
     @Override
@@ -157,8 +165,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         main_phrase.setTypeface(FontUtils.getAppsRegularFont(this));
 
-        // Find the Google+ sign in button.
-        mPlusSignInButton = (RelativeLayout) findViewById(R.id.btn_gplus_auth);
         if (supportsGooglePlayServices()) {
             // Set a listener to connect the user when the G+ button is clicked.
             mPlusSignInButton.setOnClickListener(new OnClickListener() {
@@ -176,13 +182,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         }
 
         // Set up the login form.
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
         callbackManager = CallbackManager.Factory.create();
-        authButton = (RelativeLayout) findViewById(R.id.btn_facebook_auth);
-        authButton.setOnClickListener(new View.OnClickListener() {
+        mFacebookSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showProgress(true);
@@ -194,7 +195,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                authButton.setVisibility(View.GONE);
+                mFacebookSignInButton.setVisibility(View.GONE);
                 facebookAccessToken = loginResult.getAccessToken();
                 showProgress(false);
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -206,7 +207,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                 if (response.getError() != null) {
                                     // handle error
                                     ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
-                                    authButton.setVisibility(View.VISIBLE);
+                                    mFacebookSignInButton.setVisibility(View.VISIBLE);
                                 } else {
                                     Log.d(TAG, facebookAccessToken.getToken());  // App code
                                     //email verification
@@ -221,7 +222,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                                         Log.d(TAG, "Token: " + response.toString());
                                                         ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
                                                         showProgress(false);
-                                                        authButton.setVisibility(View.VISIBLE);
+                                                        mFacebookSignInButton.setVisibility(View.VISIBLE);
                                                     }
                                                 }, new Response.ErrorListener() {
 
@@ -229,7 +230,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                                     public void onErrorResponse(VolleyError error) {
                                                         ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
                                                         showProgress(false);
-                                                        authButton.setVisibility(View.VISIBLE);
+                                                        mFacebookSignInButton.setVisibility(View.VISIBLE);
                                                     }
                                                 });
                                         jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -635,7 +636,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
                     break;
                 case FACEBOOK:
-                    authButton.setVisibility(View.VISIBLE);
+                    mFacebookSignInButton.setVisibility(View.VISIBLE);
                     ToastUtils.show(mActivity, getString(R.string.error_login_failed) + ": " + event.getError().getErrorMessage());
                     detachFacebookAccount();
                     break;
@@ -721,14 +722,14 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, "Token: " + response.toString());
                         ToastUtils.show(mActivity, getString(R.string.facebook_email_validation));
-                        authButton.setVisibility(View.VISIBLE);
+                        mFacebookSignInButton.setVisibility(View.VISIBLE);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         ToastUtils.show(mActivity, getString(R.string.facebook_login_error));
-                        authButton.setVisibility(View.VISIBLE);
+                        mFacebookSignInButton.setVisibility(View.VISIBLE);
                     }
                 });
         jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

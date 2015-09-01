@@ -51,6 +51,16 @@
         </LinearLayout>
 
 
+        <!-- Login progress -->
+        <ProgressBar
+            android:id="@+id/home_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:visibility="gone"
+            android:background="@android:color/white"/>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"

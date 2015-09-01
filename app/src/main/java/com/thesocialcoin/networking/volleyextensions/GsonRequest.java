@@ -9,6 +9,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +20,7 @@ import java.util.Map;
  * From https://gist.github.com/ficusk/5474673
  */
 public class GsonRequest<T> extends Request<T> {
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().serializeNulls().create();
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Listener<T> listener;

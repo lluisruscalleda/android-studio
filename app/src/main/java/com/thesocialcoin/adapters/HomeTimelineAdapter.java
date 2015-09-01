@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.thesocialcoin.App;
 import com.thesocialcoin.R;
-import com.thesocialcoin.controllers.HomeManager;
+import com.thesocialcoin.controllers.TimelineManager;
 import com.thesocialcoin.models.pojos.Ripple;
 import com.thesocialcoin.models.pojos.TimelineItem;
 
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by identitat on 04/08/15.
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
-public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelineRipplesAdapter.TimelineViewHolder>{
+public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapter.TimelineViewHolder>{
 
 
     /**
@@ -119,7 +119,7 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
 
     private List<TimelineItem> mData;
 
-    public HomeTimelineRipplesAdapter(List<TimelineItem> items) {
+    public HomeTimelineAdapter(List<TimelineItem> items) {
         this.mData = items;
     }
 
@@ -133,7 +133,7 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
     public TimelineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         switch (viewType) {
-            case HomeManager.NORMAL_ACT:
+            case TimelineManager.NORMAL_ACT:
                 View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_act_cardview,parent,false); //Inflating the layout
 
                 ActViewHolder vh1 = new ActViewHolder(view1); //Creating ViewHolder and passing the object of type view
@@ -141,7 +141,7 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
                 return vh1; // Returning the created object
 
 
-            case HomeManager.COMPANY_ACT:
+            case TimelineManager.COMPANY_ACT:
 
                 View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_act_company_cardview,parent,false); //Inflating the layout
 
@@ -149,7 +149,7 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
 
                 return vh2; //returning the object created
 
-            case HomeManager.CHALLENGE_ACT:
+            case TimelineManager.CHALLENGE_ACT:
                 View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_challenge_cardview,parent,false); //Inflating the layout
 
                 ChallengeViewHolder vh3 = new ChallengeViewHolder(view3); //Creating ViewHolder and passing the object of type view
@@ -173,15 +173,15 @@ public class HomeTimelineRipplesAdapter extends RecyclerView.Adapter<HomeTimelin
         TimelineItem item = getItem(position);
         if(item != null){
 
-            if(item.getKind().equals(HomeManager.KIND_ACT)){
+            if(item.getKind().equals(TimelineManager.KIND_ACT)){
                 Ripple ripple = getItem(position).getRipple();
                 if (ripple.getCompany() != null) {
-                    return HomeManager.COMPANY_ACT;
+                    return TimelineManager.COMPANY_ACT;
                 } else{
-                    return HomeManager.NORMAL_ACT;
+                    return TimelineManager.NORMAL_ACT;
                 }
-            } else if(item.getKind().equals(HomeManager.KIND_CHALLENGE)){
-                return HomeManager.CHALLENGE_ACT;
+            } else if(item.getKind().equals(TimelineManager.KIND_CHALLENGE)){
+                return TimelineManager.CHALLENGE_ACT;
             }
         }
 

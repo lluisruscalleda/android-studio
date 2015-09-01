@@ -45,6 +45,8 @@ public class Company {
     @SerializedName("linkedin_url")
     @Expose
     private String linkedinUrl;
+    @Expose
+    private int score;
 
     public Company() {}
 
@@ -262,6 +264,24 @@ public class Company {
      */
     public void setLinkedinUrl(String linkedinUrl) {
         this.linkedinUrl = linkedinUrl;
+    }
+
+    /**
+     *
+     * @return
+     * The score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     *
+     * @param score
+     * The score
+     */
+    public void setScore(int score) {
+        this.score = score;
     }
 
 }

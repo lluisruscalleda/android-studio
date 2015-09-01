@@ -27,7 +27,7 @@ public class TimelineItem {
     @Expose
     String photo;
     @Expose
-    int value;
+    Value value;
     @Expose
     Ripple ripple;
     @Expose
@@ -45,7 +45,6 @@ public class TimelineItem {
     boolean anonymous;
     @Expose
     String kind;
-
     @Expose
     private String title;
     @Expose
@@ -56,13 +55,13 @@ public class TimelineItem {
     private int completed;
     @SerializedName("num_people")
     @Expose
-    private Integer numPeople;
+    private int numPeople;
     @SerializedName("num_acts")
     @Expose
-    private Integer numActs;
+    private int numActs;
     @SerializedName("num_cities")
     @Expose
-    private Integer numCities;
+    private int numCities;
     @SerializedName("objective_value")
     @Expose
     private int objectiveValue;
@@ -70,10 +69,10 @@ public class TimelineItem {
     @Expose
     private int objectiveCompleted;
     @Expose
-    private Boolean liked;
+    private boolean liked;
     @SerializedName("num_likes")
     @Expose
-    private Integer numLikes;
+    private int numLikes;
 
     public TimelineItem(){ /*Required empty bean constructor for parceler lib*/ }
 
@@ -172,7 +171,7 @@ public class TimelineItem {
      * @return
      * The value
      */
-    public int getValue() {
+    public Value getValue() {
         return value;
     }
 
@@ -181,7 +180,7 @@ public class TimelineItem {
      * @param value
      * The value
      */
-    public void setValue(int value) {
+    public void setValue(Value value) {
         this.value = value;
     }
 
@@ -406,7 +405,7 @@ public class TimelineItem {
      * @return
      * The numPeople
      */
-    public Integer getNumPeople() {
+    public int getNumPeople() {
         return numPeople;
     }
 
@@ -415,7 +414,7 @@ public class TimelineItem {
      * @param numPeople
      * The num_people
      */
-    public void setNumPeople(Integer numPeople) {
+    public void setNumPeople(int numPeople) {
         this.numPeople = numPeople;
     }
 
@@ -424,7 +423,7 @@ public class TimelineItem {
      * @return
      * The numActs
      */
-    public Integer getNumActs() {
+    public int getNumActs() {
         return numActs;
     }
 
@@ -433,7 +432,7 @@ public class TimelineItem {
      * @param numActs
      * The num_acts
      */
-    public void setNumActs(Integer numActs) {
+    public void setNumActs(int numActs) {
         this.numActs = numActs;
     }
 
@@ -442,7 +441,7 @@ public class TimelineItem {
      * @return
      * The numCities
      */
-    public Integer getNumCities() {
+    public int getNumCities() {
         return numCities;
     }
 
@@ -451,7 +450,7 @@ public class TimelineItem {
      * @param numCities
      * The num_cities
      */
-    public void setNumCities(Integer numCities) {
+    public void setNumCities(int numCities) {
         this.numCities = numCities;
     }
 
@@ -496,7 +495,7 @@ public class TimelineItem {
      * @return
      * The liked
      */
-    public Boolean getLiked() {
+    public boolean getLiked() {
         return liked;
     }
 
@@ -505,7 +504,7 @@ public class TimelineItem {
      * @param liked
      * The liked
      */
-    public void setLiked(Boolean liked) {
+    public void setLiked(boolean liked) {
         this.liked = liked;
     }
 
@@ -514,7 +513,7 @@ public class TimelineItem {
      * @return
      * The numLikes
      */
-    public Integer getNumLikes() {
+    public int getNumLikes() {
         return numLikes;
     }
 
@@ -523,7 +522,7 @@ public class TimelineItem {
      * @param numLikes
      * The num_likes
      */
-    public void setNumLikes(Integer numLikes) {
+    public void setNumLikes(int numLikes) {
         this.numLikes = numLikes;
     }
 }

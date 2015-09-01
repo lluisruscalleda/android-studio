@@ -16,7 +16,7 @@ import org.parceler.Parcel;
 public class Challenge {
 
     @Expose
-    private Integer id;
+    private int id;
     @Expose
     private String url;
     @Expose
@@ -31,13 +31,13 @@ public class Challenge {
     private int completed;
     @SerializedName("num_people")
     @Expose
-    private Integer numPeople;
+    private int numPeople;
     @SerializedName("num_acts")
     @Expose
-    private Integer numActs;
+    private int numActs;
     @SerializedName("num_cities")
     @Expose
-    private Integer numCities;
+    private int numCities;
     @SerializedName("objective_value")
     @Expose
     private int objectiveValue;
@@ -45,10 +45,10 @@ public class Challenge {
     @Expose
     private int objectiveCompleted;
     @Expose
-    private Boolean liked;
+    private boolean liked;
     @SerializedName("num_likes")
     @Expose
-    private Integer numLikes;
+    private int numLikes;
 
     public Challenge() {}
 
@@ -57,7 +57,7 @@ public class Challenge {
      * @return
      * The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -66,7 +66,7 @@ public class Challenge {
      * @param id
      * The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -183,7 +183,7 @@ public class Challenge {
      * @return
      * The numPeople
      */
-    public Integer getNumPeople() {
+    public int getNumPeople() {
         return numPeople;
     }
 
@@ -192,7 +192,7 @@ public class Challenge {
      * @param numPeople
      * The num_people
      */
-    public void setNumPeople(Integer numPeople) {
+    public void setNumPeople(int numPeople) {
         this.numPeople = numPeople;
     }
 
@@ -201,7 +201,7 @@ public class Challenge {
      * @return
      * The numActs
      */
-    public Integer getNumActs() {
+    public int getNumActs() {
         return numActs;
     }
 
@@ -210,7 +210,7 @@ public class Challenge {
      * @param numActs
      * The num_acts
      */
-    public void setNumActs(Integer numActs) {
+    public void setNumActs(int numActs) {
         this.numActs = numActs;
     }
 
@@ -219,7 +219,7 @@ public class Challenge {
      * @return
      * The numCities
      */
-    public Integer getNumCities() {
+    public int getNumCities() {
         return numCities;
     }
 
@@ -228,7 +228,7 @@ public class Challenge {
      * @param numCities
      * The num_cities
      */
-    public void setNumCities(Integer numCities) {
+    public void setNumCities(int numCities) {
         this.numCities = numCities;
     }
 
@@ -273,7 +273,7 @@ public class Challenge {
      * @return
      * The liked
      */
-    public Boolean getLiked() {
+    public boolean getLiked() {
         return liked;
     }
 
@@ -282,7 +282,7 @@ public class Challenge {
      * @param liked
      * The liked
      */
-    public void setLiked(Boolean liked) {
+    public void setLiked(boolean liked) {
         this.liked = liked;
     }
 
@@ -291,7 +291,7 @@ public class Challenge {
      * @return
      * The numLikes
      */
-    public Integer getNumLikes() {
+    public int getNumLikes() {
         return numLikes;
     }
 
@@ -300,7 +300,7 @@ public class Challenge {
      * @param numLikes
      * The num_likes
      */
-    public void setNumLikes(Integer numLikes) {
+    public void setNumLikes(int numLikes) {
         this.numLikes = numLikes;
     }
 

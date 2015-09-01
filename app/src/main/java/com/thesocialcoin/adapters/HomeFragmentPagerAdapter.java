@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.thesocialcoin.App;
-import com.thesocialcoin.controllers.HomeManager;
+import com.thesocialcoin.controllers.TimelineManager;
 import com.thesocialcoin.fragments.HomeListPageFragment;
 import com.thesocialcoin.fragments.HomeListPageFragmentBuilder;
 import com.thesocialcoin.models.pojos.TimelineItem;
@@ -44,8 +44,13 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public HomeListPageFragment getItem(int position) {
         int mPage = position+1;
-        List<TimelineItem> mTimelineRipples = HomeManager.getInstance(App.getAppContext()).getTimelineRipplesByHomePage(position + 1);
-        return new HomeListPageFragmentBuilder(mPage, Parcels.wrap(mTimelineRipples)).build();
+        List<TimelineItem> mTimelineRipples = TimelineManager.getInstance(App.getAppContext()).getTimelineRipplesByHomePage(position + 1);
+        if(mTimelineRipples != null || mTimelineRipples.size() > 0) {
+            return new HomeListPageFragmentBuilder(mPage, Parcels.wrap(mTimelineRipples)).build();
+        }
+        else{
+            return null;
+        }
     }
 
     @Override
