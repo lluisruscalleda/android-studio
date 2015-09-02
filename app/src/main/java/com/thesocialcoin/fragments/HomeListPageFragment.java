@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,56 +114,51 @@ public class HomeListPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         ButterKnife.bind(this, view);
 
+        items = Parcels.unwrap(mTimelineRipples);
+
         final LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         timelineRecyclerView.setLayoutManager(llm);
+        mSwipeContainer.setEnabled(false);
 
-        // adding items to the recycler view
-        items = Parcels.unwrap(mTimelineRipples);
-        mHomeTimelineAdapter = new HomeTimelineAdapter(items);
-        timelineRecyclerView.setAdapter(mHomeTimelineAdapter);
-        timelineRecyclerView.setEmptyView(mEmptyView);
-        timelineRecyclerView.setErrorView(mErrorView);
+        setupAdapter();
+
+        mSwipeContainer.setColorSchemeResources(R.color.light_lake, R.color.soft_lake, R.color.hard_lake);
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeContainer.setRefreshing(true);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        mSwipeContainer.setRefreshing(false);
+                    }
+                }, 2500);
+            }
+        });
 
         //we assign an OnScrollListener to our ListView after the initialization of our swipe to refresh layout
-//        timelineRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//            }
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                boolean enable = false;
-//                if(timelineRecyclerView != null && timelineRecyclerView.getChildCount() > 0){
-//                    if(llm.findViewByPosition(llm.findFirstVisibleItemPosition()).getTop()==0 && llm.findFirstVisibleItemPosition()==0){
-//                        enable = true;
-//                    }
-//
-////                        // check if the first item of the list is visible
-////                    boolean firstItemVisible = (timelineRecyclerView.getChildAt(0).getTop() == 0 && llm.findFirstVisibleItemPosition() == 0)?true:false;
-////                    // check if the top of the first item is visible
-////                    boolean topOfFirstItemVisible = timelineRecyclerView.getChildAt(0).getTop() == 0;
-////                    // enabling or disabling the refresh layout
-////                    enable = firstItemVisible && topOfFirstItemVisible;
-//                }
-//                mSwipeContainer.setEnabled(enable);
-//            }
-//        });
-
-//        // the refresh listener. this would be called when the layout is pulled down
-//        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//
-//            @Override
-//            public void onRefresh() {
-//                // get the new data from you data source
-//                // TODO : request data here
-//                // our swipeRefreshLayout needs to be notified when the data is returned in order for it to stop the animation
-//                handler.post(refreshing);
-//            }
-//        });
+        timelineRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                mSwipeContainer.setEnabled(llm.findFirstCompletelyVisibleItemPosition() == 0);
+            }
+        });
 
 
         return view;
     }
 
+    private void setupAdapter() {
+        // adding items to the recycler view
+        mHomeTimelineAdapter = new HomeTimelineAdapter(items);
+        timelineRecyclerView.setAdapter(mHomeTimelineAdapter);
+        timelineRecyclerView.setEmptyView(mEmptyView);
+        timelineRecyclerView.setErrorView(mErrorView);
+    }
 
     private final Runnable refreshing = new Runnable(){
         public void run(){
