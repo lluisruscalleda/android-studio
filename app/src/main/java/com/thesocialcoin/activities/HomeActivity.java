@@ -60,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause()");
         RequestManager.EventBus.unregister(this);
     }
 
@@ -86,20 +87,19 @@ public class HomeActivity extends AppCompatActivity {
          * */
         if(!AccountManager.getInstance(this).isLoggedIn()){
             gotoLogin();
-        }
+        }else{
+            setupNavigationView();
+            setupToolbar();
+            setupTabPager();
 
 
-        setupNavigationView();
-        setupToolbar();
-        setupTabPager();
-
-
-        //We retrieve the timeline data
-        if(TimelineManager.getInstance(this).getAllTimelineActs() == null || TimelineManager.getInstance(this).getAllTimelineActs().size() == 0) {
-            Log.d(TAG, "TimelineManager.getInstance(this).getAllTimelineActs(): "+TimelineManager.getInstance(this).getAllTimelineActs());
-            showProgress(true);
-            TimelineManager.getInstance(this).fetchAllTimeline();
-            TimelineManager.getInstance(this).fetchUserCompanyTimeline();
+            //We retrieve the timeline data
+            if(TimelineManager.getInstance(this).getAllTimelineActs() == null || TimelineManager.getInstance(this).getAllTimelineActs().size() == 0) {
+                Log.d(TAG, "TimelineManager.getInstance(this).getAllTimelineActs(): "+TimelineManager.getInstance(this).getAllTimelineActs());
+                showProgress(true);
+                TimelineManager.getInstance(this).fetchAllTimeline();
+                TimelineManager.getInstance(this).fetchUserCompanyTimeline();
+            }
         }
     }
 
@@ -193,8 +193,8 @@ public class HomeActivity extends AppCompatActivity {
         // Add new Flag to start new Activity
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // Staring Login Activity
-        this.startActivity(i);
-        this.finish();
+        startActivity(i);
+        finish();
     }
 
 

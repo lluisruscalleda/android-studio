@@ -18,35 +18,35 @@ import java.util.List;
 public class Company {
 
     @Expose
-    private int id;
+    int id;
     @Expose
-    private String url;
+    String url;
     @Expose
-    private String name;
+    String name;
     @Expose
-    private String description;
+    String description;
     @Expose
-    private String slogan;
+    String slogan;
     @Expose
-    private String color;
+    String color;
     @Expose
-    private String logo;
+    String logo;
     @SerializedName("num_people")
     @Expose
-    private int numPeople;
+    int numPeople;
     @Expose
-    private List<Value> values = new ArrayList<Value>();
+    List<Value> values = new ArrayList<Value>();
     @SerializedName("twitter_url")
     @Expose
-    private String twitterUrl;
+    String twitterUrl;
     @SerializedName("facebook_url")
     @Expose
-    private String facebookUrl;
+    String facebookUrl;
     @SerializedName("linkedin_url")
     @Expose
-    private String linkedinUrl;
+    String linkedinUrl;
     @Expose
-    private int score;
+    int score;
 
     public Company() {}
 

@@ -52,14 +52,22 @@
 
 
         <!-- Login progress -->
-        <ProgressBar
+        <LinearLayout
             android:id="@+id/home_progress"
-            style="?android:attr/progressBarStyleLarge"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:visibility="gone"
-            android:background="@android:color/white"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical|center_horizontal"
+            android:visibility="gone">
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:background="@android:color/white"/>
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"

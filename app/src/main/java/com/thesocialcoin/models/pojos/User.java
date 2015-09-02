@@ -7,13 +7,14 @@ package com.thesocialcoin.models.pojos;
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
 @Parcel
-public class User extends iPojo {
+public class User {
 
     @Expose
     String id;
@@ -283,16 +284,16 @@ public class User extends iPojo {
     }
 
 
-    public static User create(String serializedData){
-
-        iPojo<User> jsonObject = new iPojo<User>();
-        return (User) jsonObject.create(serializedData, User.class);
+    public String serialize() {
+        // Serialize this class into a JSON string using GSON
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
-    public String serialize(){
-
-        iPojo<User> jsonObject = new iPojo<User>();
-        return jsonObject.serialize(this);
+    public User create(String serializedData, Class<User> classType) {
+        // Use GSON to instantiate this class using the JSON representation of the state
+        Gson gson = new Gson();
+        return gson.fromJson(serializedData, classType);
     }
 
 }

@@ -15,16 +15,16 @@ import org.parceler.Parcel;
 public class Value {
 
     @Expose
-    private int id;
+    int id;
     @Expose
-    private String name;
+    String name;
     @Expose
-    private String icon;
+    String icon;
     @SerializedName("icon_url")
     @Expose
-    private String iconUrl;
+    String iconUrl;
     @Expose
-    private String color;
+    String color;
 
     public Value() {}
 

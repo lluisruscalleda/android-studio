@@ -1,5 +1,6 @@
 package com.thesocialcoin.adapters;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,6 +14,8 @@ import com.thesocialcoin.models.pojos.TimelineItem;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +47,12 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public HomeListPageFragment getItem(int position) {
         int mPage = position+1;
-        List<TimelineItem> mTimelineRipples = TimelineManager.getInstance(App.getAppContext()).getTimelineRipplesByHomePage(position + 1);
-        if(mTimelineRipples != null || mTimelineRipples.size() > 0) {
-            return new HomeListPageFragmentBuilder(mPage, Parcels.wrap(mTimelineRipples)).build();
+        // passem la llista a arrayList per problemes amb el parceler i la llibreria fragmentargs
+        ArrayList<TimelineItem> list = new ArrayList<TimelineItem>();
+        list.addAll(TimelineManager.getInstance(App.getAppContext()).getTimelineRipplesByHomePage(position + 1));
+
+        if(list != null || list.size() > 0) {
+            return new HomeListPageFragmentBuilder(mPage, Parcels.wrap(list)).build();
         }
         else{
             return null;

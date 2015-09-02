@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,12 @@ import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.RecyclerViewPositionHelper;
 import com.thesocialcoin.views.RecycleEmptyErrorView;
 
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.parceler.Parcels;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,6 +42,8 @@ import butterknife.ButterKnife;
  * Copyright (c) 2015 Identitat SL. All rights reserved.
  */
 public class HomeListPageFragment extends Fragment {
+
+    private static String TAG = HomeListPageFragment.class.getSimpleName();
 
     public static final String ARG_PAGE = "ARG_PAGE";
     public static final String ARG_ITEM_LIST = "ARG_ITEM_LIST";
@@ -61,24 +68,27 @@ public class HomeListPageFragment extends Fragment {
     Parcelable mTimelineRipples;
 
     private HomeTimelineAdapter mHomeTimelineAdapter;
-    private List<TimelineItem> items;
+    private List<TimelineItem> items = new ArrayList<TimelineItem>();
 
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume()");
         RequestManager.EventBus.register(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause()");
         RequestManager.EventBus.unregister(this);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate()");
         FragmentArgs.inject(this);
 
     }
