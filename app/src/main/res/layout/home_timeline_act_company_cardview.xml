@@ -1,33 +1,57 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        style="@style/Widget.CardContent"
+        style="@style/Timeline.Act"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/cardview_border">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
+            android:id="@+id/ll_card_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
-            android:textColor="@color/lake"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:orientation="vertical"
+            >
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="@string/long_text" />
+            <TextView
+                android:id="@+id/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:gravity="center"
+                android:textColor="@color/light_lake"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Timeline.Act.Description"
+                android:text="@string/long_text"
+                android:gravity="center"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

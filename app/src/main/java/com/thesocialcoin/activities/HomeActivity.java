@@ -27,6 +27,7 @@ import com.thesocialcoin.adapters.HomeFragmentPagerAdapter;
 import com.thesocialcoin.controllers.AccountManager;
 import com.thesocialcoin.controllers.TimelineManager;
 import com.thesocialcoin.events.TimelineEvent;
+import com.thesocialcoin.fragments.HomeListPageFragment;
 import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.FontUtils;
 
@@ -34,7 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HomeListPageFragment.OnListUpdateListener {
 
     private static String TAG = HomeActivity.class.getSimpleName();
 
@@ -125,17 +126,25 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Setups lateral left menu
+     */
     private void setupNavigationView(){
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawers();
     }
 
+    /**
+     * Setups navbar burguer menu icon
+     */
     @OnClick(R.id.nav_burguer)
     public void setupToolbar(){
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    /**
+     * Setups home fragment pager
+     */
     private void setupTabPager(){
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         mHomePagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
@@ -170,7 +179,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         if (event.getType().equals(TimelineEvent.Type.SUCCESS_CO)) {
             // notify user company timeline was updated
-            postEvent(TimelineEvent.TimelineDownloadEventWithData(TimelineEvent.Type.DO_UPDATE_YOURS, TimelineManager.getInstance(this).getUserCompanyTimelineActs()));
+            postEvent(TimelineEvent.TimelineDownloadEventWithData(TimelineEvent.Type.DO_UPDATE_CO, TimelineManager.getInstance(this).getUserCompanyTimelineActs()));
         }
         if(event.getType().equals(TimelineEvent.Type.ERROR_ALL)){
             // notify all timeline fragment error
@@ -180,9 +189,26 @@ public class HomeActivity extends AppCompatActivity {
             // notify all timeline fragment error
             postEvent(new TimelineEvent(TimelineEvent.Type.DO_ERROR_YOURS));
         }
+        if(event.getType().equals(TimelineEvent.Type.ERROR_CO)){
+            // notify all timeline fragment error
+            postEvent(new TimelineEvent(TimelineEvent.Type.DO_ERROR_CO));
+        }
     }
 
-
+    //Override fragment communication method
+    @Override
+    public void onListUpdate(int position)
+    {
+        //fetch acts data switch page
+        switch (position){
+            case TimelineManager.HOME_TAB_ALL:
+                TimelineManager.getInstance(this).fetchAllTimeline();
+                break;
+            case TimelineManager.HOME_TAB_COMPANY:
+                TimelineManager.getInstance(this).fetchUserCompanyTimeline();
+                break;
+        }
+    }
 
 
     private void gotoLogin(){
@@ -208,8 +234,8 @@ public class HomeActivity extends AppCompatActivity {
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(HomeActivity.this,
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this,
+//                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
             }
 
             // This method will be invoked when the current page is scrolled

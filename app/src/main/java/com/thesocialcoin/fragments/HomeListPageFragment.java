@@ -1,5 +1,6 @@
 package com.thesocialcoin.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -49,6 +50,9 @@ public class HomeListPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
     public static final String ARG_ITEM_LIST = "ARG_ITEM_LIST";
 
+
+    Activity activity;
+
     private Handler handler = new Handler();
     RecyclerViewPositionHelper mRecyclerViewHelper;
 
@@ -71,6 +75,12 @@ public class HomeListPageFragment extends Fragment {
     private HomeTimelineAdapter mHomeTimelineAdapter;
     private List<TimelineItem> items = new ArrayList<TimelineItem>();
 
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        this.activity = activity;
+    }
 
     @Override
     public void onResume() {
@@ -93,19 +103,10 @@ public class HomeListPageFragment extends Fragment {
         FragmentArgs.inject(this);
 
     }
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//
-//        //mostrem el loading de refresh mentres esta esperant resposta del server
-//        mSwipeContainer.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mSwipeContainer.setRefreshing(true);
-//            }
-//        });
-//    }
 
+    public interface OnListUpdateListener{
+        public void onListUpdate(int position);
+    }
 
     // Inflate the fragment layout we defined above for this fragment
     // Set the associated text for the title
@@ -117,6 +118,7 @@ public class HomeListPageFragment extends Fragment {
         items = Parcels.unwrap(mTimelineRipples);
 
         final LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
         timelineRecyclerView.setLayoutManager(llm);
         mSwipeContainer.setEnabled(false);
 
@@ -127,13 +129,13 @@ public class HomeListPageFragment extends Fragment {
             @Override
             public void onRefresh() {
                 mSwipeContainer.setRefreshing(true);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        mSwipeContainer.setRefreshing(false);
-                    }
-                }, 2500);
+                //Update list items
+                try{
+                    ((OnListUpdateListener) activity).onListUpdate(mPage);
+                }catch (ClassCastException cce){
+
+                }
             }
         });
 
@@ -144,7 +146,16 @@ public class HomeListPageFragment extends Fragment {
             }
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                mSwipeContainer.setEnabled(llm.findFirstCompletelyVisibleItemPosition() == 0);
+                boolean refreshEnabled = false;
+                if(llm.findFirstCompletelyVisibleItemPosition() == 0){
+                    refreshEnabled = true;
+                }
+                int lastVisibleItem = ((LinearLayoutManager) llm).findLastVisibleItemPosition();
+                int totalItemCount = llm.getItemCount();
+                if(llm.findLastCompletelyVisibleItemPosition() == totalItemCount-1){
+                    //refreshEnabled = true;
+                }
+                mSwipeContainer.setEnabled(refreshEnabled);
             }
         });
 
@@ -160,38 +171,19 @@ public class HomeListPageFragment extends Fragment {
         timelineRecyclerView.setErrorView(mErrorView);
     }
 
-    private final Runnable refreshing = new Runnable(){
-        public void run(){
-            try {
-                // TODO : isRefreshing should be attached to your data request status
-                if(mSwipeContainer.isRefreshing()){
-                    // re run the verification after 1 second
-                    handler.postDelayed(this, 1000);
-                }else{
-                    // stop the animation after the data is fully loaded
-                    mSwipeContainer.setRefreshing(false);
-                    // TODO : update your list with the new data
-                }
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
     /**
      * Communication events with parent activity
      *
      */
     @Subscribe
     public void onTimelineEventReceived(TimelineEvent event) {
+        mSwipeContainer.setRefreshing(false);
         if (event.getType().equals(TimelineEvent.Type.DO_ERROR_ALL)) {
             if(mPage == TimelineManager.HOME_TAB_ALL) {
                 timelineRecyclerView.showErrorView();
             }
-
         }
-        if (event.getType().equals(TimelineEvent.Type.DO_ERROR_YOURS)) {
+        if (event.getType().equals(TimelineEvent.Type.DO_ERROR_CO)) {
             if(mPage == TimelineManager.HOME_TAB_COMPANY) {
                 timelineRecyclerView.showErrorView();
             }
@@ -204,7 +196,7 @@ public class HomeListPageFragment extends Fragment {
                 timelineRecyclerView.setAdapter(mHomeTimelineAdapter);
             }
         }
-        if(event.getType().equals(TimelineEvent.Type.DO_UPDATE_YOURS)){
+        if(event.getType().equals(TimelineEvent.Type.DO_UPDATE_CO)){
             if(mPage == TimelineManager.HOME_TAB_COMPANY) {
                 timelineRecyclerView.hideErrorView();
                 items = event.getData();

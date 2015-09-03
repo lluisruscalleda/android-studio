@@ -11,7 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <com.thesocialcoin.views.RecycleEmptyErrorView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="24dp">
+
+
+        <com.thesocialcoin.views.RecycleEmptyErrorView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/rv_timeline"
@@ -30,6 +37,7 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/view_error_timeline_list" />
             </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

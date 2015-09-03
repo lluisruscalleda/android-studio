@@ -91,6 +91,7 @@ public class App extends Application {
 
         if (AppManager.getInstance(this).isLoggedIn())
         {
+            Log.d(TAG, "User is logged in!");
             if(isConnectedToInternet()){
                 Log.d(TAG, "User has internet connection");
                 verifyBluetooth();

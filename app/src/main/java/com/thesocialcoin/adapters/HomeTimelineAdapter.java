@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 import com.thesocialcoin.App;
 import com.thesocialcoin.R;
 import com.thesocialcoin.controllers.TimelineManager;
@@ -34,10 +36,9 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
     public static class TimelineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.card_view)
         CardView cardView;
-        @Bind(R.id.title)
-        TextView actTitle;
         @Bind(R.id.description)
         TextView actDescription;
+
 
         protected TimelineItem mItem;
 
@@ -65,24 +66,39 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
     public static class ActViewHolder extends TimelineViewHolder {
 
 
+        @Bind(R.id.user)
+        TextView actUsername;
+        @Bind(R.id.location)
+        TextView actLocation;
+
         ActViewHolder(View itemView) {
             super(itemView);
-
+            ButterKnife.bind(this, itemView);
         }
 
         // Bind holder data
         public void bindItem(TimelineItem item) {
             super.bindItem(item);
-            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"mOck Description");
+            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"No Description");
             if(item.getRipple()==null){
-                this.actTitle.setText("mOck Title");
+                this.actLocation.setText("Unknown Location");
+                this.actUsername.setText("Unknown User");
             }else{
-                this.actTitle.setText(item.getRipple().getTitle());
+//                Picasso.with(App.getInstance().getApplicationContext())
+//                        .load(item.getUser().getPicture())
+//                        .fit()
+//                        .into(userImage);
+                this.actLocation.setText(item.getPlace().getFullName());
+                this.actUsername.setText(item.getUser().getUsername());
             }
         }
     }
     public static class CompanyActViewHolder extends TimelineViewHolder {
 
+        @Bind(R.id.user)
+        TextView actUsername;
+        @Bind(R.id.location)
+        TextView actLocation;
 
         CompanyActViewHolder(View itemView) {
             super(itemView);
@@ -92,17 +108,23 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
         // Bind holder data
         public void bindItem(TimelineItem item) {
             super.bindItem(item);
-            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"mOck Description");
+            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"No Description");
             if(item.getRipple()==null){
-                this.actTitle.setText("mOck Title");
+                this.actLocation.setText("Unknown Location");
+                this.actUsername.setText("Unknown User");
             }else{
-                this.actTitle.setText(item.getRipple().getTitle());
+                this.actLocation.setText(item.getPlace().getFullName());
+                this.actUsername.setText(item.getUser().getUsername());
             }
         }
     }
 
     public static class ChallengeViewHolder extends TimelineViewHolder {
 
+        @Bind(R.id.title)
+        TextView challengeTitle;
+        @Bind(R.id.company)
+        TextView challengeCompany;
 
         ChallengeViewHolder(View itemView) {
             super(itemView);
@@ -113,7 +135,12 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
         public void bindItem(TimelineItem item) {
             super.bindItem(item);
             this.actDescription.setText(item.getDescription());
-            this.actTitle.setText(item.getTitle());
+            if(item.getCompany() == null){
+                this.challengeCompany.setText("Unknown Company");
+            }else{
+                this.challengeCompany.setText(item.getCompany().getName());
+            }
+            this.challengeTitle.setText(item.getTitle());
         }
     }
 

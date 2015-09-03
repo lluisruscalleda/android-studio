@@ -5,8 +5,12 @@ import android.util.Log;
 
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.events.AuthenticateUserEvent;
+import com.thesocialcoin.events.TimelineEvent;
+import com.thesocialcoin.events.UserProfileEvent;
+import com.thesocialcoin.models.pojos.User;
 import com.thesocialcoin.models.shared_preferences.SessionData;
 import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestFailed;
+import com.thesocialcoin.networking.ottovolley.messages.VolleyRequestSuccess;
 
 /**
  * thesocialcoin
@@ -61,9 +65,8 @@ public class AppManager extends BaseManager {
 
         this.initManagers();
 
-        //We retrieve the timeline data
-        TimelineManager.getInstance(mContext).fetchAllTimeline();
-        TimelineManager.getInstance(mContext).fetchUserCompanyTimeline();
+        //We retrieve the UserProfile data
+        UserProfileManager.getInstance(mContext).fetchUserProfile();
     }
 
     public boolean isClientRegistered() {
@@ -99,6 +102,17 @@ public class AppManager extends BaseManager {
 
     public void notifyUserIsNotLoggedIn() {
         postEvent(new AuthenticateUserEvent(AuthenticateUserEvent.Type.ERROR));
+    }
+
+
+    /**
+     * When we receive user profile data from server we fetch the acts
+     */
+    @Subscribe
+    public void onUserProfileEventChnage(UserProfileEvent event) {
+        if (event.getType().equals(UserProfileEvent.Type.SUCCESS)) {
+            TimelineManager.getInstance(mContext).fetchActs();
+        }
     }
 }
 

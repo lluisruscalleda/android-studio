@@ -45,7 +45,7 @@ public class User {
     @Expose
     Company company;
     @Expose
-    String location;
+    TSCLocation location;
 
     public User() {}
 
@@ -270,7 +270,7 @@ public class User {
      * @return
      * The location
      */
-    public String getLocation() {
+    public TSCLocation getLocation() {
         return location;
     }
 
@@ -279,7 +279,7 @@ public class User {
      * @param location
      * The location
      */
-    public void setLocation(String location) {
+    public void setLocation(TSCLocation location) {
         this.location = location;
     }
 

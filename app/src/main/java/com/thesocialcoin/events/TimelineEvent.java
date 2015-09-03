@@ -25,8 +25,10 @@ public class TimelineEvent extends AbstractEvent {
         ERROR_YOURS,
         DO_UPDATE_ALL,  /* communicate to home page fragment ALL that has to update */
         DO_UPDATE_YOURS, /* communicate to home page fragment YOURS that has to update  */
-        DO_ERROR_ALL, /* communicate to home page fragment ALL that has an error */
-        DO_ERROR_YOURS /* communicate to home page fragment YOURS that has an error */
+        DO_UPDATE_CO, /* communicate to home page fragment CO that has to update */
+        DO_ERROR_ALL,
+        DO_ERROR_YOURS,
+        DO_ERROR_CO
 
     }
 
@@ -49,7 +51,7 @@ public class TimelineEvent extends AbstractEvent {
     }
 
     /**
-     * Event constructor with timeline data associated
+     * Event constructor with data associated
      *
      */
     public static TimelineEvent TimelineDownloadEventWithData(Type type, List<TimelineItem> data){

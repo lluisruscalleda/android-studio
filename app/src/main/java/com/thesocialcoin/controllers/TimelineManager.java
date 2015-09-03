@@ -45,7 +45,6 @@ public class TimelineManager extends BaseManager {
 
 
 
-
     // Different ripple types
     public static final int NORMAL_ACT = 0;
     public static final int COMPANY_ACT = 1;
@@ -103,7 +102,14 @@ public class TimelineManager extends BaseManager {
         }
 
         return new ArrayList<TimelineItem>();
+    }
 
+    /* Fetch all acts */
+    public static void fetchActs(){
+        TimelineManager.getInstance(mContext).fetchAllTimeline();
+        if(UserProfileManager.getInstance(mContext).hasCompany()) {
+            TimelineManager.getInstance(mContext).fetchUserCompanyTimeline();
+        }
     }
 
     /**
@@ -124,7 +130,6 @@ public class TimelineManager extends BaseManager {
             //mAllTimelineRipples = Arrays.asList(timelinePage.getResults());
             //postEvent(produceAllTimelineDownloadedEvent());
             //mFetchingAllTimeline = 0;
-
         }
     }
 
@@ -135,11 +140,13 @@ public class TimelineManager extends BaseManager {
         if(!isFetchingUserCompanyTimeline()) {
             String timelineUrl = mContext.getResources().getString(R.string.bc_api_server_url)
                 + mContext.getResources().getString(R.string.bc_api_current_version)
-                + "/" + mContext.getResources().getString(R.string.bc_api_timeline_endpoint) +"?company_id=6";
-
-            OttoGsonRequest request = new AppVersionedGetRequest<APITimelinePageResponse>().create(null, timelineUrl, APITimelinePageResponse.class, OttoErrorListenerFactory.TIMELINE_ERROR_LISTENER);
-            RequestManager.addToRequestQueue(request);
-            mFetchingUserCompanyTimeline = request.requestId;
+                + "/" + mContext.getResources().getString(R.string.bc_api_timeline_endpoint) +"?company_id=%d";
+            if(UserProfileManager.getInstance(mContext).getUserProfile().getCompany() != null){
+                String companyUrl = String.format(timelineUrl, UserProfileManager.getInstance(mContext).getUserProfile().getCompany().getId());
+                OttoGsonRequest request = new AppVersionedGetRequest<APITimelinePageResponse>().create(null, companyUrl, APITimelinePageResponse.class, OttoErrorListenerFactory.TIMELINE_ERROR_LISTENER);
+                RequestManager.addToRequestQueue(request);
+                mFetchingUserCompanyTimeline = request.requestId;
+            }
         }
     }
 
@@ -180,8 +187,6 @@ public class TimelineManager extends BaseManager {
             postEvent(produceUserCompanyTimelineDownloadErrorEvent(new TimelineVolleyError(requestError.error)));
             mFetchingAllTimeline = 0;
         }
-
-
     }
 
     /**
