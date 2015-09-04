@@ -1,22 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.thesocialcoin" >
+      tools:context="com.thesocialcoin">
 
     <group android:checkableBehavior="all">
         <item
             android:id="@+id/navigation_item_1"
             android:icon="@drawable/btn_join_ripple"
-            android:title="Toolbar"/>
+            android:title="Profile"/>
         <item
             android:id="@+id/navigation_item_2"
             android:icon="@drawable/btn_join_ripple"
-            android:title="FloatActionButton"/>
+            android:title="Accounts"/>
 
         <item
             android:id="@+id/navigation_item_3"
             android:icon="@drawable/btn_join_ripple"
-            android:title="NavigationView"/>
+            android:title="Notifications"/>
+        <item
+            android:id="@+id/navigation_item_4"
+            android:icon="@drawable/btn_join_ripple"
+            android:title="Tutorial"/>
     </group>
 
 </menu>

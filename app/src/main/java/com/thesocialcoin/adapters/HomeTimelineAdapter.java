@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 import com.thesocialcoin.App;
 import com.thesocialcoin.R;
 import com.thesocialcoin.controllers.TimelineManager;
-import com.thesocialcoin.models.pojos.Ripple;
 import com.thesocialcoin.models.pojos.TimelineItem;
 
 import java.util.List;
@@ -70,6 +69,8 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
         TextView actUsername;
         @Bind(R.id.location)
         TextView actLocation;
+        @Bind(R.id.user_image)
+        RoundedImageView userImage;
 
         ActViewHolder(View itemView) {
             super(itemView);
@@ -84,35 +85,10 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
                 this.actLocation.setText("Unknown Location");
                 this.actUsername.setText("Unknown User");
             }else{
-//                Picasso.with(App.getInstance().getApplicationContext())
-//                        .load(item.getUser().getPicture())
-//                        .fit()
-//                        .into(userImage);
-                this.actLocation.setText(item.getPlace().getFullName());
-                this.actUsername.setText(item.getUser().getUsername());
-            }
-        }
-    }
-    public static class CompanyActViewHolder extends TimelineViewHolder {
-
-        @Bind(R.id.user)
-        TextView actUsername;
-        @Bind(R.id.location)
-        TextView actLocation;
-
-        CompanyActViewHolder(View itemView) {
-            super(itemView);
-
-        }
-
-        // Bind holder data
-        public void bindItem(TimelineItem item) {
-            super.bindItem(item);
-            this.actDescription.setText((item.getDescription()!=null)?item.getDescription():"No Description");
-            if(item.getRipple()==null){
-                this.actLocation.setText("Unknown Location");
-                this.actUsername.setText("Unknown User");
-            }else{
+                Picasso.with(App.getInstance().getApplicationContext())
+                        .load(item.getUser().getPicture())
+                        .fit()
+                        .into(userImage);
                 this.actLocation.setText(item.getPlace().getFullName());
                 this.actUsername.setText(item.getUser().getUsername());
             }
@@ -167,15 +143,6 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
 
                 return vh1; // Returning the created object
 
-
-            case TimelineManager.COMPANY_ACT:
-
-                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_act_company_cardview,parent,false); //Inflating the layout
-
-                CompanyActViewHolder vh2 = new CompanyActViewHolder(view2); //Creating ViewHolder and passing the object of type view
-
-                return vh2; //returning the object created
-
             case TimelineManager.CHALLENGE_ACT:
                 View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_timeline_challenge_cardview,parent,false); //Inflating the layout
 
@@ -201,12 +168,7 @@ public class HomeTimelineAdapter extends RecyclerView.Adapter<HomeTimelineAdapte
         if(item != null){
 
             if(item.getKind().equals(TimelineManager.KIND_ACT)){
-                Ripple ripple = getItem(position).getRipple();
-                if (ripple.getCompany() != null) {
-                    return TimelineManager.COMPANY_ACT;
-                } else{
-                    return TimelineManager.NORMAL_ACT;
-                }
+                return TimelineManager.NORMAL_ACT;
             } else if(item.getKind().equals(TimelineManager.KIND_CHALLENGE)){
                 return TimelineManager.CHALLENGE_ACT;
             }

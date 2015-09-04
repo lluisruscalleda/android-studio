@@ -13,13 +13,13 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.thesocialcoin.R;
@@ -168,16 +168,43 @@ public class HomeActivity extends AppCompatActivity implements HomeListPageFragm
     }
 
     /**
+     * Method to add new Page to Home Pager
+     */
+    public void addPageToHomePager (String newPage)
+    {
+        int pageIndex = mHomePagerAdapter.addView (newPage);
+        mHomePagerAdapter.notifyDataSetChanged();
+        // if you want to make "newPage" the currently displayed page:
+        //mViewPager.setCurrentItem (pageIndex, true);
+
+        tabLayout.setupWithViewPager(mViewPager);
+    }
+
+
+    /**
      * Activity subscription to timeline data changes for notify it
      */
     @Subscribe
     public void onTimelineEventChange(TimelineEvent event) {
         showProgress(false);
         if (event.getType().equals(TimelineEvent.Type.SUCCESS_ALL)) {
+            //if all acts page doesnt exists create it
+            if(mHomePagerAdapter.getCount() == TimelineManager.getInstance(this).HOME_TAB_ALL -1 ){
+                // Create an initial view to display; must be a subclass of FrameLayout.
+                LayoutInflater inflater = this.getLayoutInflater();
+                LinearLayout v0 = (LinearLayout) inflater.inflate (R.layout.fragment_home_page, null);
+                addPageToHomePager(TimelineManager.getInstance(this).tabTitles[0]);
+            }
             // notify all timeline was updated
             postEvent(TimelineEvent.TimelineDownloadEventWithData(TimelineEvent.Type.DO_UPDATE_ALL, TimelineManager.getInstance(this).getAllTimelineActs()));
         }
         if (event.getType().equals(TimelineEvent.Type.SUCCESS_CO)) {
+            if(mHomePagerAdapter.getCount() == TimelineManager.getInstance(this).HOME_TAB_COMPANY -1 ){
+                // Create an initial view to display; must be a subclass of FrameLayout.
+                LayoutInflater inflater = this.getLayoutInflater();
+                LinearLayout v0 = (LinearLayout) inflater.inflate (R.layout.fragment_home_page, null);
+                addPageToHomePager(TimelineManager.getInstance(this).tabTitles[1]);
+            }
             // notify user company timeline was updated
             postEvent(TimelineEvent.TimelineDownloadEventWithData(TimelineEvent.Type.DO_UPDATE_CO, TimelineManager.getInstance(this).getUserCompanyTimelineActs()));
         }

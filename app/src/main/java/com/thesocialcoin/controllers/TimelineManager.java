@@ -33,6 +33,7 @@ public class TimelineManager extends BaseManager {
      *
      *
      */
+    public static String tabTitles[] = new String[] { "ALL", "MY COMPANY" };
 
     // Home tabs for listing all ripples or only yours
     public static final int HOME_TAB_ALL = 1;

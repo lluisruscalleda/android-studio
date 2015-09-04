@@ -10,6 +10,7 @@
     <color name="tomato">#ff2f37</color>
     <color name="night">#1e2627</color>
 
+    <color name="tomato_timeline_background">#661316</color>
     <!-- Main colours palette -->
     <color name="light_lake">#72c7bf</color>
     <color name="soft_lake">#33a399</color>

@@ -26,11 +26,8 @@ import com.thesocialcoin.networking.core.RequestManager;
 import com.thesocialcoin.utils.RecyclerViewPositionHelper;
 import com.thesocialcoin.views.RecycleEmptyErrorView;
 
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.parceler.Parcels;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
